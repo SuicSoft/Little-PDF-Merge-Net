@@ -1,4 +1,10 @@
-﻿<Metro:MetroWindow x:Class="SuicSoft.LittleSoft.LittlesPDFMerge.Windows.MainWindow"
+﻿<!--
+   Do not copy our UI. You can copy anything from this project other than our UI.
+   
+   Do not copy our xaml and create fake versions of our software
+    -->
+    
+    <Metro:MetroWindow x:Class="SuicSoft.LittleSoft.LittlesPDFMerge.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Metro="http://metro.mahapps.com/winfx/xaml/controls"
