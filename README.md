@@ -1,5 +1,5 @@
 # Little-s-PDF-Merge
-Free , open source and fast PDF merger using Google Material Design and C#.Net
+Free , open source and fast PDF merger using Google Material Design, WPF and C# .Net
 
 Free to use, distrubute and modify. You can't sell this, and remove all '<i>SuicSoft</i>' stuff if you're using it on you're site
 (keep the dog if you like!) - read more in <b>LICENSE.txt</b>
