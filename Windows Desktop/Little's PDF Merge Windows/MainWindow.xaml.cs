@@ -89,7 +89,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
  
         public MainWindow()
         {
-
+            MessageBox.Show("Hello World.");
            
             InitializeComponent();
 
