@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="SuicSoft_LittleSoft_Little_s_PDF_Merge_Service.LPMOnline" CodeBehind="Service1.svc.cs" %>
