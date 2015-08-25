@@ -205,6 +205,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         {
             if (FilesBox.Items.Count == 1)
             {
+                Mergebtn.IsEnabled = true;
                 bm.IsEnabled = true;
                 am.IsEnabled = true;
                 rb.IsEnabled = true;
@@ -214,6 +215,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             }
             else if (FilesBox.Items.Count == 0)
             {
+                Mergebtn.IsEnabled = false;
                 bm.IsEnabled = false;
                 rb.IsEnabled = false;
                 ub.IsEnabled = false;
@@ -222,6 +224,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             }
             else
             {
+                Mergebtn.IsEnabled = true;
                 ub.IsEnabled = true;
                 db.IsEnabled = true;
                 bm.IsEnabled = true;
