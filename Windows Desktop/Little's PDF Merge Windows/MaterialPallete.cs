@@ -35,10 +35,10 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         public MaterialPallete(Color color)
         {
             Color[] materialcolor = GetClosestColor(MaterialColors, color);
-                DarkPrimaryColor = Color.FromRgb(56, 142, 60);
-                PrimaryColor = Color.FromRgb(76, 175, 80);
-                LightPrimaryColor = Color.FromRgb(200, 230, 201);
-                AccentColor = Color.FromRgb(0, 150, 136);
+                DarkPrimaryColor = Color.FromRgb(25, 118, 210);
+                PrimaryColor = Color.FromRgb(33, 150, 243);
+                LightPrimaryColor = Color.FromRgb(187, 222, 251);
+                AccentColor = Color.FromRgb(83, 109, 254);
         }
 
         /// <summary>

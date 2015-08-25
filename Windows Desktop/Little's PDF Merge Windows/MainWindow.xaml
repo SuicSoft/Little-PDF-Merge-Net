@@ -12,7 +12,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="1">
             <!--Files List-->
-            <ListBox x:Name="FilesBox" BorderBrush="{x:Null}" Foreground="{DynamicResource PrimaryText}"/>
+            <ListBox x:Name="FilesBox" Foreground="{DynamicResource PrimaryText}"/>
             <!--Ink ellipse-->
             <Ellipse x:Name="Ink" Width="{Binding Height, ElementName=Ink}" Height="115" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-120,-100,0,0" Fill="{DynamicResource AccentColor}"/>
         </Grid>

@@ -39,7 +39,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         }
 
         [DllImport("dbghelp.dll")]
-        public static extern bool MiniDumpWriteDump(IntPtr hProcess,
+        private static extern bool MiniDumpWriteDump(IntPtr hProcess,
         Int32 ProcessId,
         IntPtr hFile,
         int DumpType,

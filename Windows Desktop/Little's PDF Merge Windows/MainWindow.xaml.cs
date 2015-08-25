@@ -85,12 +85,8 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
     [CLSCompliant(false)]
     partial class MainWindow : MetroWindow
     {
-       
- 
         public MainWindow()
         {
-            MessageBox.Show("Hello World.");
-           
             InitializeComponent();
 
             #region Load Colors
@@ -126,11 +122,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 //Make things bigger.
                 split.Height = 30;
             }
-            Debug.WriteLine(DateTime.Now.Millisecond);
-
         }
-
-        private OpenFileDialog openFileDialog;
         private static bool IsDialogOpen;
 
         #region Constants
@@ -138,7 +130,12 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         #endregion
 
         #region Overrides
-
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            HwndSource source = PresentationSource.FromVisual(this) as HwndSource;
+            source.AddHook(WndProc);
+        }
         #endregion
 
         #region Window Message Handler (WndProc)
@@ -362,6 +359,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 case Combiner.SourceTestResult.Unreadable:
                     //Tell the user the pdf is corrupt.
                     Dispatcher.Invoke(new Action(() => this.ShowMessageAsync("The file " + Path.GetFileName(file) + " could not be opened as a PDF or image", "Some thing went wrong when opening " + Path.GetFileName(file))));
+                    return;
                     break;
                 //File is a protected pdf.
                 case Combiner.SourceTestResult.Protected:
@@ -389,15 +387,11 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                     break;
                 //File is a image (maybe not valid!).
                 case Combiner.SourceTestResult.Image:
-                    //await Dispatcher.BeginInvoke(new Action(() => this.ShowMessageAsync("Can't merge images", "Images are not yet supported. Images should be supported in the next build\version."))); //Remove when merges images.
                     break;
                 //File is unknown
                 case Combiner.SourceTestResult.Unknown:
                     await Dispatcher.BeginInvoke(new Action(() => this.ShowMessageAsync("Invalid format", "The file you selected is not a supported format. More supported formats coming soon.")));
-                    break;
-                //IO Error (Bad sectors)
-                case Combiner.SourceTestResult.IOError:
-                    await Dispatcher.BeginInvoke(new Action(() => this.ShowMessageAsync("IO Error", "The file failed to read because of a disk/IO error.The file may have bad sectors and may be corrupt.")));
+                    return;
                     break;
 
             }
@@ -416,13 +410,11 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         private void AddFilebtn_Click(object sender, RoutedEventArgs e)
         {
             //To get the button click animation to show. We need to open the Microsoft.Win32.OpenFileDialog in a new thread.
-            System.Threading.Thread openfilethread = null;
-            openfilethread = new System.Threading.Thread(new System.Threading.ThreadStart(delegate()
+            System.Threading.Thread openfilethread = new System.Threading.Thread(new System.Threading.ThreadStart(delegate()
             {
                 //Tell the dialog is open.
                 IsDialogOpen = true;
-                //So we don't get System.NullReferenceException.
-                openFileDialog = new Microsoft.Win32.OpenFileDialog();
+                OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.DefaultExt = ".pdf";
                 openFileDialog.Filter = "Portable Document Format (*.pdf)|*.pdf|Text files (*.txt)|*.txt";
                 openFileDialog.Multiselect = true;
@@ -430,17 +422,14 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 {
                     foreach (var file in openFileDialog.FileNames)
                     {
-                        //var thumb = WindowsThumbnailProvider.GetThumbnail(file,256,256, ThumbnailOptions.None);
                         AddInputFile(file);
-
-                        //Application.Current.Resources["PDFThumb"] = 
                     }
                 }
                 //Tell the dialog closed.
                 IsDialogOpen = false;
-            }));
-            openfilethread.Name = "Open file dialog thread.";
-            openfilethread.Start();
+                //Set some properties for the thread and start it
+            })) { Name = "Open file dialog thread." }; openfilethread.Start();
+            
         }
         /// <summary>
         /// Moves the selected item up or down.
