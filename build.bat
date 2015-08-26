@@ -1,0 +1,1 @@
+msbuild /property:Configuration=Release "Little's PDF Merge.sln" /maxcpucount:20
