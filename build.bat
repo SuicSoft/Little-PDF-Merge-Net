@@ -1,1 +1,1 @@
-msbuild /property:Configuration=Release "Little's PDF Merge.sln" /maxcpucount:20
+msbuild /property:Configuration=Release "Little's PDF Merge.sln" /maxcpucount:%NUMBER_OF_PROCESSORS%
