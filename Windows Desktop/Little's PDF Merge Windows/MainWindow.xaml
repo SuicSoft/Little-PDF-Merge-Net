@@ -23,9 +23,9 @@
             <Ellipse x:Name="Ink" Width="{Binding Height, ElementName=Ink}" Height="115" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-120,-100,0,0" Fill="{DynamicResource AccentColor}"/>
         </Grid>
         <Grid UseLayoutRounding="True"  RenderOptions.BitmapScalingMode="NearestNeighbor" Height="65" Width="65" Grid.Row="2" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Margin="0,0,7,10">
-            <Button x:Name="AddFilebtn"  Style="{StaticResource MaterialDesignFloatingActionAccentButton}"  Opacity="1"  Height="{Binding Width, ElementName=AddFilebtn}" Width="56"   Background="{DynamicResource AccentColor}" BorderBrush="{DynamicResource AccentColor}"  Foreground="White" ToolTip="Add a file" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AddFilebtn_Click">
+            <Button x:Name="AddFilebtn"  Style="{StaticResource MaterialDesignFloatingActionAccentButton}" Height="{Binding Width, ElementName=AddFilebtn}" Width="56"   Background="{DynamicResource AccentColor}" BorderBrush="{DynamicResource AccentColor}"  Foreground="White" ToolTip="Add a file" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AddFilebtn_Click">
                 <Button.Effect>
-                    <DropShadowEffect x:Uid="shadoweffect" x:Name="shadoweffect" BlurRadius="8" ShadowDepth="2.5" Direction="290" Color="#BBBBBB"/>
+                    <DropShadowEffect x:Name="shadoweffect" BlurRadius="8" ShadowDepth="2.5" Direction="290" Color="#BBBBBB"/>
                 </Button.Effect>
                 <Button.Triggers>
                     <EventTrigger RoutedEvent="FrameworkElement.Loaded">
@@ -117,7 +117,6 @@
                 <EasingThicknessKeyFrame x:Uid="EasingThicknessKeyFrame_2" KeyTime="0:0:0.7" Value="-120,-100,0,0" EasingFunction="{DynamicResource ease}"/>
             </ThicknessAnimationUsingKeyFrames>
         </Storyboard>
-        <SolidColorBrush  x:Key="WindowTitleColorBrush" Color="#1976D2" />
     </Metro:MetroWindow.Resources>
     <Metro:MetroWindow.GlowBrush>
         <DynamicResource x:Uid="StaticResource_1" ResourceKey="WindowTitleColorBrush"/>

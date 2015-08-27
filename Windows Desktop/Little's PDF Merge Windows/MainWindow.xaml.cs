@@ -77,6 +77,7 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using SuicSoft.LittleSoft.LittlesPDFMerge.Core;
 using iTextSharp.text.pdf;
+using System.Threading;
 namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
 {
     /// <summary>
@@ -87,41 +88,45 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
     {
         public MainWindow()
         {
+            // Create new stopwatch
+            Stopwatch stopwatch = new Stopwatch();
+
+            // Begin timing
+            stopwatch.Start();
             InitializeComponent();
+            // Stop timing
+            stopwatch.Stop();
+
+            Debug.WriteLine("Time to draw controls: {0}", stopwatch.Elapsed);
+
+            Stopwatch stopwatch2 = new Stopwatch();
 
             #region Load Colors
-            Debug.WriteLine(DateTime.Now.Millisecond);
-            using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("Software\\SuicSoft\\LittlePDFMerge\\Theme"))
+            new Thread(delegate()
             {
-                if (registryKey != null)
+                Dispatcher.Invoke(new Action(delegate()
                 {
-                    //Read theme settings.
+
                     System.Drawing.Color color = System.Drawing.Color.FromArgb((Int32)Registry.GetValue("HKEY_CURRENT_USER\\" + "Software\\Microsoft\\Windows\\DWM", "ColorizationColor", "00000000"));
                     var colors = new MaterialPallete(Color.FromArgb(color.A, color.R, color.G, color.B));
                     Resources["AccentColor"] = new SolidColorBrush(colors.AccentColor);
                     Resources["PrimaryColor"] = new SolidColorBrush(colors.PrimaryColor);
                     Resources["LightPrimaryColor"] = new SolidColorBrush(colors.LightPrimaryColor);
                     Resources["WindowTitleColorBrush"] = new SolidColorBrush(colors.DarkPrimaryColor);
-                    Resources["TextIcons"] = (SolidColorBrush)new BrushConverter().ConvertFromString((string)registryKey.GetValue("TextIcons", "White"));
-
-                }
-                else
-                {
-                    RegistryKey registryKeynew = Registry.CurrentUser.CreateSubKey("Software\\SuicSoft\\LittlePDFMerge\\Theme");
-                    registryKeynew.SetValue("AccentColor", "#536DFE");
-                    registryKeynew.SetValue("PrimaryColor", "#03A9F4");
-                    registryKeynew.SetValue("LightPrimaryColor", "#B3E5FC");
-                    registryKeynew.SetValue("TextIcons", "White");
-
-                }
-            }
+                }));
+            }) { Priority = ThreadPriority.Highest }.Start();
+            // Begin timing
+            stopwatch2.Start();
             #endregion
-
             if (HasTouchInput())
             {
                 //Make things bigger.
                 split.Height = 30;
             }
+            // Stop timing
+            stopwatch2.Stop();
+
+            Debug.WriteLine("Time to run init code: {0}", stopwatch2.Elapsed);
         }
         private static bool IsDialogOpen;
 
@@ -132,14 +137,18 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         #region Overrides
         protected override void OnSourceInitialized(EventArgs e)
         {
-            base.OnSourceInitialized(e);
-            HwndSource source = PresentationSource.FromVisual(this) as HwndSource;
-            source.AddHook(WndProc);
+            try
+            {
+                base.OnSourceInitialized(e);
+                HwndSource source = PresentationSource.FromVisual(this) as HwndSource;
+                source.AddHook(WndProc);
+            }
+            catch { }
         }
         #endregion
 
         #region Window Message Handler (WndProc)
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam,ref bool handled)
         {
 
             // Handle messages...
@@ -428,7 +437,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 //Tell the dialog closed.
                 IsDialogOpen = false;
                 //Set some properties for the thread and start it
-            })) { Name = "Open file dialog thread." }; openfilethread.Start();
+            })) { Name = "Open file dialog thread." };// openfilethread.Start();
             
         }
         /// <summary>

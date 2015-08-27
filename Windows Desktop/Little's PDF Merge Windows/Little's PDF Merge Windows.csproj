@@ -53,12 +53,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
-    <Reference Include="MaterialDesignColors">
-      <HintPath>..\..\packages\MaterialDesignColors.1.0.0\lib\net45\MaterialDesignColors.dll</HintPath>
-    </Reference>
-    <Reference Include="MaterialDesignThemes.Wpf">
-      <HintPath>..\..\packages\MaterialDesignThemes.0.0.0.93\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
@@ -133,6 +127,14 @@
     <ProjectReference Include="..\..\Little%27s PDF Merge Core\Little%27s PDF Merge Core.csproj">
       <Project>{9047d44d-5216-4ef4-bafd-954912b0ca09}</Project>
       <Name>Little%27s PDF Merge Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MaterialDesignInXamlToolkit\MaterialDesignColors.Wpf\MaterialDesignColors.Wpf.csproj">
+      <Project>{90b53209-c60c-4655-b28d-a1b3e1044ba3}</Project>
+      <Name>MaterialDesignColors.Wpf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MaterialDesignInXamlToolkit\MaterialDesignThemes.Wpf\MaterialDesignThemes.Wpf.csproj">
+      <Project>{f079fb0a-a8ed-4216-b6a5-345756751a04}</Project>
+      <Name>MaterialDesignThemes.Wpf</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
