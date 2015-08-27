@@ -88,31 +88,25 @@
                                 <Storyboard TargetName="ClickEllipse">
                                     <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)">
                                         <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="120"/>
                                         <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="50"/>
                                         <EasingDoubleKeyFrame KeyTime="0:0:0.17" Value="120"/>
                                     </DoubleAnimationUsingKeyFrames>
                                     <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)">
                                         <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="120"/>
                                         <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="50"/>
                                         <EasingDoubleKeyFrame KeyTime="0:0:0.17" Value="120"/>
-                                    </DoubleAnimationUsingKeyFrames>
+                                    </DoubleAnimationUsingKeyFrames>                                    
                                     <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
                                         <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="-60"/>
                                         <EasingDoubleKeyFrame KeyTime="0:0:0.17" Value="-60"/>
                                     </DoubleAnimationUsingKeyFrames>
                                     <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
                                         <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="-60"/>
                                         <EasingDoubleKeyFrame KeyTime="0:0:0.17" Value="-60"/>
                                     </DoubleAnimationUsingKeyFrames>
                                     <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)">
                                         <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value=".26"/>
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.17" Value=".40"/>
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.17" Value=".30"/>
                                         <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
                                     </DoubleAnimationUsingKeyFrames>
                                 </Storyboard>
