@@ -5,11 +5,6 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Little's PDF Merge WF-Legacy", "Windows Desktop\Little's PDF Merge WF-Legacy\Little's PDF Merge WF-Legacy.csproj", "{2BAEB5C3-2106-4E41-99D1-CBA05A857707}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".linux", ".linux", "{926A3D0E-02D7-4222-982F-75FEF8B127E6}"
-	ProjectSection(SolutionItems) = preProject
-		.linux\LPM.sh = .linux\LPM.sh
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Little's PDF Merge Windows", "Windows Desktop\Little's PDF Merge Windows\Little's PDF Merge Windows.csproj", "{A37F8117-02B9-4C7F-B647-2306EBF0EFE0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows Apps", "Windows Apps", "{88F172B0-0B72-4BAD-949F-A0278A9F1527}"
@@ -20,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Littles PDF Merge.Windows",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Littles PDF Merge.WindowsPhone", "Windows Apps\Littles PDF Merge.WindowsPhone\Littles PDF Merge.WindowsPhone.csproj", "{0D9C9F37-088A-4659-9A07-2A0D9C3DD6BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Little's PDF Merge Chrome", "Online & Chrome\Little's PDF Merge Chrome\Little's PDF Merge Chrome.csproj", "{64C1733E-14D2-4DA4-940A-AAB4AB3A4688}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Little's PDF Merge Chrome", "Little's PDF Merge Chrome\Little's PDF Merge Chrome.csproj", "{64C1733E-14D2-4DA4-940A-AAB4AB3A4688}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Little's PDF Merge Core", "Little's PDF Merge Core\Little's PDF Merge Core.csproj", "{9047D44D-5216-4EF4-BAFD-954912B0CA09}"
 EndProject
@@ -31,8 +26,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaterialDesignThemes.Wpf", "MaterialDesignInXamlToolkit\MaterialDesignThemes.Wpf\MaterialDesignThemes.Wpf.csproj", "{F079FB0A-A8ED-4216-B6A5-345756751A04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaterialDesignColors.Wpf", "MaterialDesignInXamlToolkit\MaterialDesignColors.Wpf\MaterialDesignColors.Wpf.csproj", "{90B53209-C60C-4655-B28D-A1B3E1044BA3}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MaterialDesignInXamlToolkit", "MaterialDesignInXamlToolkit", "{665615E8-992D-4229-9AF2-BCA0367F2A27}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -285,7 +278,5 @@ Global
 		{687C5FD0-57D6-4320-AFF6-362E8E94281B} = {88F172B0-0B72-4BAD-949F-A0278A9F1527}
 		{0D9C9F37-088A-4659-9A07-2A0D9C3DD6BD} = {88F172B0-0B72-4BAD-949F-A0278A9F1527}
 		{64C1733E-14D2-4DA4-940A-AAB4AB3A4688} = {5DC9825B-4C9E-4BA8-AC9B-741D630B341C}
-		{F079FB0A-A8ED-4216-B6A5-345756751A04} = {665615E8-992D-4229-9AF2-BCA0367F2A27}
-		{90B53209-C60C-4655-B28D-A1B3E1044BA3} = {665615E8-992D-4229-9AF2-BCA0367F2A27}
 	EndGlobalSection
 EndGlobal

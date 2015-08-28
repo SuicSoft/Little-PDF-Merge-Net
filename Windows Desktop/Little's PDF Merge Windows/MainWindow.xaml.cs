@@ -102,27 +102,20 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             Stopwatch stopwatch2 = new Stopwatch();
 
             #region Load Colors
-            new Thread(delegate()
-            {
-                Dispatcher.Invoke(new Action(delegate()
-                {
 
-                    System.Drawing.Color color = System.Drawing.Color.FromArgb((Int32)Registry.GetValue("HKEY_CURRENT_USER\\" + "Software\\Microsoft\\Windows\\DWM", "ColorizationColor", "00000000"));
-                    var colors = new MaterialPallete(Color.FromArgb(color.A, color.R, color.G, color.B));
-                    Resources["AccentColor"] = new SolidColorBrush(colors.AccentColor);
-                    Resources["PrimaryColor"] = new SolidColorBrush(colors.PrimaryColor);
-                    Resources["LightPrimaryColor"] = new SolidColorBrush(colors.LightPrimaryColor);
-                    Resources["WindowTitleColorBrush"] = new SolidColorBrush(colors.DarkPrimaryColor);
-                }));
-            }) { Priority = ThreadPriority.Highest }.Start();
+            System.Drawing.Color color = System.Drawing.Color.FromArgb((Int32)Registry.GetValue("HKEY_CURRENT_USER\\" + "Software\\Microsoft\\Windows\\DWM", "ColorizationColor", "00000000"));
+            var colors = new MaterialPallete(Color.FromArgb(color.A, color.R, color.G, color.B));
+            Resources["AccentColor"] = new SolidColorBrush(colors.AccentColor);
+            Resources["PrimaryColor"] = new SolidColorBrush(colors.PrimaryColor);
+            Resources["LightPrimaryColor"] = new SolidColorBrush(colors.LightPrimaryColor);
+            Resources["WindowTitleColorBrush"] = new SolidColorBrush(colors.DarkPrimaryColor);
+
             // Begin timing
             stopwatch2.Start();
             #endregion
             if (HasTouchInput())
-            {
                 //Make things bigger.
                 split.Height = 30;
-            }
             // Stop timing
             stopwatch2.Stop();
 
@@ -137,13 +130,10 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         #region Overrides
         protected override void OnSourceInitialized(EventArgs e)
         {
-            try
-            {
-                base.OnSourceInitialized(e);
-                HwndSource source = PresentationSource.FromVisual(this) as HwndSource;
-                source.AddHook(WndProc);
-            }
-            catch { }
+
+            base.OnSourceInitialized(e);
+            HwndSource source = PresentationSource.FromVisual(this) as HwndSource;
+            source.AddHook(WndProc);
         }
         #endregion
 
@@ -173,7 +163,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         /// Checks if the device has a touch screen.
         /// </summary>
         /// <returns>True if the device uses a touch screen</returns>
-        private bool HasTouchInput()
+        private static bool HasTouchInput()
         {
             return Tablet.TabletDevices.OfType<TabletDevice>().Any(t => t.Type == TabletDeviceType.Touch);
         }
@@ -257,62 +247,33 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         //        result = new String(keyChars);
         //    }
         //}
-        public long NrCombinations(int nrChars, int stringLength)
+        public static long NrCombinations(int nrChars, int stringLength)
         {
-            Func<long, int, long> power = null;
-            power = (i, p) => p == 1 ? i : i * power(i, p - 1);
+            Func<long, int, long> pwr = null;
+            pwr = (i, p) => p == 1 ? i : i * pwr(i, p - 1);
 
-            return power(nrChars, stringLength);
+            return pwr(nrChars, stringLength);
         }
 
 
         public string GenerateString(long number, int sentenceLength)
         {
-            char[] current = new char[sentenceLength];
+            char[] c = new char[sentenceLength];
             for (int i = 0; i < sentenceLength; i++)
             {
                 double remainder = number % chars.Length;
                 number = number / chars.Length;
-                current[i] = chars[(int)remainder];
+                c[i] = chars[(int)remainder];
             }
-            return new string(current);
+            return new string(c);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "i")]
         public bool IsMatch(string hash, long i, int passwordLength)
         {
             return string.Equals(hash, GenerateString(i, passwordLength));
         }
 
-        private string GetMatching(string hash, int passwordLength)
-        {
-            string result = string.Empty;
-            int stringlength = passwordLength;
-            long nrCombinations = NrCombinations(chars.Length, stringlength);
-            long x = 0;
-
-            Parallel.For(0, nrCombinations, (i, loopState) =>
-            {
-                count++;
-                Dispatcher.Invoke(new Action(() => TitleLabel.Content = count));
-                if (IsMatch(hash, i, passwordLength))
-                {
-                    x = i;
-                    loopState.Stop();
-                    return;
-                }
-            });
-
-
-            if (x > 0)
-            {
-                result = this.GenerateString(x, passwordLength);
-            }
-
-            return result;
-
-        }
-
-        Int64 count;
         #endregion
 
         private async void ShowPasswordBox(string file)
@@ -337,9 +298,9 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
 
             }
         }
-        public async Task<MessageDialogResult> DontShowAgainDialog(string title, string message, string id)
+        public async Task<MessageDialogResult> DonNotShowAgainDialog(string title, string message, string id)
         {
-            const string regpath = "Software\\SuicSoft\\LittlePDFMerge";
+            const string regpath = "Software\\SuicSoft\\LittlePDFMerge"; //Example : Software\\Company\ProductName.
             //Open registry key for editing and reading.
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(regpath, true))
             {
@@ -382,7 +343,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                         else if (!reader.IsOpenedWithFullPermissions)
                             Dispatcher.Invoke(new Action(async () =>
                             {
-                                if (MessageDialogResult.Affirmative == await this.DontShowAgainDialog("The file " + " is a protected file", "Opening protected files may not be allowed by the pdf author", "Lawyer"))
+                                if (MessageDialogResult.Affirmative == await this.DonNotShowAgainDialog("The file " + " is a protected file", "Opening protected files may not be allowed by the pdf author", "Lawyer"))
                                     //That dog wants to open protected files.
                                     PdfReader.unethicalreading = true;
                                 else
@@ -419,25 +380,19 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         private void AddFilebtn_Click(object sender, RoutedEventArgs e)
         {
             //To get the button click animation to show. We need to open the Microsoft.Win32.OpenFileDialog in a new thread.
-            System.Threading.Thread openfilethread = new System.Threading.Thread(new System.Threading.ThreadStart(delegate()
-            {
+            new System.Threading.Thread(new System.Threading.ThreadStart(delegate(){
                 //Tell the dialog is open.
                 IsDialogOpen = true;
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.DefaultExt = ".pdf";
                 openFileDialog.Filter = "Portable Document Format (*.pdf)|*.pdf|Text files (*.txt)|*.txt";
                 openFileDialog.Multiselect = true;
-                if (openFileDialog.ShowDialog() == true)
-                {
+                if (openFileDialog.ShowDialog() == true){
                     foreach (var file in openFileDialog.FileNames)
-                    {
                         AddInputFile(file);
-                    }
-                }
-                //Tell the dialog closed.
+                }//Tell the dialog closed.
                 IsDialogOpen = false;
-                //Set some properties for the thread and start it
-            })) { Name = "Open file dialog thread." };// openfilethread.Start();
+            })) { Name = "Open file dialog thread." }.Start();
             
         }
         /// <summary>
@@ -450,45 +405,27 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             int indexold = FilesBox.SelectedIndex;
             //The selected item
             object dataItem = FilesBox.SelectedItem;
-            try
-            {
 
-                int index = FilesBox.SelectedIndex;
 
-                if (sender == ub)
-                    index--;
-                if (sender == db)
-                    index++;
+            int index = FilesBox.SelectedIndex;
 
-                FilesBox.Items.Remove(dataItem);
-                FilesBox.Items.Insert(index, dataItem);
-                FilesBox.SelectedIndex = 0;
-                FilesBox.SelectedIndex = index;
-                this.UpdateLayout();
+            if (sender == ub) index--;
+            if (sender == db) index++;
 
-            }
-            catch
-            {
-                try
-                {
-                    FilesBox.Items.Insert(indexold, dataItem);
-                    FilesBox.SelectedIndex = indexold;
-                }
-                catch { }
-            }
+            FilesBox.Items.Remove(dataItem);
+            FilesBox.Items.Insert(index, dataItem);
+            FilesBox.SelectedIndex = 0;
+            FilesBox.SelectedIndex = index;
+          
         }
 
         private void btnmerge_Click(object sender, RoutedEventArgs e)
         {
             //To get the button click animation to show. We need to open the Microsoft.Win32.SaveFileDialog in a new thread.
-            System.Threading.Thread savefilethread = null;
-            savefilethread = new System.Threading.Thread(new System.Threading.ThreadStart(delegate()
+            new System.Threading.Thread(new System.Threading.ThreadStart(delegate()
             {
-                var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
-                saveFileDialog.Title = "Merging " + FilesBox.Items.Count + " File(s)";
+                var saveFileDialog = new Microsoft.Win32.SaveFileDialog() { Title = "Merging " + FilesBox.Items.Count + " File(s)" };
                 if (saveFileDialog.ShowDialog() == true)
-                {
-
                     using (Combiner comb = new Combiner())
                     {
                         comb.OutputPath = saveFileDialog.FileName;
@@ -498,9 +435,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                         }
                     }
                     System.Diagnostics.Process.Start(saveFileDialog.FileName);
-                }
-            }));
-            savefilethread.Start();
+            })).Start();
         }
         private void Border_SizeChanged(object sender, SizeChangedEventArgs e)
         {

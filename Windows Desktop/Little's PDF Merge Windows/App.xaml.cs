@@ -11,6 +11,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.IO.Compression;
+using System.Diagnostics.CodeAnalysis;
 namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
 {
     /// <summary>
@@ -19,9 +20,12 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
     public partial class App : Application
     {
         #region P/Invoke
-        public static class MINIDUMP_TYPE
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "MINIDUMP"),System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "TYPE")]
+        [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
+        static internal class MINIDUMP_TYPE
         {
             public const int MiniDumpNormal = 0x00000000;
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Segs")]
             public const int MiniDumpWithDataSegs = 0x00000001;
             public const int MiniDumpWithFullMemory = 0x00000002;
             public const int MiniDumpWithHandleData = 0x00000004;
@@ -35,13 +39,15 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             public const int MiniDumpWithoutOptionalData = 0x00000400;
             public const int MiniDumpWithFullMemoryInfo = 0x00000800;
             public const int MiniDumpWithThreadInfo = 0x00001000;
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Segs")]
             public const int MiniDumpWithCodeSegs = 0x00002000;
         }
 
         [DllImport("dbghelp.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool MiniDumpWriteDump(IntPtr hProcess,
         Int32 ProcessId,
-        IntPtr hFile,
+        SafeHandle hFile,
         int DumpType,
         IntPtr ExceptionParam,
         IntPtr UserStreamParam,
@@ -72,7 +78,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             string subject = "SuicSoft error reporting " + e.Source;
             string body = "The HResult code is " + e.HResult + " , the exception message is " + e.Message + " ,the stack trace is " + e.StackTrace;
 
-            var smtp = new SmtpClient
+            using (var smtp = new SmtpClient
             {
                 //Gmail SMTP server.
                 Host = "smtp.gmail.com",
@@ -81,16 +87,18 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromAddress.Address,"")
-            };
-            using (var message = new MailMessage(fromAddress, toAddress)
-            {
-                Subject = subject,
-                Body = body
+                Credentials = new NetworkCredential(fromAddress.Address, "")
             })
             {
-                message.Attachments.Add(new Attachment(Compress(new FileInfo(CreateMiniDump()))));
-                smtp.Send(message);
+                using (var message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = body
+                })
+                {
+                    message.Attachments.Add(new Attachment(Compress(new FileInfo(CreateMiniDump()))));
+                    smtp.Send(message);
+                }
             }
         }
         private static string CreateMiniDump()
@@ -102,7 +110,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 {
                     MiniDumpWriteDump(process.Handle,
                     process.Id,
-                    fs.SafeFileHandle.DangerousGetHandle(),
+                    fs.SafeFileHandle,
                     MINIDUMP_TYPE.MiniDumpNormal,
                     IntPtr.Zero,
                     IntPtr.Zero,
@@ -111,6 +119,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             }
             return filepath;
         }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         public static string Compress(FileInfo fi)
         {
             // Get the stream of the source file.
