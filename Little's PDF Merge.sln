@@ -32,7 +32,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaterialDesignThemes.Wpf", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaterialDesignColors.Wpf", "MaterialDesignInXamlToolkit\MaterialDesignColors.Wpf\MaterialDesignColors.Wpf.csproj", "{90B53209-C60C-4655-B28D-A1B3E1044BA3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MaterialDesignXamlToolkit", "MaterialDesignXamlToolkit", "{665615E8-992D-4229-9AF2-BCA0367F2A27}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MaterialDesignInXamlToolkit", "MaterialDesignInXamlToolkit", "{665615E8-992D-4229-9AF2-BCA0367F2A27}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
