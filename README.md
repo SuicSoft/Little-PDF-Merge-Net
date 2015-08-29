@@ -23,7 +23,7 @@ LPM.Core (Little's PDF Merge Core) is a free and open source pdf merger library 
 
 For c#.
 ```
- using (Combiner comb = new Combiner())
+ using (SuicSoft.LittleSoft.LittlesPDFMerge.Core.Combiner comb = new SuicSoft.LittleSoft.LittlesPDFMerge.Core.Combiner())
                     {
                         comb.OutputPath = "youroutputpath";
                         comb.AddFile(System.IO.File.ReadAllBytes("somepath"), null); //Replace null with password as a byte array if needed
