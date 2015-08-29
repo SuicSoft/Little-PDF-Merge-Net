@@ -16,4 +16,7 @@ and download the great <b>GOODWARE</b>
 
 I'm Suici. Say that like Sooky. I'm not as popular as Android, Duo or the Octocat, But I'm on the web!
 What Am I? I'm a dog, bearded collie puppy! - And I was drawn in Fresh Paint for the Logo - But I'm real!
+<code>
+dogs can hack
+</code>
 
