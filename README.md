@@ -1,3 +1,20 @@
+<head>
+<style type="text/css">.csharpcode, .csharpcode pre
+{
+	font-size: 13.3333px;
+	font-width: 400;
+	color: black;
+	font-family: "Courier New";
+}
+.csharpcode pre { margin: 0px; }
+.csharpcode .comment { color: #008000; }
+.csharpcode .comment2 { color: #808080; }
+.csharpcode .type { color: #2B91AF; }
+.csharpcode .keyword { color: #0000FF; }
+.csharpcode .string { color: #A31515; }
+.csharpcode .preproc { color: #0000FF; }
+</style>
+</head>
 # Little-s-PDF-Merge
 Free , open source and fast PDF merger using Google Material Design, WPF and C# .Net
 <img src="https://raw.githubusercontent.com/SuicSoft/Little-PDF-Merge/master/lpm.PNG"></img>
@@ -21,21 +38,6 @@ What Am I? I'm a dog, bearded collie puppy! - And I was drawn in Fresh Paint for
 LPM.Core (Little's PDF Merge Core) is a free and open source pdf merger library for C#.NET, VB.NET and other .NET programming languages.
 
 For c#.
-<style type="text/css">.csharpcode, .csharpcode pre
-{
-	font-size: 13.3333px;
-	font-width: 400;
-	color: black;
-	font-family: "Courier New";
-}
-.csharpcode pre { margin: 0px; }
-.csharpcode .comment { color: #008000; }
-.csharpcode .comment2 { color: #808080; }
-.csharpcode .type { color: #2B91AF; }
-.csharpcode .keyword { color: #0000FF; }
-.csharpcode .string { color: #A31515; }
-.csharpcode .preproc { color: #0000FF; }
-</style>
 <div class='csharpcode'>Code:<pre style='border:1px dashed #CCCCCC;overflow-x:auto;overflow-y:hidden;background:#f0f0f0;padding:0px;color:#000000;text-align:left;line-height20px;color:#000000;word-wrap:normal;'> <span class='keyword'>using</span> (<span class='type'>Combiner</span> comb = <span class='keyword'>new</span> <span class='type'>Combiner</span>())
                     {
                         comb.OutputPath = <span class='string'>&quot;youroutputpath&quot;</span>;
