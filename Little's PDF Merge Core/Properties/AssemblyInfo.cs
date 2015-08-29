@@ -6,10 +6,13 @@ using System.Windows.Markup;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+#endif
 [assembly: AssemblyTitle("SuicSoft LittleSoft Little's PDF Merge Core")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SuicSoft")]
 [assembly: AssemblyProduct("SuicSoft LittleSoft Little's PDF Merge Core")]
 [assembly: AssemblyCopyright("Copyright © SuicSoft 2015")]

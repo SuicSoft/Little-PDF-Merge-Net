@@ -84,10 +84,11 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     [CLSCompliant(false)]
-    partial class MainWindow : MetroWindow
+    partial class MainWindow : FScreenMetroWindow
     {
         public MainWindow()
         {
+            PdfReader.unethicalreading = true;
             // Create new stopwatch
             Stopwatch stopwatch = new Stopwatch();
 
@@ -282,20 +283,20 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             string result = await this.ShowInputAsync("PDF not allowed", "Enter the password for " + Path.GetFileName(file) + " to open the file. Enter the password 'hack' to crack the password", new LoginDialogSettings { UsernameWatermark = "Password", PasswordWatermark = "Enter Password Again", AffirmativeButtonText = "Ok", ColorScheme = MetroDialogColorScheme.Accented });
             if (!String.IsNullOrWhiteSpace(result))
             {
-                //Use iTextSharp.text.pdf.PdfReader to open the pdf.
-                using (PdfReader reader = new PdfReader(file, System.Text.Encoding.Default.GetBytes(result)))
+                try
                 {
+                    //Use iTextSharp.text.pdf.PdfReader to open the pdf.
+                    using (PdfReader reader = new PdfReader(file, System.Text.Encoding.Default.GetBytes(result)))
+                    { }
                     //Check if passowrd is correcy
-                    if (reader.BadPassword)
-                    {
+                }
+                catch{
                         //If it isn't. Ask for the password again and return
                         ShowPasswordBox(file);
                         return;
-                    }
-
-                    AddFileToListBox(file, System.Text.Encoding.Default.GetBytes(result));
                 }
 
+                AddFileToListBox(file, System.Text.Encoding.Default.GetBytes(result));
             }
         }
         public async Task<MessageDialogResult> DonNotShowAgainDialog(string title, string message, string id)
@@ -334,22 +335,27 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 //File is a protected pdf.
                 case Combiner.SourceTestResult.Protected:
                     PdfReader.unethicalreading = false;
-                    using (PdfReader reader = new PdfReader(file))
+                    try
                     {
-                        if (reader.BadPassword){
-                            Dispatcher.Invoke(new Action(() => ShowPasswordBox(file)));
-                            return;
+                        using (PdfReader reader = new PdfReader(file))
+                        {
+                            if (!reader.IsOpenedWithFullPermissions)
+                                Dispatcher.Invoke(new Action(async () =>
+                                {
+                                    if (MessageDialogResult.Affirmative == await this.DonNotShowAgainDialog("The file " + " is a protected file", "Opening protected files may not be allowed by the pdf author", "Lawyer"))
+                                        //That dog wants to open protected files.
+                                        PdfReader.unethicalreading = true;
+                                    else
+                                        return;
+                                }));
                         }
-                        else if (!reader.IsOpenedWithFullPermissions)
-                            Dispatcher.Invoke(new Action(async () =>
-                            {
-                                if (MessageDialogResult.Affirmative == await this.DonNotShowAgainDialog("The file " + " is a protected file", "Opening protected files may not be allowed by the pdf author", "Lawyer"))
-                                    //That dog wants to open protected files.
-                                    PdfReader.unethicalreading = true;
-                                else
-                                    return;
-                            }));
+                    }catch
+                    {
+                        Dispatcher.Invoke(new Action(() => ShowPasswordBox(file)));
+                        return;
                     }
+                       
+                    
                     break;
                 //File is a valid pdf.
                 case Combiner.SourceTestResult.Ok:
