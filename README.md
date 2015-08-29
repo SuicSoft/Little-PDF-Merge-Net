@@ -22,12 +22,12 @@ What Am I? I'm a dog, bearded collie puppy! - And I was drawn in Fresh Paint for
 LPM.Core (Little's PDF Merge Core) is a free and open source pdf merger library for C#.NET, VB.NET and other .NET programming languages.
 
 For c#.
-<code>
+```
  using (Combiner comb = new Combiner())
                     {
                         comb.OutputPath = "youroutputpath";
                         comb.AddFile(System.IO.File.ReadAllBytes("somepath"), null); //Replace null with password as a byte array if needed
                         comb.AddFile(System.IO.File.ReadAllBytes("somepath"), null); //Replace null with password as a byte array if needed
                     }
-</code>
+```
 
