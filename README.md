@@ -1,3 +1,4 @@
+<html>
 <head>
 <style type="text/css">.csharpcode, .csharpcode pre
 {
@@ -15,6 +16,7 @@
 .csharpcode .preproc { color: #0000FF; }
 </style>
 </head>
+<body>
 # Little-s-PDF-Merge
 Free , open source and fast PDF merger using Google Material Design, WPF and C# .Net
 <img src="https://raw.githubusercontent.com/SuicSoft/Little-PDF-Merge/master/lpm.PNG"></img>
@@ -46,3 +48,5 @@ For c#.
                     }<!--[if IE]>
 
 <![endif]--></pre></div>
+</body>
+</html>
