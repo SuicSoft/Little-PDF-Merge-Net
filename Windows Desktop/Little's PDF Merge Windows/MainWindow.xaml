@@ -4,13 +4,12 @@
    Do not copy our xaml and create fake versions of our software
     -->
     
-    <sss:FScreenMetroWindow x:Class="SuicSoft.LittleSoft.LittlesPDFMerge.Windows.MainWindow"
+    <Metro:MetroWindow x:Class="SuicSoft.LittleSoft.LittlesPDFMerge.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:ss="http://xaml.suicsoft.com/projects/LPM.Core/helpers"
-        xmlns:sss="clr-namespace:SuicSoft.LittleSoft.LittlesPDFMerge.Windows"
-        Title="Little's PDF Merge" Icon="Fonts-Icons\Icon.ico"  Height="415" Width="625" AllowDrop="True" FontFamily="/LPM.Windows;component/Fonts-Icons/#Material-Design-Iconic-Font" Closing="MetroWindow_Closing">
+        Title="Little's PDF Merge" Icon="Fonts-Icons\Icon.ico"  Height="415" Width="625" AllowDrop="True" FontFamily="/LPM.Windows;component/Fonts-Icons/#Material-Design-Iconic-Font">
     <Grid>
         <Grid.RowDefinitions>
             <!--So that the blue thing won't fall down-->
@@ -129,5 +128,5 @@
     </Metro:MetroWindow.Triggers>
 
 
-</sss:FScreenMetroWindow>
+</Metro:MetroWindow>
 
