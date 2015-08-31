@@ -116,7 +116,6 @@
     <None Include="SuiciDoga.snk" />
     <None Include="SuicSoft.pfx" />
     <Resource Include="Fonts-Icons\Material-Design-Iconic-Font.ttf" />
-    <Resource Include="Fonts-Icons\Roboto-Regular.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

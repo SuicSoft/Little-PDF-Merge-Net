@@ -78,6 +78,7 @@ using System.Runtime.InteropServices;
 using SuicSoft.LittleSoft.LittlesPDFMerge.Core;
 using iTextSharp.text.pdf;
 using System.Threading;
+using System.Reflection;
 namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
 {
     /// <summary>
@@ -120,6 +121,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             {
                 ((System.Windows.Shapes.Path)btn.Content).Data = Geometry.Parse("M14,14H19V16H16V19H14V14M5,14H10V19H8V16H5V14M8,5H10V10H5V8H8V5M19,8V10H14V5H16V8H19Z");
                 d.SetValue(IgnoreTaskbarOnMaximizeProperty, true);
+                d.SetValue(ShowTitleBarProperty, false);
                 _WindowStyle = (WindowStyle)d.GetValue(Window.WindowStyleProperty);
                 _WindowState = (WindowState)d.GetValue(Window.WindowStateProperty);
                 d.SetValue(Window.WindowStyleProperty, WindowStyle.None);
@@ -128,6 +130,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             else
             {
                 ((System.Windows.Shapes.Path)btn.Content).Data = Geometry.Parse("M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17V19H5V14H7V17H10Z");
+                d.SetValue(ShowTitleBarProperty, true);
                 d.SetValue(IgnoreTaskbarOnMaximizeProperty, false);
                 d.SetValue(Window.WindowStyleProperty, _WindowStyle);
                 d.SetValue(Window.WindowStateProperty, _WindowState);
@@ -158,23 +161,10 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             InitializeComponent();
             // Stop timing
             stopwatch.Stop();
-
             Debug.WriteLine("Time to draw controls: {0}", stopwatch.Elapsed);
 
             Stopwatch stopwatch2 = new Stopwatch();
 
-            #region Load Colors
-
-            System.Drawing.Color color = System.Drawing.Color.FromArgb((Int32)Registry.GetValue("HKEY_CURRENT_USER\\" + "Software\\Microsoft\\Windows\\DWM", "ColorizationColor", "00000000"));
-            var colors = new MaterialPallete(Color.FromArgb(color.A, color.R, color.G, color.B));
-            Resources["AccentColor"] = new SolidColorBrush(colors.AccentColor);
-            Resources["PrimaryColor"] = new SolidColorBrush(colors.PrimaryColor);
-            Resources["LightPrimaryColor"] = new SolidColorBrush(colors.LightPrimaryColor);
-            Resources["WindowTitleColorBrush"] = new SolidColorBrush(colors.DarkPrimaryColor);
-
-            // Begin timing
-            stopwatch2.Start();
-            #endregion
             if (HasTouchInput())
                 //Make things bigger.
                 split.Height = 30;
@@ -263,9 +253,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         {
             if (FilesBox.Items.Count == 1)
             {
-                Mergebtn.IsEnabled = true;
                 bm.IsEnabled = true;
-                am.IsEnabled = true;
                 rb.IsEnabled = true;
                 ub.IsEnabled = false;
                 db.IsEnabled = false;
@@ -273,7 +261,6 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             }
             else if (FilesBox.Items.Count == 0)
             {
-                Mergebtn.IsEnabled = false;
                 bm.IsEnabled = false;
                 rb.IsEnabled = false;
                 ub.IsEnabled = false;
@@ -282,7 +269,6 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             }
             else
             {
-                Mergebtn.IsEnabled = true;
                 ub.IsEnabled = true;
                 db.IsEnabled = true;
                 bm.IsEnabled = true;
@@ -491,23 +477,33 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             //To get the button click animation to show. We need to open the Microsoft.Win32.SaveFileDialog in a new thread.
             new System.Threading.Thread(new System.Threading.ThreadStart(delegate()
             {
-                var saveFileDialog = new Microsoft.Win32.SaveFileDialog() { Title = "Merging " + FilesBox.Items.Count + " File(s)" };
+                ItemCollection items = null;
+                string CurrentItem = null;
+                Dispatcher.Invoke(new Action(() =>
+                    {
+                        items = FilesBox.Items;
+                        CurrentItem = ((ListBoxItem)items[0]).Content.ToString();
+                    }));
+                SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog() { Title = items.Count > 1 ? String.Format("Merging {0} File(s)", items.Count) : String.Format("Converting {0}", CurrentItem) };
                 if (saveFileDialog.ShowDialog() == true)
                     using (Combiner comb = new Combiner())
                     {
                         comb.OutputPath = saveFileDialog.FileName;
-                        foreach (var item in FilesBox.Items.OfType<ListBoxItem>().ToArray())
+                        foreach (var item in items.OfType<ListBoxItem>().ToArray())
                         {
                             Dispatcher.Invoke(new Action(() => comb.AddFile(File.ReadAllBytes(item.Content.ToString()), (byte[])item.Tag)));
                         }
                     }
+                if (!String.IsNullOrEmpty(saveFileDialog.FileName))
                     System.Diagnostics.Process.Start(saveFileDialog.FileName);
             })).Start();
         }
+        
         private void Border_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (TitleText.ActualHeight < 70)
             {
+                vb.Stretch = Stretch.None;
                 ButtonsPanel.VerticalAlignment = System.Windows.VerticalAlignment.Center;
                 var anim = new ThicknessAnimation { To = new Thickness(55, 0, 0, 0), Duration = new Duration(new TimeSpan(0, 0, 0, 0, 100)) };
                 ButtonsPanel.Margin = new Thickness(55, 0, 0, 0);
@@ -517,24 +513,26 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 ButtonsPanel.VerticalAlignment = System.Windows.VerticalAlignment.Bottom;
                 ButtonsPanel.Margin = new Thickness(0, 0, 0, 0);
             }
-            if ((TitleText.ActualHeight < 80))
+            if ((TitleText.ActualHeight < 84))
             {
                 var anim = new DoubleAnimation
                 {
                     To = 0,
                     Duration = new TimeSpan(0, 0, 0, 0, 150),
                 };
+                vb.Stretch = Stretch.None;
                 TitleLabel.BeginAnimation(UIElement.OpacityProperty, anim);
+
             }
 
             else
             {
+                vb.Stretch = Stretch.Uniform;
                 var anim = new DoubleAnimation
                 {
                     To = 1,
                     Duration = new TimeSpan(0, 0, 0, 0, 150),
                 };
-                HamburgerIcon.BeginAnimation(UIElement.OpacityProperty, anim);
                 TitleLabel.BeginAnimation(UIElement.OpacityProperty, anim);
             }
         }
@@ -544,6 +542,24 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             if (IsDialogOpen == true) e.Cancel = true;
         }
 
+        private void TitleLabel_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftShift) | Keyboard.IsKeyDown(Key.RightShift))
+            {
+                TitleLabel.Content = "Little's PDF Flags";
+            }
+        }
+        bool loadico;
+        private void metroWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Width < 320)
+            {
+                loadico = true;
+                Icon = null;
+            }
+            else if (e.NewSize.Width > 320 & loadico)
+                Icon = new System.Windows.Media.Imaging.BitmapImage(new Uri("pack://application:,,,/LPM.Windows;component/Fonts-Icons/Icon.ico", UriKind.Absolute));
+        }
     }
 }
 

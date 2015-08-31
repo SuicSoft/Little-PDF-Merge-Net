@@ -18,7 +18,7 @@
                 <ResourceDictionary>
                     <!-- include your primary palette -->
                     <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Indigo.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.LightBlue.xaml" />
                     </ResourceDictionary.MergedDictionaries>
                     <!-- 
                             include three hues from the primary palette (and the associated forecolours).  
@@ -30,14 +30,9 @@
                     <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" po:Freeze="True" Color="{StaticResource Primary500Foreground}"/>
                     <SolidColorBrush x:Key="PrimaryHueDarkBrush" po:Freeze="True" Color="{StaticResource Primary700}"/>
                     <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" po:Freeze="True" Color="{StaticResource Primary700Foreground}"/>
+                    
                 </ResourceDictionary>
-                <ResourceDictionary>
-                    <SolidColorBrush x:Key="PrimaryColor" po:Freeze="True" Color="#2196F3"/>
-                    <SolidColorBrush x:Key="LightPrimaryColor" po:Freeze="True" Color="#BBDEFB"/>
-                    <SolidColorBrush x:Key="TextIcons" po:Freeze="True" Color="White"/>
-                    <SolidColorBrush x:Key="PrimaryText" po:Freeze="True" Color="#212121"/>
-                    <SolidColorBrush x:Key="AccentColor" po:Freeze="True" Color="#536DFE"/>
-                </ResourceDictionary>
+
                 <!-- secondary colour -->
                 <ResourceDictionary>
                     <!-- include your secondary pallette -->
@@ -48,7 +43,7 @@
                     <!-- include a single secondary accent color (and the associated forecolour) -->
                     <SolidColorBrush x:Key="SecondaryAccentBrush" po:Freeze="True" Color="{StaticResource Accent700}"/>
                     <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" po:Freeze="True" Color="{StaticResource Accent700Foreground}"/>
-                   
+                    
                 </ResourceDictionary>
 
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
