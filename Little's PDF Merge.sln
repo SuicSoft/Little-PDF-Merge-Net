@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Little's PDF Merge WF-Legacy", "Windows Desktop\Little's PDF Merge WF-Legacy\Little's PDF Merge WF-Legacy.csproj", "{2BAEB5C3-2106-4E41-99D1-CBA05A857707}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Little's PDF Merge Windows", "Windows Desktop\Little's PDF Merge Windows\Little's PDF Merge Windows.csproj", "{A37F8117-02B9-4C7F-B647-2306EBF0EFE0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows Apps", "Windows Apps", "{88F172B0-0B72-4BAD-949F-A0278A9F1527}"
@@ -53,29 +51,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.AppVeyor|ARM.ActiveCfg = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.AppVeyor|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.AppVeyor|Mixed Platforms.Build.0 = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.AppVeyor|x64.ActiveCfg = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.AppVeyor|x86.ActiveCfg = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Debug|x86.ActiveCfg = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Debug|x86.Build.0 = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Release|ARM.ActiveCfg = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Release|x64.ActiveCfg = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Release|x86.ActiveCfg = Release|Any CPU
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707}.Release|x86.Build.0 = Release|Any CPU
 		{A37F8117-02B9-4C7F-B647-2306EBF0EFE0}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
 		{A37F8117-02B9-4C7F-B647-2306EBF0EFE0}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
 		{A37F8117-02B9-4C7F-B647-2306EBF0EFE0}.AppVeyor|ARM.ActiveCfg = Release|Any CPU
@@ -274,7 +249,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{2BAEB5C3-2106-4E41-99D1-CBA05A857707} = {3AB3F864-A994-4E21-B75B-2D5970129879}
 		{A37F8117-02B9-4C7F-B647-2306EBF0EFE0} = {3AB3F864-A994-4E21-B75B-2D5970129879}
 		{965ACEEE-1B05-4332-9A11-6CBDB04C3281} = {88F172B0-0B72-4BAD-949F-A0278A9F1527}
 		{687C5FD0-57D6-4320-AFF6-362E8E94281B} = {88F172B0-0B72-4BAD-949F-A0278A9F1527}
