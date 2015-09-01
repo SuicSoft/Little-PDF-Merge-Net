@@ -409,7 +409,9 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
 
         private async void btnmerge_Click(object sender, RoutedEventArgs e)
         {
+            //Encryption and security made this function more than two times bigger :).
             bool p = false;
+            SecureString pass = null;
             foreach (ListBoxItem item in FilesBox.Items)
             {
                 if (item.Tag != null)
@@ -418,15 +420,17 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                     break;
                 }
             }
-            //if (p)
-            //{
-            //    if (MessageDialogResult.Affirmative == await this.ShowMessageAsync("Password protected pdf", "One or more of the pdfs you are merging are password protected. Do you want to protect the merged pdf with a pasword?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings() { AffirmativeButtonText = "Yes", NegativeButtonText = "No" })
-            //    {
-
-            //    }
-
-
-            //}
+            if (p)
+            {
+                if (MessageDialogResult.Affirmative == await this.ShowMessageAsync("Password protected pdf", "One or more of the pdfs you are merging are password protected. Do you want to protect the merged pdf with a pasword?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings() { AffirmativeButtonText = "Yes", NegativeButtonText = "No" }))
+                {
+                    string result = await this.ShowInputAsync("Enter the password for the merged pdf", "Password contain anything");
+                    if (!String.IsNullOrEmpty(result))
+                        pass = result.ToSecureString();
+                    result = String.Empty;
+                    GC.Collect();
+                }
+            }
             //To get the button click animation to show. We need to open the Microsoft.Win32.SaveFileDialog in a new thread.
             new System.Threading.Thread(new System.Threading.ThreadStart(delegate()
             {
@@ -442,6 +446,8 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 if (saveFileDialog.ShowDialog() == true)
                     using (Combiner comb = new Combiner())
                     {
+                        if (pass != null)
+                            comb.Password = pass;
                         comb.d = saveFileDialog.FileName;
                         string n = String.Empty;
                         Parallel.For(0,count,i=>

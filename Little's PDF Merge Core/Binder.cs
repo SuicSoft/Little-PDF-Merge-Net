@@ -126,6 +126,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Core
             }
         }
     }
+
     public class Combiner : IDisposable
     {
 
@@ -220,6 +221,8 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Core
             //Open the document
             b.Open();
         }
+        public SecureString Password = null;
+
         private static byte[] e;
         public static byte[] ProtectPassword(SecureString s)
         {
@@ -270,6 +273,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Core
                             c.AddPage(k);
                         }
                     }
+
                 //Check if the file contains the image file header.
                 else if (IsImage(file))
                 {
@@ -333,7 +337,14 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Core
                 if (a != null)
                 {
                     a.Close();
-                    File.WriteAllBytes(d, a.GetBuffer());
+                    if (Password != null)
+                        using (Stream output = new FileStream(d, FileMode.Create, FileAccess.Write, FileShare.None))
+                        {
+                            PdfReader reader = new PdfReader(a.GetBuffer());
+                            PdfEncryptor.Encrypt(reader, output, true, Password.ConvertToUnsecureString(), Password.ConvertToUnsecureString(), PdfWriter.ALLOW_SCREENREADERS);
+                        }
+                    else
+                        File.WriteAllBytes(d, a.GetBuffer());
                     a = null;
                 }
             }
