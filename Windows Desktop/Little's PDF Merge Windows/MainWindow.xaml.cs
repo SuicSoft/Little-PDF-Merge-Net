@@ -79,6 +79,7 @@ using SuicSoft.LittleSoft.LittlesPDFMerge.Core;
 using iTextSharp.text.pdf;
 using System.Threading;
 using System.Reflection;
+using System.Security;
 namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
 {
     /// <summary>
@@ -164,7 +165,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             Debug.WriteLine("Time to draw controls: {0}", stopwatch.Elapsed);
 
             Stopwatch stopwatch2 = new Stopwatch();
-
+            stopwatch2.Start();
             if (HasTouchInput())
                 //Make things bigger.
                 split.Height = 30;
@@ -220,33 +221,6 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             return Tablet.TabletDevices.OfType<TabletDevice>().Any(t => t.Type == TabletDeviceType.Touch);
         }
         /// <summary>
-        /// Finds the closest color to a color.
-        /// </summary>
-        /// <param name="colorArray">The array to containing the colors to match to.</param>
-        /// <param name="baseColor">The color to match to</param>
-        /// <returns></returns>
-        private static Color[] GetClosestColor(System.Collections.Generic.List<Color> colorArray, Color baseColor)
-        {
-            var colors = colorArray.Select(x => new { Value = x, Diff = GetDiff(x, baseColor) });
-            var min = colors.Min(x => x.Diff);
-            int index = colorArray.FindIndex(i => i == colors.AsParallel().ToList().Find(x => x.Diff == min).Value);
-            try{
-                return new Color[2] { colors.AsParallel().ToList().Find(x => x.Diff == min).Value, colorArray.ElementAt(index - 1) };
-            }
-            catch{
-                return new Color[2] { colors.AsParallel().ToList().Find(x => x.Diff == min).Value, colorArray.ElementAt(index) };
-            }
-        }
-
-        private static int GetDiff(Color color, Color baseColor)
-        {
-            int a = color.A - baseColor.A,
-                r = color.R - baseColor.R,
-                g = color.G - baseColor.G,
-                b = color.B - baseColor.B;
-            return a * a + r * r + g * g + b * b;
-        }
-        /// <summary>
         /// Updates the UI (disable and enable controls).
         /// </summary>
         private void UpdateUI()
@@ -275,55 +249,6 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 rb.IsEnabled = true;
             }
         }
-
-        #region Hacker
-
-        static char[] chars =
-        {
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 'q', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-            'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','R','Q','S','T','U','V','W','X','Y','Z',
-            '0','1','2','3','4','5','6','7','8','9'
-
-        };
-
-
-        //using (PdfReader read = new PdfReader(filepath, System.Text.Encoding.Default.GetBytes(new String(keyChars))))
-        //{
-        //    if (!read.BadPassword & !isMatched)
-        //    {
-        //        isMatched = true;
-        //        result = new String(keyChars);
-        //    }
-        //}
-        public static long NrCombinations(int nrChars, int stringLength)
-        {
-            Func<long, int, long> pwr = null;
-            pwr = (i, p) => p == 1 ? i : i * pwr(i, p - 1);
-
-            return pwr(nrChars, stringLength);
-        }
-
-
-        public string GenerateString(long number, int sentenceLength)
-        {
-            char[] c = new char[sentenceLength];
-            for (int i = 0; i < sentenceLength; i++)
-            {
-                double remainder = number % chars.Length;
-                number = number / chars.Length;
-                c[i] = chars[(int)remainder];
-            }
-            return new string(c);
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "i")]
-        public bool IsMatch(string hash, long i, int passwordLength)
-        {
-            return string.Equals(hash, GenerateString(i, passwordLength));
-        }
-
-        #endregion
-
         private async void ShowPasswordBox(string file)
         {
             //Show the user the password dialog.
@@ -335,15 +260,16 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                     //Use iTextSharp.text.pdf.PdfReader to open the pdf.
                     using (PdfReader reader = new PdfReader(file, System.Text.Encoding.Default.GetBytes(result)))
                     { }
-                    //Check if passowrd is correcy
+                    //Check if passowrd is correct
                 }
                 catch{
                         //If it isn't. Ask for the password again and return
                         ShowPasswordBox(file);
                         return;
                 }
-
-                AddFileToListBox(file, System.Text.Encoding.Default.GetBytes(result));
+                AddFileToListBox(file,result.ToSecureString());
+                result = String.Empty;
+                GC.Collect();
             }
         }
         public async Task<MessageDialogResult> DonNotShowAgainDialog(string title, string message, string id)
@@ -377,7 +303,6 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 case Combiner.SourceTestResult.Unreadable:
                     //Tell the user the pdf is corrupt.
                     Dispatcher.Invoke(new Action(() => this.ShowMessageAsync("The file " + Path.GetFileName(file) + " could not be opened as a PDF or image", "Some thing went wrong when opening " + Path.GetFileName(file))));
-                    return;
                     break;
                 //File is a protected pdf.
                 case Combiner.SourceTestResult.Protected:
@@ -396,7 +321,8 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                                         return;
                                 }));
                         }
-                    }catch
+                    }
+                    catch
                     {
                         Dispatcher.Invoke(new Action(() => ShowPasswordBox(file)));
                         return;
@@ -407,6 +333,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 //File is a valid pdf.
                 case Combiner.SourceTestResult.Ok:
                     //Add the pdf to the ListBox.
+                    AddFileToListBox(file, null);
                     break;
                 //File is a image (maybe not valid!).
                 case Combiner.SourceTestResult.Image:
@@ -414,14 +341,22 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 //File is unknown
                 case Combiner.SourceTestResult.Unknown:
                     await Dispatcher.BeginInvoke(new Action(() => this.ShowMessageAsync("Invalid format", "The file you selected is not a supported format. More supported formats coming soon.")));
-                    return;
                     break;
 
             }
-            AddFileToListBox(file, null);
+            
         }
-        private void AddFileToListBox(string file, byte[] password)
+        private void AddFileToListBox(string file, SecureString password)
         {
+            
+            #if CSharp6
+            password?.MakeReadOnly();
+            #else
+            if (password != null)
+            {
+                password.MakeReadOnly();
+            }
+            #endif
             Dispatcher.BeginInvoke(new Action(() => FilesBox.Items.Add(new ListBoxItem { Content = file, Tag = password })));
             Dispatcher.BeginInvoke(new Action(() => UpdateUI()));
         }
@@ -472,27 +407,55 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
           
         }
 
-        private void btnmerge_Click(object sender, RoutedEventArgs e)
+        private async void btnmerge_Click(object sender, RoutedEventArgs e)
         {
+            bool p = false;
+            foreach (ListBoxItem item in FilesBox.Items)
+            {
+                if (item.Tag != null)
+                {
+                    p = true;
+                    break;
+                }
+            }
+            //if (p)
+            //{
+            //    if (MessageDialogResult.Affirmative == await this.ShowMessageAsync("Password protected pdf", "One or more of the pdfs you are merging are password protected. Do you want to protect the merged pdf with a pasword?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings() { AffirmativeButtonText = "Yes", NegativeButtonText = "No" })
+            //    {
+
+            //    }
+
+
+            //}
             //To get the button click animation to show. We need to open the Microsoft.Win32.SaveFileDialog in a new thread.
             new System.Threading.Thread(new System.Threading.ThreadStart(delegate()
             {
-                ItemCollection items = null;
+
+                int count = 0;
                 string CurrentItem = null;
                 Dispatcher.Invoke(new Action(() =>
                     {
-                        items = FilesBox.Items;
-                        CurrentItem = ((ListBoxItem)items[0]).Content.ToString();
+                        count = FilesBox.Items.Count;
+                        CurrentItem = ((ListBoxItem)FilesBox.Items[0]).Content.ToString();
                     }));
-                SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog() { Title = items.Count > 1 ? String.Format("Merging {0} File(s)", items.Count) : String.Format("Converting {0}", CurrentItem) };
+                SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog() { Title = count > 1 ? String.Format("Merging {0} File(s)", count) : String.Format("Converting {0}", CurrentItem) };
                 if (saveFileDialog.ShowDialog() == true)
                     using (Combiner comb = new Combiner())
                     {
-                        comb.OutputPath = saveFileDialog.FileName;
-                        foreach (var item in items.OfType<ListBoxItem>().ToArray())
+                        comb.d = saveFileDialog.FileName;
+                        string n = String.Empty;
+                        Parallel.For(0,count,i=>
                         {
-                            Dispatcher.Invoke(new Action(() => comb.AddFile(File.ReadAllBytes(item.Content.ToString()), (byte[])item.Tag)));
-                        }
+                            SecureString tag = null;
+                            Dispatcher.Invoke(new Action(() =>
+                                {
+                                    var item = ((ListBoxItem)FilesBox.Items[i]);
+                                    n = item.Content.ToString();
+                                    tag = (SecureString)item.Tag;
+                                }));
+                            comb.AddFile(File.ReadAllBytes(n), Combiner.ProtectPassword((SecureString)tag));
+                            tag.Dispose();
+                        });
                     }
                 if (!String.IsNullOrEmpty(saveFileDialog.FileName))
                     System.Diagnostics.Process.Start(saveFileDialog.FileName);
