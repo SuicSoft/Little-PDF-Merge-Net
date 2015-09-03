@@ -77,9 +77,11 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using SuicSoft.LittleSoft.LittlesPDFMerge.Core;
 using iTextSharp.text.pdf;
+using System.Collections.Generic;
 using System.Threading;
 using System.Reflection;
 using System.Security;
+using Plugin.Core;
 namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
 {
     /// <summary>
@@ -145,6 +147,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         }
 #endregion
 
+        List<IPlugin> plugins;
         public MainWindow()
         {
             StateChanged += StateChange;
@@ -156,7 +159,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             PdfReader.unethicalreading = true;
             // Create new stopwatch
             Stopwatch stopwatch = new Stopwatch();
-
+            
             // Begin timing
             stopwatch.Start();
             InitializeComponent();
@@ -169,10 +172,26 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             if (HasTouchInput())
                 //Make things bigger.
                 split.Height = 30;
+            try { plugins = new GenericMEFPluginLoader<IPlugin>("Plugins").Plugins.ToList(); }
+            catch { Debug.WriteLine("Failed to init plugins"); }
+            //Init code is run as parallel. This software is optimized for CPUs with 2 or more cores (not 1 core and two threads).
+            Parallel.For(0, plugins.Count(),i=>
+                {
+                    plugins[i].OnLoad();
+                });
             // Stop timing
             stopwatch2.Stop();
 
             Debug.WriteLine("Time to run init code: {0}", stopwatch2.Elapsed);
+        }
+        private void b_Click(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            if (b != null)
+            {
+                string key = b.Content.ToString();
+               
+            }
         }
         private static bool IsDialogOpen;
 
@@ -268,7 +287,12 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                         return;
                 }
                 AddFileToListBox(file,result.ToSecureString());
-                result = String.Empty;
+                GCHandle gchandle = GCHandle.Alloc(result, GCHandleType.Pinned);
+                byte[] bt = new byte[result.Length * 2];
+                new Random().NextBytes(bt);
+                Marshal.Copy(bt, 0, gchandle.AddrOfPinnedObject(), System.Text.Encoding.Unicode.GetBytes(result).Length);
+                Array.Clear(bt, 0, bt.Length);
+                gchandle.Free();
                 GC.Collect();
             }
         }
@@ -348,17 +372,20 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         }
         private void AddFileToListBox(string file, SecureString password)
         {
-            
-            #if CSharp6
-            password?.MakeReadOnly();
-            #else
+            Dispatcher.BeginInvoke(new Action(() => FilesBox.Items.Add(new ListBoxItem { Content = file, Tag = password })));
+            Dispatcher.BeginInvoke(new Action(() => UpdateUI()));
             if (password != null)
             {
                 password.MakeReadOnly();
+                GCHandle gchandle = GCHandle.Alloc(password, GCHandleType.Pinned);
+                byte[] bt = new byte[Marshal.SizeOf(password)];
+                new Random().NextBytes(bt);
+                Marshal.Copy(bt, 0, gchandle.AddrOfPinnedObject(), bt.Length);
+                Array.Clear(bt, 0, bt.Length);
+                gchandle.Free();
             }
-            #endif
-            Dispatcher.BeginInvoke(new Action(() => FilesBox.Items.Add(new ListBoxItem { Content = file, Tag = password })));
-            Dispatcher.BeginInvoke(new Action(() => UpdateUI()));
+            
+            
         }
         #endregion
 
@@ -376,8 +403,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 openFileDialog.Filter = "Portable Document Format (*.pdf)|*.pdf|Text files (*.txt)|*.txt";
                 openFileDialog.Multiselect = true;
                 if (openFileDialog.ShowDialog() == true){
-                    foreach (var file in openFileDialog.FileNames)
-                        AddInputFile(file);
+                    Parallel.For(0, openFileDialog.FileNames.Count(), i => AddInputFile(openFileDialog.FileNames[i]));
                 }//Tell the dialog closed.
                 IsDialogOpen = false;
             })) { Name = "Open file dialog thread." }.Start();
@@ -406,56 +432,91 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             FilesBox.SelectedIndex = index;
           
         }
-
+        private static void ClearIntPtr (IntPtr address, int length)
+        {
+            byte[] bt = new byte[length];
+            //Generate Random byte array
+            new Random().NextBytes(bt);
+            //Copy random byte array to memory address of 
+            Marshal.Copy(bt, 0, address , length);
+            //Clear Random Array.
+            Array.Clear(bt, 0, bt.Length);
+        }
         private async void btnmerge_Click(object sender, RoutedEventArgs e)
         {
             //Encryption and security made this function more than two times bigger :).
             SecureString pass = null;
-            if (FilesBox.Items.Cast<ListBoxItem>().Any(t => t.Tag != null))
+            if (FilesBox.Items.Cast<ListBoxItem>().Any(x => x.Tag != null))
                 if (MessageDialogResult.Affirmative == await this.ShowMessageAsync("Password protected pdf", "One or more of the pdfs you are merging are password protected. Do you want to protect the merged pdf with a pasword?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings() { AffirmativeButtonText = "Yes", NegativeButtonText = "No" }))
                 {
                     string result = await this.ShowInputAsync("Enter the password for the merged pdf", "Password contain anything");
                     if (!String.IsNullOrEmpty(result))
+                    {
+                        //Set the password as the input text.
                         pass = result.ToSecureString();
-                    result = String.Empty;
+                        //Get GCHandle of result.
+                        GCHandle gchandle = GCHandle.Alloc(result, GCHandleType.Pinned);
+                        //Clear it from memory and replace it with junk data. * 2 is needed because the string is unicode
+                        ClearIntPtr(gchandle.AddrOfPinnedObject(),result.Length * 2);
+                        //Free GCHandle
+                        gchandle.Free();
+                    }
+                    else
+                        //Set the password to null if the user types nothing or clicks cancel.
+                        pass = null;
                     if (pass != null)
                         pass.MakeReadOnly();
-                    GC.Collect();
                 }
+                else
+                    //Set the password to null if the user types nothing or clicks cancel.
+                    pass = null;
             
             //To get the button click animation to show. We need to open the Microsoft.Win32.SaveFileDialog in a new thread.
             new System.Threading.Thread(new System.Threading.ThreadStart(delegate()
             {
-
+                //The number of files.
                 int count = 0;
+                //Title of first item.
                 string CurrentItem = null;
                 Dispatcher.Invoke(new Action(() =>
                     {
+                        //Set count.
                         count = FilesBox.Items.Count;
+                        //Set current item.
                         CurrentItem = ((ListBoxItem)FilesBox.Items[0]).Content.ToString();
                     }));
+                //Initailize the open file dialog and title.
                 SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog() { Title = count > 1 ? String.Format("Merging {0} File(s)", count) : String.Format("Converting {0}", CurrentItem) };
+                //If user clicks ok.
                 if (saveFileDialog.ShowDialog() == true)
-                    using (Combiner comb = new Combiner())
+                    using (Combiner comb = new Combiner(pass))
                     {
-                        if (pass != null)
-                            comb.Password = pass;
-                        comb.d = saveFileDialog.FileName;
-                        string n = String.Empty;
-                        Parallel.For(0,count,i=>
+                        //Set output path.
+                        comb.Output = saveFileDialog.FileName;
+                        //Name of the file.
+                        string n = null;
+                        Stopwatch sw = new Stopwatch();
+                        //Start stopwatch to check merge time.
+                        sw.Start();
+                        Parallel.For(0, count, i =>
                         {
                             SecureString tag = null;
                             Dispatcher.Invoke(new Action(() =>
-                                {
-                                    var item = ((ListBoxItem)FilesBox.Items[i]);
-                                    n = item.Content.ToString();
-                                    tag = (SecureString)item.Tag;
-                                }));
+                            {
+                                var item = ((ListBoxItem)FilesBox.Items[i]);
+                                n = item.Content.ToString();
+                                tag = (SecureString)item.Tag;
+                            }));
                             comb.AddFile(File.ReadAllBytes(n), Combiner.ProtectPassword((SecureString)tag));
-                            tag.Dispose();
+                            if (tag != null)
+                                tag.Dispose();
                         });
+                        //Stop stopwatch.
+                        sw.Stop();
+                        Debug.WriteLine("Time to merge pdfs in memory {0}",sw.Elapsed.ToString());
                     }
                 if (!String.IsNullOrEmpty(saveFileDialog.FileName))
+                    //Open the pdf file
                     System.Diagnostics.Process.Start(saveFileDialog.FileName);
             })).Start();
         }

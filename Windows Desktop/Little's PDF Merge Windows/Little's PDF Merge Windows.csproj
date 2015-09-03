@@ -51,6 +51,9 @@
     <AssemblyOriginatorKeyFile>SuiciDoga.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dragablz">
+      <HintPath>..\..\packages\Dragablz.0.0.2.120\lib\net45\Dragablz.dll</HintPath>
+    </Reference>
     <Reference Include="itextsharp, Version=5.5.6.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\iTextSharp.5.5.6\lib\itextsharp.dll</HintPath>
@@ -60,6 +63,7 @@
       <HintPath>..\..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -88,6 +92,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GenericMEFPluginLoader.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -96,6 +101,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MaterialPallete.cs" />
+    <Compile Include="MEFPluginLoader.cs" />
+    <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -141,6 +148,10 @@
     <ProjectReference Include="..\..\MaterialDesignInXamlToolkit\MaterialDesignThemes.Wpf\MaterialDesignThemes.Wpf.csproj">
       <Project>{f079fb0a-a8ed-4216-b6a5-345756751a04}</Project>
       <Name>MaterialDesignThemes.Wpf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Plugin.Core\Plugin.Core.csproj">
+      <Project>{33775abe-c35b-4310-94d3-3a24d05fe0f6}</Project>
+      <Name>Plugin.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

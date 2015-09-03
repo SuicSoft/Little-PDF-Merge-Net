@@ -9,7 +9,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:ss="http://xaml.suicsoft.com/projects/LPM.Core/helpers"
-        Title="Little's PDF Merge" Icon="Fonts-Icons\Icon.ico" MinHeight="215" MinWidth="290" Height="415" Width="625" AllowDrop="True" TextElement.Foreground="{DynamicResource MaterialDesignBody}" FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" GlowBrush="{DynamicResource WindowTitleColorBrush}" SizeChanged="metroWindow_SizeChanged">
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        Title="Little's PDF Merge" Icon="Fonts-Icons\Icon.ico" MinHeight="215" MinWidth="290" Height="420" Width="625" AllowDrop="True" TextElement.Foreground="{DynamicResource MaterialDesignBody}" FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" GlowBrush="{DynamicResource WindowTitleColorBrush}" SizeChanged="metroWindow_SizeChanged">
     <Grid>
         <Grid.RowDefinitions>
             <!--So that the blue thing won't fall down-->
@@ -71,21 +72,28 @@
             </x:Code>
         </StackPanel>
         <Rectangle x:Name="rectangle" Height="5" Fill="Transparent" Grid.Row="1" VerticalAlignment="Bottom"/>
-        <StackPanel x:Name="stackPanel" Orientation="Horizontal" Background="{DynamicResource MaterialDesignPaper}" Grid.Row="1" Height="25" VerticalAlignment="Bottom">
-            <StackPanel.Effect>
+        <dragablz:TabablzControl Grid.Row="1" x:Name="tabc" Height="40" VerticalAlignment="Bottom" Background="{DynamicResource MaterialDesignPaper}">
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController />
+            </dragablz:TabablzControl.InterTabController>
+            <dragablz:TabablzControl.Effect>
                 <DropShadowEffect BlurRadius="5" ShadowDepth="1" Direction="0" Color="#CCCCCC"/>
-            </StackPanel.Effect>
-            <Button Style="{StaticResource MaterialDesignFlatButton}" Height="Auto" Foreground="White" Content="Messages"/>
-            <Button Style="{StaticResource MaterialDesignFlatButton}" Height="Auto" Foreground="White" Content="Console"/>
-        </StackPanel>
-        <Button x:Name="button" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="1" Width="20" Height="20" Margin="2.5">
+            </dragablz:TabablzControl.Effect>
+            <TabItem Header="Console">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Material Design</TextBlock>
+            </TabItem>
+            <TabItem Header="Messages">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Looks Quite Nice</TextBlock>
+            </TabItem>
+        </dragablz:TabablzControl>
+        <Button x:Name="button" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="1" Width="20" Height="20" Margin="10">
             <Viewbox Width="18" Height="18">
                 <Canvas Width="24" Height="24">
                     <Path Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" Fill="White" />
                 </Canvas>
             </Viewbox>
         </Button>
-        <Grid x:Name="grid" UseLayoutRounding="True"  RenderOptions.BitmapScalingMode="NearestNeighbor" Height="65" Width="65" Grid.Row="2" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Margin="0,0,7,26">
+        <Grid x:Name="grid" UseLayoutRounding="True"  RenderOptions.BitmapScalingMode="NearestNeighbor" Height="65" Width="65" Grid.Row="2" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Margin="0,0,7,42">
             <Button x:Name="AddFilebtn"  Style="{StaticResource MaterialDesignFloatingActionAccentButton}" Height="{Binding Width, ElementName=AddFilebtn}" Width="56"  Foreground="White" ToolTip="Add a file" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AddFilebtn_Click">
                 <Button.Effect>
                     <DropShadowEffect x:Name="shadoweffect" BlurRadius="8" ShadowDepth="2.5" Direction="290" Color="#BBBBBB"/>
@@ -146,13 +154,13 @@
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="button">
                 <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="stackPanel">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="tabc">
                 <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="grid">
                 <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="0,0,7,10"/>
             </ThicknessAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="stackPanel">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="tabc">
                 <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="button">
@@ -160,8 +168,8 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="Show">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="stackPanel">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="25"/>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="tabc">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="40"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="button">
                 <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="20"/>
@@ -170,9 +178,9 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="20"/>
             </DoubleAnimationUsingKeyFrames>
             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="grid">
-                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="0,0,7,26"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="0,0,7,42"/>
             </ThicknessAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="stackPanel">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="tabc">
                 <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="button">

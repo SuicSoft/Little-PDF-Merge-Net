@@ -13,6 +13,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Media;
+using System.Reflection;
 namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
 {
     /// <summary>
@@ -152,7 +153,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            
+           
         }
     }
 }
