@@ -31,8 +31,7 @@ d...+o` :-::::+ooooooooooosssssss///////`              :+o++++++oo/` -ss-     os
             :ooossooy:                                                                                                                                    | 
 __________________________________________________________________________________________________________________________________________________________| 
 
- *This file is a modified file from a open source project.
- *This file is part of Little's PDF Merge.
+ *This file is part of Little's PDF Merge. An open source software
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  | Contact Infomation                 | Program Infomation                              | Tools Used                                                    | Libs Used                        | Software Requirements    | Hardware Requirements | Codes used             |  
  |  *Email : mailto:suiciwd@gmail.com |  *Name : SuicSoft LittleSoft Little's PDF Merge |  *Microsoft Visual Studio  *Microsoft Blend for Visual Studio |  *iTextSharp (iText .NET Port)   |  *Windows Vista or newer |  *1Ghz or faster CPU  |  *http://goo.gl/3r5oj2 |
@@ -82,6 +81,7 @@ using System.Threading;
 using System.Reflection;
 using System.Security;
 using Plugin.Core;
+using System.Windows.Threading;
 namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
 {
     /// <summary>
@@ -93,6 +93,14 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         #region Fullscreen Window
          private static Button btn = new Button() { Content = new System.Windows.Shapes.Path() { Fill = Brushes.White, Data = System.Windows.Media.Geometry.Parse("M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17V19H5V14H7V17H10Z") } };
 
+        void InitailizeFullscreenWindow()
+         {
+             StateChanged += StateChange;
+             btn.Click += btn_Click;
+             var commands = new WindowCommands();
+             commands.Items.Add(btn);
+             RightWindowCommands = commands;
+         }
         void btn_Click(object sender, RoutedEventArgs e)
         {
             if ((bool)GetValue(IsFullscreenProperty) == false)  
@@ -147,53 +155,52 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         }
 #endregion
 
+        #region .ctor (Constructor)
         List<IPlugin> plugins;
         public MainWindow()
         {
-            StateChanged += StateChange;
-            btn.Click += btn_Click;
-            var commands = new WindowCommands();
-            commands.Items.Add(btn);
-            RightWindowCommands = commands;
+            //Initailize fullscreen buttons
+            InitailizeFullscreenWindow();
 
             PdfReader.unethicalreading = true;
             // Create new stopwatch
             Stopwatch stopwatch = new Stopwatch();
-            
             // Begin timing
             stopwatch.Start();
+            //Draw UI
             InitializeComponent();
             // Stop timing
             stopwatch.Stop();
+            //Print UI draw time.
             Debug.WriteLine("Time to draw controls: {0}", stopwatch.Elapsed);
-
-            Stopwatch stopwatch2 = new Stopwatch();
-            stopwatch2.Start();
-            if (HasTouchInput())
-                //Make things bigger.
-                split.Height = 30;
+            //Reset the stop watch
+            stopwatch.Reset();
+            //Start it again.
+            stopwatch.Start();
+            //Try loading plugins
             try { plugins = new GenericMEFPluginLoader<IPlugin>("Plugins").Plugins.ToList(); }
+            //Print error message if crashes
             catch { Debug.WriteLine("Failed to init plugins"); }
             //Init code is run as parallel. This software is optimized for CPUs with 2 or more cores (not 1 core and two threads).
             Parallel.For(0, plugins.Count(),i=>
                 {
+                    //Any code in the plugin should be in try catch.
                     plugins[i].OnLoad();
                 });
             // Stop timing
-            stopwatch2.Stop();
+            stopwatch.Stop();
+            //Print time to load plugins code.
+            Debug.WriteLine("Time to load plugins code: {0}", stopwatch.Elapsed);
+            
+        }
+        #endregion
 
-            Debug.WriteLine("Time to run init code: {0}", stopwatch2.Elapsed);
-        }
-        private void b_Click(object sender, RoutedEventArgs e)
-        {
-            Button b = sender as Button;
-            if (b != null)
-            {
-                string key = b.Content.ToString();
-               
-            }
-        }
+        //If a dialog is open
         private static bool IsDialogOpen;
+        //Reload the icon when resizing
+        bool loadico;
+        //Timer used for the mouse down on controls
+        DispatcherTimer timer = new DispatcherTimer();
 
         #region Constants
         private const int WM_DWMCOLORIZATIONCOLORCHANGED = 800;
@@ -231,19 +238,11 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         #endregion
 
         #region Methods
-        /// <summary>
-        /// Checks if the device has a touch screen.
-        /// </summary>
-        /// <returns>True if the device uses a touch screen</returns>
-        private static bool HasTouchInput()
-        {
-            return Tablet.TabletDevices.OfType<TabletDevice>().Any(t => t.Type == TabletDeviceType.Touch);
-        }
-        /// <summary>
+
         /// Updates the UI (disable and enable controls).
-        /// </summary>
         private void UpdateUI()
         {
+            //One file.
             if (FilesBox.Items.Count == 1)
             {
                 bm.IsEnabled = true;
@@ -252,6 +251,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 db.IsEnabled = false;
 
             }
+            //No files.
             else if (FilesBox.Items.Count == 0)
             {
                 bm.IsEnabled = false;
@@ -260,6 +260,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 db.IsEnabled = false;
 
             }
+            //Two or more files.
             else
             {
                 ub.IsEnabled = true;
@@ -268,6 +269,10 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 rb.IsEnabled = true;
             }
         }
+        /// <summary>
+        /// Shows a password box for a pdf
+        /// </summary>
+        /// <param name="file">The path of the pdf</param>
         private async void ShowPasswordBox(string file)
         {
             //Show the user the password dialog.
@@ -277,8 +282,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 try
                 {
                     //Use iTextSharp.text.pdf.PdfReader to open the pdf.
-                    using (PdfReader reader = new PdfReader(file, System.Text.Encoding.Default.GetBytes(result)))
-                    { }
+                    new PdfReader(file, System.Text.Encoding.Default.GetBytes(result)).Dispose();
                     //Check if passowrd is correct
                 }
                 catch{
@@ -286,16 +290,23 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                         ShowPasswordBox(file);
                         return;
                 }
+                //Add the file to the listbox as a secure string
                 AddFileToListBox(file,result.ToSecureString());
+                //Get GCHandle
                 GCHandle gchandle = GCHandle.Alloc(result, GCHandleType.Pinned);
-                byte[] bt = new byte[result.Length * 2];
-                new Random().NextBytes(bt);
-                Marshal.Copy(bt, 0, gchandle.AddrOfPinnedObject(), System.Text.Encoding.Unicode.GetBytes(result).Length);
-                Array.Clear(bt, 0, bt.Length);
+                //Clear the object with junk.
+                ClearIntPtr(gchandle.AddrOfPinnedObject(), result.Length * 2);
+                //Free GCHandle
                 gchandle.Free();
-                GC.Collect();
             }
         }
+        /// <summary>
+        /// Don't show this message again dialog.
+        /// </summary>
+        /// <param name="title">The title</param>
+        /// <param name="message">The Message</param>
+        /// <param name="id">A id that can be any string</param>
+        /// <returns></returns>
         public async Task<MessageDialogResult> DonNotShowAgainDialog(string title, string message, string id)
         {
             const string regpath = "Software\\SuicSoft\\LittlePDFMerge"; //Example : Software\\Company\ProductName.
@@ -305,6 +316,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 //Check if do not show this again has been clicked before
                 if ((int)key.GetValue(id, 0) == 0)
                 {
+                    //Show message to user.
                     MessageDialogResult result = await this.ShowMessageAsync(title, message, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings { FirstAuxiliaryButtonText = "Don't show again", ColorScheme = MetroDialogColorScheme.Accented });
                     if (result == MessageDialogResult.FirstAuxiliary)
                     {
@@ -319,6 +331,10 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             return MessageDialogResult.Affirmative;
             }
         }
+        /// <summary>
+        /// Add a input file.
+        /// </summary>
+        /// <param name="file">The path of the file</param>
         private async void AddInputFile(string file)
         {
             switch (Combiner.TestSourceFile(File.ReadAllBytes(file)))
@@ -342,6 +358,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                                         //That dog wants to open protected files.
                                         PdfReader.unethicalreading = true;
                                     else
+                                        //Exit the method
                                         return;
                                 }));
                         }
@@ -351,8 +368,6 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                         Dispatcher.Invoke(new Action(() => ShowPasswordBox(file)));
                         return;
                     }
-                       
-                    
                     break;
                 //File is a valid pdf.
                 case Combiner.SourceTestResult.Ok:
@@ -366,10 +381,9 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 case Combiner.SourceTestResult.Unknown:
                     await Dispatcher.BeginInvoke(new Action(() => this.ShowMessageAsync("Invalid format", "The file you selected is not a supported format. More supported formats coming soon.")));
                     break;
-
-            }
-            
+            }  
         }
+
         private void AddFileToListBox(string file, SecureString password)
         {
             Dispatcher.BeginInvoke(new Action(() => FilesBox.Items.Add(new ListBoxItem { Content = file, Tag = password })));
@@ -392,10 +406,11 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
         /// <summary>
         /// When the user clicks add file
         /// </summary>
-        private void AddFilebtn_Click(object sender, RoutedEventArgs e)
+        private void AddFile(object sender, RoutedEventArgs e)
         {
             //To get the button click animation to show. We need to open the Microsoft.Win32.OpenFileDialog in a new thread.
             new System.Threading.Thread(new System.Threading.ThreadStart(delegate(){
+
                 //Tell the dialog is open.
                 IsDialogOpen = true;
                 OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -404,11 +419,14 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
                 openFileDialog.Multiselect = true;
                 if (openFileDialog.ShowDialog() == true){
                     Parallel.For(0, openFileDialog.FileNames.Count(), i => AddInputFile(openFileDialog.FileNames[i]));
-                }//Tell the dialog closed.
+                }
+                //Tell the dialog closed.
                 IsDialogOpen = false;
+                
             })) { Name = "Open file dialog thread." }.Start();
             
         }
+
         /// <summary>
         /// Moves the selected item up or down.
         /// </summary>
@@ -419,18 +437,13 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             int indexold = FilesBox.SelectedIndex;
             //The selected item
             object dataItem = FilesBox.SelectedItem;
-
-
             int index = FilesBox.SelectedIndex;
-
             if (sender == ub) index--;
             if (sender == db) index++;
-
             FilesBox.Items.Remove(dataItem);
             FilesBox.Items.Insert(index, dataItem);
             FilesBox.SelectedIndex = 0;
             FilesBox.SelectedIndex = index;
-          
         }
         private static void ClearIntPtr (IntPtr address, int length)
         {
@@ -442,7 +455,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             //Clear Random Array.
             Array.Clear(bt, 0, bt.Length);
         }
-        private async void btnmerge_Click(object sender, RoutedEventArgs e)
+        private async void Merge(object sender, RoutedEventArgs e)
         {
             //Encryption and security made this function more than two times bigger :).
             SecureString pass = null;
@@ -521,7 +534,7 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             })).Start();
         }
         
-        private void Border_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void TitleResize(object sender, SizeChangedEventArgs e)
         {
             if (TitleText.ActualHeight < 70)
             {
@@ -559,20 +572,12 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             }
         }
 
-        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void _Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (IsDialogOpen == true) e.Cancel = true;
         }
 
-        private void TitleLabel_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (Keyboard.IsKeyDown(Key.LeftShift) | Keyboard.IsKeyDown(Key.RightShift))
-            {
-                TitleLabel.Content = "Little's PDF Flags";
-            }
-        }
-        bool loadico;
-        private void metroWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void _SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (e.NewSize.Width < 320)
             {
@@ -582,6 +587,14 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
             else if (e.NewSize.Width > 320 & loadico)
                 Icon = new System.Windows.Media.Imaging.BitmapImage(new Uri("pack://application:,,,/LPM.Windows;component/Fonts-Icons/Icon.ico", UriKind.Absolute));
         }
+
+        void TimerClick(object sender, EventArgs e)
+        {
+            timer.Stop();
+            timer.Tick -= TimerClick;
+            MessageBox.Show("Test");
+        }
+
     }
 }
 

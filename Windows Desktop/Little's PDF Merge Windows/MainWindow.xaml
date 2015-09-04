@@ -10,7 +10,7 @@
         xmlns:Metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:ss="http://xaml.suicsoft.com/projects/LPM.Core/helpers"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
-        Title="Little's PDF Merge" Icon="Fonts-Icons\Icon.ico" MinHeight="215" MinWidth="290" Height="420" Width="625" AllowDrop="True" TextElement.Foreground="{DynamicResource MaterialDesignBody}" FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" GlowBrush="{DynamicResource WindowTitleColorBrush}" SizeChanged="metroWindow_SizeChanged">
+        Title="Little's PDF Merge" Icon="Fonts-Icons\Icon.ico" MinHeight="215" MinWidth="290" Height="420" Width="625" AllowDrop="True" TextElement.Foreground="{DynamicResource MaterialDesignBody}" FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" GlowBrush="{DynamicResource WindowTitleColorBrush}" Closing="_Closing" SizeChanged="_SizeChanged">
     <Grid>
         <Grid.RowDefinitions>
             <!--So that the blue thing won't fall down-->
@@ -26,7 +26,7 @@
             <Ellipse x:Name="Ink" Width="{Binding Height, ElementName=Ink}" Fill="{DynamicResource SecondaryAccentBrush}" Height="115" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-120,-100,0,0"/>
         </Grid>
         <!--Region Title-->
-        <Border x:Name="TitleText" Background="{DynamicResource PrimaryHueDarkBrush}" SizeChanged="Border_SizeChanged">
+        <Border x:Name="TitleText" Background="{DynamicResource PrimaryHueDarkBrush}" SizeChanged="TitleResize">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="8" ShadowDepth="2.5" Direction="270" Color="#BBBBBB"/>
             </Border.Effect>
@@ -38,7 +38,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Viewbox x:Name="vb" Margin="0,0,0,25" Grid.Column="1">
-                <Label  x:Name="TitleLabel" TextElement.Foreground="{DynamicResource MaterialDesignBody}" Content="Little's PDF Merge"  FontSize="35"  HorizontalAlignment="Center" Margin="5,5,10,5" VerticalAlignment="Top" MouseDoubleClick="TitleLabel_MouseDoubleClick"/>
+                <Label  x:Name="TitleLabel" TextElement.Foreground="{DynamicResource MaterialDesignBody}" Content="Little's PDF Merge"  FontSize="35"  HorizontalAlignment="Center" Margin="5,5,10,5" VerticalAlignment="Top"/>
             </Viewbox>
             <ToggleButton x:Name="HamburgerIcon" Style="{StaticResource MaterialDesignHamburgerToggleButton}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,8,0,0"/>
         </Grid>
@@ -58,7 +58,7 @@
                         </Style.Triggers>
                     </Style>
                 </ComboBox.Style>-->
-            <Button x:Name="bm" x:Uid="bm" IsEnabled="False" Content="Merge" Click="btnmerge_Click"/>
+            <Button x:Name="bm" x:Uid="bm" IsEnabled="False" Content="Merge" Click="Merge"/>
             <!--</ComboBox>-->
             <Button x:Name="ub" x:Uid="ub" IsEnabled="False" Content="Up" Click="MI" Padding="0" Width="40" Margin="6"/>
             <Button x:Name="db" x:Uid="db" IsEnabled="False" Content="Down" Click="MI" Padding="0" Width="50" Margin="6"/>
@@ -94,7 +94,7 @@
             </Viewbox>
         </Button>
         <Grid x:Name="grid" UseLayoutRounding="True"  RenderOptions.BitmapScalingMode="NearestNeighbor" Height="65" Width="65" Grid.Row="2" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Margin="0,0,7,42">
-            <Button x:Name="AddFilebtn"  Style="{StaticResource MaterialDesignFloatingActionAccentButton}" Height="{Binding Width, ElementName=AddFilebtn}" Width="56"  Foreground="White" ToolTip="Add a file" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AddFilebtn_Click">
+            <Button x:Name="AddFilebtn"  Style="{StaticResource MaterialDesignFloatingActionAccentButton}" Height="{Binding Width, ElementName=AddFilebtn}" Width="56"  Foreground="White" ToolTip="Add a file" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" Click="AddFile">
                 <Button.Effect>
                     <DropShadowEffect x:Name="shadoweffect" BlurRadius="8" ShadowDepth="2.5" Direction="290" Color="#BBBBBB"/>
                 </Button.Effect>

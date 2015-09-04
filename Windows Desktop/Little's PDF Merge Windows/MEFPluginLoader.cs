@@ -1,21 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using Plugin.Core;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
 {
-    public class GenericMEFPluginLoader<T>
+    public class MEFPluginLoader
     {
         private CompositionContainer _Container;
 
         [ImportMany]
-        public IEnumerable<T> Plugins
+        public IEnumerable<IPlugin> Plugins
         {
             get;
             set;
         }
 
-        public GenericMEFPluginLoader(string path)
+        public MEFPluginLoader(string path)
         {
             DirectoryCatalog directoryCatalog = new DirectoryCatalog(path);
 
