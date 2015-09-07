@@ -55,36 +55,35 @@ ________________________________________________________________________________
  *IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
  *WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using Plugin.Core;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Windows.Threading;
+using System.ComponentModel.Composition.Hosting;
 
-namespace PluginExample
+namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
 {
-    [Export(typeof(IPlugin))]
-    public class Hello : IPlugin
+    public class GenericMEFPluginLoader<T>
     {
-        #region IPlugin Members
+        private CompositionContainer _Container;
 
-        public string Name
+        [ImportMany]
+        public IEnumerable<T> Plugins
         {
-            get
-            {
-                return "Example";
-            }
-        }
-        public void OnLoad()
-        {
-            try
-            {
-                System.Windows.MessageBox.Show("Hello World");
-                
-            }catch
-            {
-                System.Windows.MessageBox.Show("The Plugin " + Name + " Crashed!");
-            }
+            get;
+            set;
         }
 
-        #endregion
+        public GenericMEFPluginLoader(string path)
+        {
+            DirectoryCatalog directoryCatalog = new DirectoryCatalog(path);
+
+            //An aggregate catalog that combines multiple catalogs
+            var catalog = new AggregateCatalog(directoryCatalog);
+
+            // Create the CompositionContainer with all parts in the catalog (links Exports and Imports)
+            _Container = new CompositionContainer(catalog);
+
+            //Fill the imports of this object
+            _Container.ComposeParts(this);
+        }
     }
 }
