@@ -133,7 +133,6 @@
         </Grid>
     </Grid>
     <Metro:MetroWindow.Resources>
-        <SolidColorBrush x:Key="WindowTitleColorBrush" Color="{DynamicResource Primary700}"/>
         <CircleEase x:Key="ease"/>
         <Storyboard x:Key="InkSplash" Timeline.DesiredFrameRate="40">
             <DoubleAnimationUsingKeyFrames BeginTime="0:0:0.25" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Ink">
