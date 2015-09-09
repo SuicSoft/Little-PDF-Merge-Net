@@ -64,24 +64,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="About.xaml.cs">
+    <Compile Include="User Controls\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ActionCommand.cs" />
+    <Compile Include="Commands\ActionCommand.cs" />
     <Compile Include="DemoItem.cs" />
-    <Compile Include="Palette.xaml.cs">
+    <Compile Include="User Controls\Merger.xaml.cs">
+      <DependentUpon>Merger.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Palette.xaml.cs">
       <DependentUpon>Palette.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PaletteSelector.xaml.cs">
+    <Compile Include="User Controls\PaletteSelector.xaml.cs">
       <DependentUpon>PaletteSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PaletteSelectorViewModel.cs" />
-    <Compile Include="RelayCommand.cs" />
-    <Compile Include="Settings.xaml.cs">
+    <Compile Include="View Models\PaletteSelectorViewModel.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="User Controls\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel.cs" />
-    <Page Include="About.xaml">
+    <Compile Include="View Models\ViewModel.cs" />
+    <Page Include="User Controls\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -97,15 +100,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Palette.xaml">
+    <Page Include="User Controls\Merger.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PaletteSelector.xaml">
+    <Page Include="User Controls\Palette.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Settings.xaml">
+    <Page Include="User Controls\PaletteSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="User Controls\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
