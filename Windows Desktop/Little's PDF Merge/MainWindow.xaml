@@ -32,7 +32,7 @@
                             <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightBrush}"/>
                         </Style>
                     </StackPanel.Resources>
-                    <Button x:Name="bm" x:Uid="bm" IsEnabled="False" Content="Merge"/>
+                    <Button x:Name="bm" x:Uid="bm" Command="{Binding ElementName=merger, Path=DataContext.MergeCommand}" Content="Merge"/>
                     <Button x:Name="ub" x:Uid="ub" IsEnabled="False" Content="Up" Padding="0" Width="40" Margin="6"/>
                     <Button x:Name="db" x:Uid="db" IsEnabled="False" Content="Down" Padding="0" Width="50" Margin="6"/>
                     <Button x:Uid="rb" x:Name="rb" IsEnabled="False"  Content="Remove" Padding="0" Width="76" Margin="6"/>

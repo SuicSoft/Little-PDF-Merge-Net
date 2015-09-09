@@ -6,6 +6,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+        <ListBox ItemsSource="{Binding Files, Mode=TwoWay}" x:Name="f" Background="{DynamicResource MaterialDesignPaper}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="1" Text="{Binding path}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <Button Style="{StaticResource MaterialDesignFloatingActionAccentButton}" Command="{Binding AddFileCommand}" Margin="7" Height="56" Width="56" Foreground="White" ToolTip="Add a file" VerticalAlignment="Bottom" HorizontalAlignment="Right">
             <Label SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased" RenderOptions.BitmapScalingMode="NearestNeighbor">
                 <Viewbox Width="24" Height="24">

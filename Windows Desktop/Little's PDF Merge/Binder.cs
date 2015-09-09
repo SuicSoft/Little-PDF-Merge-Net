@@ -190,11 +190,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                 }
                 //Clear password from memory
                 Array.Clear(password != null ? pass : new byte[0], 0, password != null ? pass.Length : 0);
-                Array.Clear(e, 0, 15);
-                if (password != null)
-                {
-                    GC.Collect();
-                }
             }
             catch
             {
