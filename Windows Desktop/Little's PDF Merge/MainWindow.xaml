@@ -4,7 +4,7 @@
         xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:SuicSoft.LittlesPDFMerge.Windows"
-        Title="MainWindow" Height="443" Width="719">
+        Title="MainWindow" Height="443" Width="719" GlowBrush="{DynamicResource WindowTitleColorBrush}">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
@@ -13,12 +13,18 @@
             <RowDefinition Height="90"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <local:Merger x:Name="merger" Grid.Row="1">
+            <local:Merger.DataContext>
+                <local:MergerViewModel/>
+            </local:Merger.DataContext>
+        </local:Merger>
+        <local:Settings Background="{DynamicResource MaterialDesignPaper}" Width="Auto" x:Name="settings" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=MenuToggleButton}" Grid.Row="1" Height="Auto"/>
         <wpf:ColorZone x:Name="colorzone" Height="90" Padding="10" Effect="{StaticResource MaterialDesignShadowDepth2}"
                        Mode="PrimaryMid">
             <StackPanel>
                 <Grid>
                     <ToggleButton HorizontalAlignment="Left" Style="{StaticResource MaterialDesignHamburgerToggleButton}" x:Name="MenuToggleButton"/>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Little's PDF Merge</TextBlock>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"><Run Text="Little's PDF Merge"/></TextBlock>
                 </Grid>
                 <StackPanel x:Name="ButtonsPanel"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Orientation="Horizontal" >
                     <StackPanel.Resources>
@@ -33,6 +39,5 @@
                 </StackPanel>
             </StackPanel>
         </wpf:ColorZone>
-        <local:Settings Width="Auto" x:Name="settings" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=MenuToggleButton}" Grid.Row="1" Height="Auto"/>
     </Grid>
 </metro:MetroWindow>

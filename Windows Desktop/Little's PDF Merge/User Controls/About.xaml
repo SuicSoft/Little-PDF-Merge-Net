@@ -11,7 +11,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Image RenderOptions.BitmapScalingMode="Fant" Source="Resources/Logo.png"/>
+        <Image RenderOptions.BitmapScalingMode="Fant" Source="Logo.png"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24">SuicSoft 2015</TextBlock>
         <StackPanel Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Margin="7" Command="{Binding OpenSupportWebsiteCommand}" CommandParameter="https://github.com/SuicSoft/Little-PDF-Merge/issues">

@@ -28,6 +28,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             //Switch to dark if past 5:00 pm.
             if (DateTime.Now.TimeOfDay < new TimeSpan(7, 0, 0) | DateTime.Now.TimeOfDay > new TimeSpan(17, 0, 0))
                 new PaletteHelper().SetLightDark(true);
+            MergerViewModel.window = this;
         }
     }
 }

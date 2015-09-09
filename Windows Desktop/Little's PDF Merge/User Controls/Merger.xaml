@@ -6,6 +6,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-            
+        <Button Style="{StaticResource MaterialDesignFloatingActionAccentButton}" Command="{Binding AddFileCommand}" Margin="7" Height="56" Width="56" Foreground="White" ToolTip="Add a file" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <Label SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased" RenderOptions.BitmapScalingMode="NearestNeighbor">
+                <Viewbox Width="24" Height="24">
+                    <Canvas Width="24" Height="24">
+                        <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" Fill="White" />
+                    </Canvas>
+                </Viewbox>
+            </Label>
+        </Button>
     </Grid>
 </UserControl>
