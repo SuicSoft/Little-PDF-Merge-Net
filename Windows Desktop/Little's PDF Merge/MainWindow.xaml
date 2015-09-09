@@ -1,0 +1,38 @@
+﻿<metro:MetroWindow x:Class="SuicSoft.LittlesPDFMerge.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:SuicSoft.LittlesPDFMerge.Windows"
+        Title="MainWindow" Height="443" Width="719">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <wpf:ColorZone x:Name="colorzone" Height="90" Padding="10" Effect="{StaticResource MaterialDesignShadowDepth2}"
+                       Mode="PrimaryMid">
+            <StackPanel>
+                <Grid>
+                    <ToggleButton HorizontalAlignment="Left" Style="{StaticResource MaterialDesignHamburgerToggleButton}" x:Name="MenuToggleButton"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Little's PDF Merge</TextBlock>
+                </Grid>
+                <StackPanel x:Name="ButtonsPanel"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Orientation="Horizontal" >
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightBrush}"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button x:Name="bm" x:Uid="bm" IsEnabled="False" Content="Merge"/>
+                    <Button x:Name="ub" x:Uid="ub" IsEnabled="False" Content="Up" Padding="0" Width="40" Margin="6"/>
+                    <Button x:Name="db" x:Uid="db" IsEnabled="False" Content="Down" Padding="0" Width="50" Margin="6"/>
+                    <Button x:Uid="rb" x:Name="rb" IsEnabled="False"  Content="Remove" Padding="0" Width="76" Margin="6"/>
+                </StackPanel>
+            </StackPanel>
+        </wpf:ColorZone>
+        <local:Settings Width="Auto" x:Name="settings" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=MenuToggleButton}" Grid.Row="1" Height="Auto"/>
+    </Grid>
+</metro:MetroWindow>
