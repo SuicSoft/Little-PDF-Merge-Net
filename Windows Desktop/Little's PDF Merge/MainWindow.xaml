@@ -19,23 +19,18 @@
             </local:Merger.DataContext>
         </local:Merger>
         <local:Settings Background="{DynamicResource MaterialDesignPaper}" Width="Auto" x:Name="settings" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=MenuToggleButton}" Grid.Row="1" Height="Auto"/>
-        <wpf:ColorZone x:Name="colorzone" Height="90" Padding="10" Effect="{StaticResource MaterialDesignShadowDepth2}"
-                       Mode="PrimaryMid">
+        <wpf:ColorZone x:Name="colorzone" Height="90" Padding="10" Effect="{StaticResource MaterialDesignShadowDepth2}" Mode="PrimaryMid">
             <StackPanel>
                 <Grid>
                     <ToggleButton HorizontalAlignment="Left" Style="{StaticResource MaterialDesignHamburgerToggleButton}" x:Name="MenuToggleButton"/>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"><Run Text="Little's PDF Merge"/></TextBlock>
                 </Grid>
                 <StackPanel x:Name="ButtonsPanel"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Orientation="Horizontal" >
-                    <StackPanel.Resources>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
-                            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueLightBrush}"/>
-                        </Style>
-                    </StackPanel.Resources>
-                    <Button x:Name="bm" x:Uid="bm" Command="{Binding ElementName=merger, Path=DataContext.MergeCommand}" Content="Merge"/>
-                    <Button x:Name="ub" x:Uid="ub" IsEnabled="False" Content="Up" Padding="0" Width="40" Margin="6"/>
-                    <Button x:Name="db" x:Uid="db" IsEnabled="False" Content="Down" Padding="0" Width="50" Margin="6"/>
-                    <Button x:Uid="rb" x:Name="rb" IsEnabled="False"  Content="Remove" Padding="0" Width="76" Margin="6"/>
+
+                    <Button x:Name="bm" x:Uid="bm" Background="Transparent" Foreground="{DynamicResource PrimaryHueLightBrush}" Command="{Binding ElementName=merger, Path=DataContext.MergeCommand}" Content="Merge"/>
+                    <Button x:Name="ub" x:Uid="ub" Background="Transparent" Foreground="{DynamicResource PrimaryHueLightBrush}" Command="{Binding ElementName=merger, Path=DataContext.MoveUpCommand}" Content="Up" Padding="0" Width="40" Margin="6"/>
+                    <Button x:Name="db" x:Uid="db" Background="Transparent" Foreground="{DynamicResource PrimaryHueLightBrush}" Command="{Binding ElementName=merger, Path=DataContext.MoveDownCommand}" Content="Down" Padding="0" Width="50" Margin="6"/>
+                    <Button x:Uid="rb" x:Name="rb" Background="Transparent" Foreground="{DynamicResource PrimaryHueLightBrush}" Content="Remove" Padding="0" Width="76" Margin="6"/>
                 </StackPanel>
             </StackPanel>
         </wpf:ColorZone>

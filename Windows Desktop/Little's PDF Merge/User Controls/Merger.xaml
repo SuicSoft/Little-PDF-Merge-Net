@@ -3,19 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ListBox ItemsSource="{Binding Files, Mode=TwoWay}" x:Name="f" Background="{DynamicResource MaterialDesignPaper}">
+        <ListBox ItemsSource="{Binding Files}" x:Name="f" Background="{DynamicResource MaterialDesignPaper}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="100" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="1" Text="{Binding path}" />
-                    </Grid>
+                    <TextBlock Text="{Binding path}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

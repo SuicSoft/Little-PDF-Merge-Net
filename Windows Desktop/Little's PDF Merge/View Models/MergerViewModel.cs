@@ -18,10 +18,11 @@ namespace SuicSoft.LittlesPDFMerge.Windows
 {
     class MergerViewModel 
     {
-        public static MetroWindow window;
+        MainWindow window = (MainWindow)Application.Current.MainWindow;
         public MergerViewModel()
         {
             MergeCommand = new ActionCommand(() => Save());
+            #region AddFileComand
             AddFileCommand = new ActionCommand(() =>
                 {
                     //To get the button click animation to show. We need to open the Microsoft.Win32.OpenFileDialog in a new thread.
@@ -37,11 +38,15 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                         }
                     })) { Name = "Open file dialog thread." }.Start();
                 });
+            #endregion
+            MoveUpCommand = new ActionCommand(() => Files.MoveUp(window.merger.f.SelectedIndex));
+            MoveDownCommand = new ActionCommand(() => Files.MoveDown(window.merger.f.SelectedIndex));
         }
-        public List<PDFItem> _Files = new List<PDFItem>();
-        public IEnumerable<PDFItem> Files { get; set; }
+        public List<PDFItem> Files = new List<PDFItem>();
         public static ICommand MergeCommand { get; set; }
         public static ICommand AddFileCommand { get; set; }
+        public static ICommand MoveUpCommand { get; set; }
+        public static ICommand MoveDownCommand { get; set; }
         /// <summary>
         /// Shows a password box for a pdf
         /// </summary>
@@ -56,9 +61,8 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                 {
                     //Use iTextSharp.text.pdf.PdfReader to open the pdf.
                     new PdfReader(file, System.Text.Encoding.Default.GetBytes(result)).Dispose();
-                    //Check if passowrd is correct
                     //Add the file to the listbox as a secure string. Won't reach here if password is wrong.
-                    _Files.Add(new PDFItem(file, null));
+                    Files.Add(new PDFItem(file, null));
                 }
                 catch
                 {
@@ -116,7 +120,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                 //File is a valid pdf.
                 case Combiner.SourceTestResult.Ok:
                     //Add the pdf to the ListBox.
-                    _Files.Add(new PDFItem(file, null));
+                    Files.Add(new PDFItem(file, null));
                     break;
                 //File is a image (maybe not valid!).
                 case Combiner.SourceTestResult.Image:
@@ -126,26 +130,25 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                     await window.Dispatcher.BeginInvoke(new Action(() => window.ShowMessageAsync("Invalid format", "The file you selected is not a supported format. More supported formats coming soon.")));
                     break;
             }
-            Files = _Files;
-            window.Dispatcher.Invoke(new Action(() => ((MainWindow)App.Current.MainWindow).merger.f.ItemsSource = _Files));
+            window.Dispatcher.Invoke(new Action(() => window.merger.f.ItemsSource = Files));
         }
+
         public void Save()
         {
             //To get the button click animation to show. We need to open the Microsoft.Win32.SaveFileDialog in a new thread.
             new System.Threading.Thread(new System.Threading.ThreadStart(async () =>
             {
                 //Initailize the open file dialog and title.
-                SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog() { Title = _Files.Count > 1 ? String.Format("Merging {0} File(s)", _Files.Count) : String.Format("Converting {0}",Path.GetFileName(_Files[0].path))};
+                SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog() { Title = Files.Count > 1 ? String.Format("Merging {0} File(s)", Files.Count) : String.Format("Converting {0}",Path.GetFileName(Files[0].path))};
                 //If user clicks ok.
                 if (saveFileDialog.ShowDialog() == true)
                 using (Combiner comb = new Combiner())
                 {
                     comb.Output = saveFileDialog.FileName;
-                    comb.Password = _Files.Cast<PDFItem>().Any(x => x.password != null) ? MessageDialogResult.Affirmative == await window.ShowMessageAsync("Password protected pdf", "One or more of the pdfs you are merging are password protected. Do you want to protect the merged pdf with a pasword?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings() { AffirmativeButtonText = "Yes", NegativeButtonText = "No" }) ? (await window.ShowInputAsync("Enter the password for the merged pdf", "Password contain anything")).ToSecureString() : null : null;
-                    Parallel.For(0, _Files.Count, i =>
-                        {
-                            comb.AddFile(File.ReadAllBytes(_Files[i].path), null);
-                        });
+                    comb.Password = Files.Cast<PDFItem>().Any(x => x.password != null) ? MessageDialogResult.Affirmative == await window.ShowMessageAsync("Password protected pdf", "One or more of the pdfs you are merging are password protected. Do you want to protect the merged pdf with a pasword?", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings() { AffirmativeButtonText = "Yes", NegativeButtonText = "No" }) ? (await window.ShowInputAsync("Enter the password for the merged pdf", "Password contain anything")).ToSecureString() : null : null;
+                    foreach (var item in Files)
+                        comb.AddFile(File.ReadAllBytes(item.path), null);
+
                 }
                 if (!String.IsNullOrEmpty(saveFileDialog.FileName))
                     Process.Start(saveFileDialog.FileName);
