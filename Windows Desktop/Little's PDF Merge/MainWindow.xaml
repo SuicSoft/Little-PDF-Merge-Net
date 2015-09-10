@@ -23,7 +23,7 @@
             <StackPanel>
                 <Grid>
                     <ToggleButton HorizontalAlignment="Left" Style="{StaticResource MaterialDesignHamburgerToggleButton}" x:Name="MenuToggleButton"/>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"><Run Text="Little's PDF Merge"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"><Run Text="Little's PDF Merge"/></TextBlock>
                 </Grid>
                 <StackPanel x:Name="ButtonsPanel"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Orientation="Horizontal" >
 
