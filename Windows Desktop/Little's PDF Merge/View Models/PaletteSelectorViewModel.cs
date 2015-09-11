@@ -9,8 +9,9 @@ namespace SuicSoft.LittlesPDFMerge.Windows
     {
         public PaletteSelectorViewModel()
         {
-            Swatches = new SwatchesProvider().Swatches;
+            Swatches = new SwatchesProvider().Swatches.ToList();
             ToggleBaseCommand = new ActionCommand(o => ApplyBase((bool)o));
+            ResetCommand = new ActionCommand(() => Reset());
             ApplyPrimaryCommand = new ActionCommand(o => ApplyPrimary((Swatch)o));
             ApplyAccentCommand = new ActionCommand(o => ApplyAccent((Swatch)o));
         }
@@ -20,6 +21,13 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         {
             new PaletteHelper().ReplacePrimaryColor(swatch);
         }
+        public ICommand ResetCommand { get; set; }
+
+        private static void Reset()
+        {
+            new PaletteHelper().ReplacePrimaryColor(Swatches[1]);
+            new PaletteHelper().ReplaceAccentColor(Swatches[9]);
+        }
 
         public ICommand ToggleBaseCommand { get; set; }
 
@@ -28,7 +36,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             new PaletteHelper().SetLightDark(isDark);
         }
 
-        public IEnumerable<Swatch> Swatches { get; set; }
+        public static List<Swatch> Swatches { get; set; }
 
         public ICommand ApplyPrimaryCommand { get; set; }
 

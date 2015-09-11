@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Microsoft.Practices.Prism.Commands;
 namespace SuicSoft.LittlesPDFMerge.Windows
 {
     class MergerViewModel 
@@ -21,7 +22,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         MainWindow window = (MainWindow)Application.Current.MainWindow;
         public MergerViewModel()
         {
-            MergeCommand = new ActionCommand(() => Save());
+            MergeCommand = new DelegateCommand(Save, CanMerge);
             #region AddFileComand
             AddFileCommand = new ActionCommand(() =>
                 {
@@ -41,6 +42,10 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             #endregion
             MoveUpCommand = new ActionCommand(() => Files.MoveUp(window.merger.f.SelectedIndex));
             MoveDownCommand = new ActionCommand(() => Files.MoveDown(window.merger.f.SelectedIndex));
+        }
+        public bool CanMerge()
+        {
+            return Files.Count > 0;
         }
         public List<PDFItem> Files = new List<PDFItem>();
         public static ICommand MergeCommand { get; set; }
@@ -131,6 +136,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                     break;
             }
             window.Dispatcher.Invoke(new Action(() => window.merger.f.ItemsSource = Files));
+            MergeCommand = new DelegateCommand(Save, CanMerge);
         }
 
         public void Save()
