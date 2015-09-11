@@ -80,6 +80,9 @@
     </ApplicationDefinition>
     <Compile Include="Binder.cs" />
     <Compile Include="Extension.cs" />
+    <Compile Include="ToastWindow.xaml.cs">
+      <DependentUpon>ToastWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View Models\MergerViewModel.cs" />
     <Compile Include="PDFItem.cs" />
     <Compile Include="User Controls\About.xaml.cs">
@@ -102,6 +105,10 @@
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="View Models\ViewModel.cs" />
+    <Page Include="ToastWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="User Controls\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

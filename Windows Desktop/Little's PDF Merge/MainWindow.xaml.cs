@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -28,6 +29,8 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             //Switch to dark if past 5:00 pm.
             if (DateTime.Now.TimeOfDay < new TimeSpan(7, 0, 0) | DateTime.Now.TimeOfDay > new TimeSpan(17, 0, 0))
                 new PaletteHelper().SetLightDark(true);
+            ToastWindow win = new ToastWindow();
+            win.Show();
         }
     }
 }
