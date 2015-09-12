@@ -1,11 +1,13 @@
-The SuicSoft Open License (SOL)
+### The SuicSoft Open License (SOL)
 
-Copyright (c) 2014-2015 SuicSoft
+<b>Copyright (c) 2014-2015 SuicSoft</b>
 
-1. "Source Code" means the C# .NET Code found in this GitHub Repository.
-2. "SuicSoft Software" means the original software created by SuicSoft.
-3. "Potentially Unwanted Programs" are unwanted programs such as Trojans, spyware and adware, along with other malware which may compromise your privacy.
-4. "Malware" can be computer viruses, worms, trojan horses, ransomware, spyware, adware, scareware, and other malicious programs.
+
+1. <i>"Source Code" means the C# .NET Code found in this GitHub Repository.</i>
+2. <i>"SuicSoft Software" means the original software created by SuicSoft.</i>
+3. <i>"Potentially Unwanted Programs" are unwanted programs such as Trojans, spyware and adware, along with other malware which may compromise your privacy.</i>
+4. <i>"Malware" can be computer viruses, worms, trojan horses, ransomware, spyware, adware, scareware, and other malicious programs.</i>
+
 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -17,16 +19,16 @@ subject to the following conditions:
 
 For users:
 
-1. Selling copies of this SuicSoft Software is not allowed.
-2. You may not host downloads of this SuicSoft Software on websites which serve malware with or without the authors permisson. 
+1. Selling copies of this SuicSoft Software is <b>NOT</b> allowed.
+2. You may <b>NOT</b> host downloads of this SuicSoft Software on websites which serve malware with or without the authors permisson. 
 
 For Developers/Source Code users:
 
-1. You may copy the Source Code as you like, but only use the .XAML files as a reference - you cannot just copy our design and change the branding.
+1. You may copy the Source Code as you like, but only use the .XAML files as a reference - you <b>CANNOT</b> just copy our design and change the branding.
 2. If you publish a software using our Source Code, you must make the published software 
 Open Source (under an Open Source license, like the GNU GPL or even our very own SOL!).
-3. If you are distrubuting/publishing a software made with our Source Code, you must NOT bundle Potentially Unwanted Programs, and you must NOT create computer viruses, worms, trojan horses, ransomware, spyware, adware and scareware from the Source Code.
-4. Hosting the Source Code without permission from SuicSoft is NOT allowed
+3. If you are distrubuting/publishing a software made with our Source Code, you must <b>NOT</b> bundle Potentially Unwanted Programs, and you must <b>NOT</b> create computer viruses, worms, trojan horses, ransomware, spyware, adware and scareware from the Source Code.
+4. Hosting the Source Code without permission from SuicSoft is <b>NOT</b> allowed
 
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
