@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using System.Linq;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using Microsoft.Win32;
 namespace SuicSoft.LittlesPDFMerge.Windows
 {
+    /// <summary>
+    /// The view model for the palette selector.
+    /// </summary>
     public class PaletteSelectorViewModel
     {
         #region Variables

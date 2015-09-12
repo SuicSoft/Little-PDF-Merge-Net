@@ -93,7 +93,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// <summary>
         /// The output path.
         /// </summary>
-
         public string Output
         {
             get { return d; }
@@ -112,6 +111,10 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             //Open the document
             b.Open();
         }
+        /// <summary>
+        /// Initailizes the combiner with a password
+        /// </summary>
+        /// <param name="pass"></param>
         public Combiner(SecureString pass)
         {
             b = new Document();

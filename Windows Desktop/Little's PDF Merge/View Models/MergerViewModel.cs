@@ -44,10 +44,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             return Files.Count > 0;
         }
         public List<PDFItem> Files = new List<PDFItem>();
-        public static ICommand MergeCommand { get; set; }
-        public static ICommand AddFileCommand { get; set; }
-        public static ICommand MoveUpCommand { get; set; }
-        public static ICommand MoveDownCommand { get; set; }
         /// <summary>
         /// Shows a password box for a pdf
         /// </summary>
