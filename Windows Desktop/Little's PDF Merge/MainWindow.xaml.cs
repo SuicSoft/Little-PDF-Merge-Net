@@ -1,20 +1,8 @@
 ﻿using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SuicSoft.LittlesPDFMerge.Windows
 {
@@ -29,8 +17,16 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             //Switch to dark if past 5:00 pm.
             if (DateTime.Now.TimeOfDay < new TimeSpan(7, 0, 0) | DateTime.Now.TimeOfDay > new TimeSpan(17, 0, 0))
                 new PaletteHelper().SetLightDark(true);
-            ToastWindow win = new ToastWindow();
-            win.Show();
+        }
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            try
+            {
+                new PaletteHelper().ReplaceAccentColor(new MaterialDesignColors.SwatchesProvider().Swatches.ToList()[(int)Registry.GetValue("HKEY_CURRENT_USER\\SOFTWARE\\LittlePDFMerge", "Accent", 0)]);
+                new PaletteHelper().ReplacePrimaryColor(new MaterialDesignColors.SwatchesProvider().Swatches.ToList()[(int)Registry.GetValue("HKEY_CURRENT_USER\\SOFTWARE\\LittlePDFMerge", "Primary", 0)]);
+            }
+            catch { }
+            base.OnSourceInitialized(e);
         }
     }
 }
