@@ -2,7 +2,11 @@ The SuicSoft Open License (SOL)
 
 Copyright (c) 2014-2015 SuicSoft
 
-"Source Code" means the C# .NET Code found in this GitHub Repository
+1. "Source Code" means the C# .NET Code found in this GitHub Repository.
+2. "SuicSoft Software" means the original software created by SuicSoft.
+3. "Potentially Unwanted Programs" are unwanted programs such as Trojans, spyware and adware, along with other malware which may compromise your privacy.
+4. "Malware" can be computer viruses, worms, trojan horses, ransomware, spyware, adware, scareware, and other malicious programs.
+
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -11,16 +15,18 @@ to use, copy, modify, merge, publish, distribute and sublicense of the Software,
 and to permit persons to whom the Software is furnished to do so, 
 subject to the following conditions:
 
+For users:
+
+1. Selling copies of this SuicSoft Software is not allowed.
+2. You may not host downloads of this SuicSoft Software on websites which serve malware with or without the authors permisson. 
+
+For Developers/Source Code users:
+
 1. You may copy the Source Code as you like, but only use the .XAML files as a reference - you cannot just copy our design and change the branding.
-
-2. Selling copies of this Software is not allowed.
-
-3. If you publish a software using our Source Code, you must make the published
-software Open Source (under an Open Source license, like the GNU GPL or even our very own SOL!).
-
-4. You are NOT allowed to host the Source Code yourself, if you haven't changed anything.
-
-5. If you are distrubuting/publishing a software made with our Source Code, you must not bundle Potentially Unwanted Programs (what are they? http://www.webopedia.com/TERM/P/PUP.html), and you must not create computer viruses, worms, trojan horses, ransomware, spyware, adware and scareware from the Source Code.
+2. If you publish a software using our Source Code, you must make the published software 
+Open Source (under an Open Source license, like the GNU GPL or even our very own SOL!).
+3. If you are distrubuting/publishing a software made with our Source Code, you must NOT bundle Potentially Unwanted Programs, and you must NOT create computer viruses, worms, trojan horses, ransomware, spyware, adware and scareware from the Source Code.
+4. Hosting the Source Code without permission from SuicSoft is NOT allowed
 
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
