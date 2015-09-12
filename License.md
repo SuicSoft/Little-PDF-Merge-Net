@@ -29,6 +29,8 @@ For Developers/Source Code users:
 Open Source (under an Open Source license, like the GNU GPL or even our very own SOL!).
 3. If you are distrubuting/publishing a software made with our Source Code, you must <b>NOT</b> bundle Potentially Unwanted Programs, and you must <b>NOT</b> create computer viruses, worms, trojan horses, ransomware, spyware, adware and scareware from the Source Code.
 4. Hosting the Source Code without permission from SuicSoft is <b>NOT</b> allowed
+5. The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
