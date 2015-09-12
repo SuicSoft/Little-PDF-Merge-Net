@@ -17,12 +17,12 @@ to use, copy, modify, merge, publish, distribute and sublicense of the Software,
 and to permit persons to whom the Software is furnished to do so, 
 subject to the following conditions:
 
-<b>For users:</b>
+<b>For Everyone:</b>
 
 1. Selling copies of this SuicSoft Software is <b>NOT</b> allowed.
 2. You may <b>NOT</b> host downloads of this SuicSoft Software on websites which serve malware with or without the authors permisson. 
 
-For Developers/Source Code users:
+<b>For Developers/Source Code users:</b>
 
 1. You may copy the Source Code as you like, but only use the .XAML files as a reference - you <b>CANNOT</b> just copy our design and change the branding.
 2. If you publish a software using our Source Code, you must make the published software 
