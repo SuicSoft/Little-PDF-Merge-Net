@@ -1,11 +1,33 @@
-﻿using MaterialDesignColors;
+﻿/* SuicSoft 2014-2015
+ * Contact : mailto:suiciwd@gmail.com
+ * Web : http://suicsoft.com | http://suicsoft.github.io
+ * Github : http://github.com/suicsoft/Little-PDF-Merge
+ 
+ * Read more in LICENSE.md
+ */
+
+/* File Description
+ * The view model used for the palette selector.
+ */
+
+//For palette.
+using MaterialDesignColors;
+//For palette
 using MaterialDesignThemes.Wpf;
+//For the arrays
 using System.Collections.Generic;
+//For the commands
 using System.Windows.Input;
+//For those linq stuff.
 using System.Linq;
+//For disk I/O.
 using System.IO;
+//WPF.
 using System.Windows;
+//Registry and dialogs.
 using Microsoft.Win32;
+using Microsoft.Practices.Prism.Commands;
+using System;
 namespace SuicSoft.LittlesPDFMerge.Windows
 {
     /// <summary>
@@ -13,6 +35,25 @@ namespace SuicSoft.LittlesPDFMerge.Windows
     /// </summary>
     public class PaletteSelectorViewModel
     {
+        #region Constructor
+        /// <summary>
+        /// Initailizes the palette selector view model.
+        /// </summary>
+        public PaletteSelectorViewModel()
+        {
+            //Set variables
+            Swatches = new SwatchesProvider().Swatches.ToList();
+            ToggleBaseCommand = new DelegateCommand<object>(SetIsDark);
+            ResetCommand = new DelegateCommand(Reset);
+            ApplyPrimaryCommand = new DelegateCommand<Swatch>(ApplyPrimary);
+            ApplyAccentCommand = new DelegateCommand<Swatch>(ApplyAccent);
+            SaveCommand = new DelegateCommand(Save);
+        }
+        public void SetIsDark(object o)
+        {
+            new PaletteHelper().SetLightDark((bool)o);
+        }
+        #endregion
         #region Variables
         /// <summary>
         /// The index of the primary color
@@ -51,19 +92,12 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         public ICommand ToggleBaseCommand { get; set; }
         #endregion
 
-        public PaletteSelectorViewModel()
-        {
-            Swatches = new SwatchesProvider().Swatches.ToList();
-            ToggleBaseCommand = new ActionCommand(o => new PaletteHelper().SetLightDark((bool)o));
-            ResetCommand = new ActionCommand(() => Reset());
-            ApplyPrimaryCommand = new ActionCommand(o => ApplyPrimary((Swatch)o));
-            ApplyAccentCommand = new ActionCommand(o => ApplyAccent((Swatch)o));
-            SaveCommand = new ActionCommand(() => Save());
-        }
+        #region Methods
+          #region Save / Reset
         /// <summary>
         /// Save the color settings
         /// </summary>
-        private static void Save()
+        public static void Save()
         {
             //Save accent.
             Registry.SetValue("HKEY_CURRENT_USER\\SOFTWARE\\SuicSoft\\LittlePDFMerge", "Accent", AccentIndex);
@@ -73,7 +107,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// <summary>
         /// Reset the color settings
         /// </summary>
-        private static void Reset()
+        public static void Reset()
         {
             //Replace primary with default.
             ApplyPrimary(Swatches[1]);
@@ -82,11 +116,14 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             //Write the defaults to the registry.
             Save();
         }
+        #endregion
+
+          #region Apply Colors
         /// <summary>
         /// Sets the primary color.
         /// </summary>
         /// <param name="swatch">The primary color to set.</param>
-        private static void ApplyPrimary(Swatch swatch)
+        public static void ApplyPrimary(Swatch swatch)
         {
             //Replace the color.
             new PaletteHelper().ReplacePrimaryColor(swatch);
@@ -97,12 +134,14 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// Sets the accent color.
         /// </summary>
         /// <param name="swatch">The accent color to set.</param>
-        private static void ApplyAccent(Swatch swatch)
+        public static void ApplyAccent(Swatch swatch)
         {
             //Replace the color.
             new PaletteHelper().ReplaceAccentColor(swatch);
             //Set the color index
             AccentIndex = Swatches.FindIndex(x => x == swatch);
         }
+        #endregion
+        #endregion
     }
 }

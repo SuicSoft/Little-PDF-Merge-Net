@@ -74,7 +74,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ActionCommand.cs" />
     <Compile Include="Binder.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="View Models\MergerViewModel.cs" />
