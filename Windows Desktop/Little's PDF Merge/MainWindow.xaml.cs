@@ -33,9 +33,9 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         private static void LoadColors()
         {
             //Load accent.
-            new PaletteHelper().ReplaceAccentColor(new SwatchesProvider().Swatches.ToList()[(int)Registry.GetValue("HKEY_CURRENT_USER\\SOFTWARE\\SuicSoft\\LittlePDFMerge", "Accent", 1)]);
+            new PaletteHelper().ReplaceAccentColor(new SwatchesProvider().Swatches.ToList()[(int)Registry.GetValue("HKEY_CURRENT_USER\\SOFTWARE\\SuicSoft\\LittlePDFMerge", "Accent",9)]);
             //Load primary.
-            new PaletteHelper().ReplacePrimaryColor(new SwatchesProvider().Swatches.ToList()[(int)Registry.GetValue("HKEY_CURRENT_USER\\SOFTWARE\\SuicSoft\\LittlePDFMerge", "Primary", 9)]);
+            new PaletteHelper().ReplacePrimaryColor(new SwatchesProvider().Swatches.ToList()[(int)Registry.GetValue("HKEY_CURRENT_USER\\SOFTWARE\\SuicSoft\\LittlePDFMerge", "Primary", 1)]);
         }
     }
 }

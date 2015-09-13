@@ -100,9 +100,9 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         private static void ApplyAccent(Swatch swatch)
         {
             //Replace the color.
-            new PaletteHelper().ReplacePrimaryColor(swatch);
+            new PaletteHelper().ReplaceAccentColor(swatch);
             //Set the color index
-            PrimaryIndex = Swatches.FindIndex(x => x == swatch);
+            AccentIndex = Swatches.FindIndex(x => x == swatch);
         }
     }
 }

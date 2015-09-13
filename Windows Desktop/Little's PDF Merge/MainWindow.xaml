@@ -30,7 +30,7 @@
                     <Button x:Name="bm" x:Uid="bm" Background="Transparent" Foreground="{DynamicResource PrimaryHueLightBrush}" Command="{Binding ElementName=merger, Path=DataContext.MergeCommand}" Content="Merge"/>
                     <Button x:Name="ub" x:Uid="ub" Background="Transparent" Foreground="{DynamicResource PrimaryHueLightBrush}" Command="{Binding ElementName=merger, Path=DataContext.MoveUpCommand}" Content="Up" Padding="0" Width="40" Margin="6"/>
                     <Button x:Name="db" x:Uid="db" Background="Transparent" Foreground="{DynamicResource PrimaryHueLightBrush}" Command="{Binding ElementName=merger, Path=DataContext.MoveDownCommand}" Content="Down" Padding="0" Width="50" Margin="6"/>
-                    <Button x:Uid="rb" x:Name="rb" Background="Transparent" Foreground="{DynamicResource PrimaryHueLightBrush}" Content="Remove" Padding="0" Width="76" Margin="6"/>
+                    <Button x:Uid="rb" x:Name="rb" Background="Transparent" Foreground="{DynamicResource PrimaryHueLightBrush}" Command="{Binding ElementName=merger, Path=DataContext.RemoveCommand}" Content="Remove" Padding="0" Width="76" Margin="6"/>
                 </StackPanel>
             </StackPanel>
         </wpf:ColorZone>

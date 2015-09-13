@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ListBox ItemsSource="{Binding Files}" x:Name="f" Background="{DynamicResource MaterialDesignPaper}">
+        <ListBox ItemsSource="{Binding Path=Files , UpdateSourceTrigger=LostFocus}" x:Name="f" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" Background="{DynamicResource MaterialDesignPaper}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding path}"/>
