@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.Practices.Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -9,24 +12,39 @@ namespace SuicSoft.LittlesPDFMerge.Windows
 {
     class ViewModel
     {
+        public ViewModel()
+        {
+            NetworkChange.NetworkAvailabilityChanged += NetworkChange_NetworkAvailabilityChanged;
+        }
+        public bool isavalible = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
+        void NetworkChange_NetworkAvailabilityChanged(object sender, NetworkAvailabilityEventArgs e)
+        {
+            isavalible = e.IsAvailable;
+            mOpenSupportWebsiteCommand.RaiseCanExecuteChanged();
+            OpenSupportWebsiteCommand.RaiseCanExecuteChanged();
+        }
         /// <summary>
         /// Command for opening a website.
         /// </summary>
-        public ICommand OpenSupportWebsiteCommand
+        public DelegateCommand<string> OpenSupportWebsiteCommand
         {
             get
             {
-                if (mOpenSupportWebsiteCommand == null)
-                    mOpenSupportWebsiteCommand = new RelayCommand<object>(OpenWebsite);
-
+                mOpenSupportWebsiteCommand = mOpenSupportWebsiteCommand == null ? new DelegateCommand<string>(OpenWebsite, CanAccessWeb) : mOpenSupportWebsiteCommand;
                 return mOpenSupportWebsiteCommand;
             }
         }
-        private RelayCommand<object> mOpenSupportWebsiteCommand;
-
-        private void OpenWebsite(object url)
+        private DelegateCommand<string> mOpenSupportWebsiteCommand;
+        public bool CanAccessWeb(string url)
         {
-            System.Diagnostics.Process.Start(url as string);
+            return isavalible ? new Ping().Send(new Uri((string)url).Host).Status == IPStatus.Success ? true : false : false;
+        }
+        private void OpenWebsite(string url)
+        {
+            new Thread(new System.Threading.ThreadStart(delegate()
+                 {
+                     System.Diagnostics.Process.Start(url as string);
+                 })).Start();
         }
     }
 }

@@ -3,8 +3,8 @@ using System.Windows.Input;
 namespace SuicSoft.LittlesPDFMerge.Windows
 {
     /// <summary>
-	/// A basic implementation of ICommand that wraps a method that takes no parameters or a method that takes one parameter.
-	/// </summary>
+    /// A basic implementation of ICommand that wraps a method that takes no parameters or a method that takes one parameter.
+    /// </summary>
     public sealed class ActionCommand : ICommand
     {
         private Action action;

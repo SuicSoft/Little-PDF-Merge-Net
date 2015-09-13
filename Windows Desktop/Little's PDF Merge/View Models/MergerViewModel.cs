@@ -30,7 +30,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             Files = new List<PDFItem>();
             MergeCommand = new DelegateCommand(Save, CanMerge);
             #region AddFileComand
-            AddFileCommand = new ActionCommand(() =>
+            AddFileCommand = new DelegateCommand(() =>
             {
                 //To get the button click animation to show. We need to open the Microsoft.Win32.OpenFileDialog in a new thread.
                 new System.Threading.Thread(new System.Threading.ThreadStart(delegate()
