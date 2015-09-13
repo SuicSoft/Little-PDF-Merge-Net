@@ -6,7 +6,7 @@ Free to use, distrubute and modify.
 <b>You can't sell this, and remove all '<i>SuicSoft</i>' stuff if you're using it </b>
 
 <b>NO COPYING OF OUR USER INTERFACE IS ALLOWED, IF YOU WANT TO MAKE A MATERIAL DESIGN WINDOWS PROGRAM, CHECK OUT MATERIAL-DESIGN-IN-XAML-TOOLKIT, AND USE IT YOURSELF</B>
-(keep the dog if you like!) - read more in <b>LICENSE.txt</b>
+(keep the dog if you like!) - read more in <b>LICENSE.md</b>
 
 # SuicSoft. Better Software. Happier PCs
 SuicSoft's great <b>FREEWARE</b> are <b>badware</b> free (free from those annoying stuff...you know)
