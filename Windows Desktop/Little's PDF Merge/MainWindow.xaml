@@ -4,7 +4,7 @@
         xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:SuicSoft.LittlesPDFMerge.Windows"
-        Title="MainWindow" Height="443" Width="719" GlowBrush="{DynamicResource WindowTitleColorBrush}">
+        Title="Little's PDF Merge" Height="443" Width="719" Icon="app.ico" ShowIconOnTitleBar="False" GlowBrush="{DynamicResource WindowTitleColorBrush}">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>

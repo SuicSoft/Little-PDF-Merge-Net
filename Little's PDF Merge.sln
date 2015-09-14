@@ -27,6 +27,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginExample", "PluginExam
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Little's PDF Merge", "Windows Desktop\Little's PDF Merge\Little's PDF Merge.csproj", "{2E050301-FD86-4504-BFDA-5384A21B7BBA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{09F54B8F-4B90-4891-A153-A1253B8D77C0}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Downloads\icons.zip = ..\..\..\..\Downloads\icons.zip
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Windows Apps\Littles PDF Merge.Shared\Littles PDF Merge.Shared.projitems*{965aceee-1b05-4332-9a11-6cbdb04c3281}*SharedItemsImports = 13
