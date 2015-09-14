@@ -5,7 +5,7 @@ REM Build Project
 C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe /property:Configuration=Release "Little's PDF Merge.sln" /maxcpucount:%NUMBER_OF_PROCESSORS%
 for %%* in (.) do echo Creating Shortcut For %%~nx* ...
 REM Write Shortcut Script
-Set MyFile=%~dp0\Windows Desktop\Little's PDF Merge Windows\bin\Release\LPM.Windows.exe
+Set MyFile=%~dp0\Windows Desktop\Little's PDF Merge\bin\Release\LPM.Windows.exe
 Set ShorcutName=Little's PDF Merge
 (
 echo Call Shortcut("%MyFile%","%ShorcutName%"^)
