@@ -60,17 +60,18 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                 })) { Name = "Open file dialog thread." }.Start();
             });
             #endregion
-            MoveUpCommand = new DelegateCommand(MoveUp, CanMove);
-            MoveDownCommand = new DelegateCommand(MoveDown, CanMove);
+            MoveUpCommand = new DelegateCommand(MoveUp, CanMoveUp);
+            MoveDownCommand = new DelegateCommand(MoveDown, CanMoveDown);
             RemoveCommand = new DelegateCommand(Remove, CanMerge);
         }
         #endregion
 
         #region Variables
+        int _si = 0;
         /// <summary>
         /// The selected listbox index.
         /// </summary>
-        public int SelectedIndex { get; set; }
+        public int SelectedIndex { get { return _si; } set { _si = value; MoveDownCommand.RaiseCanExecuteChanged(); MoveUpCommand.RaiseCanExecuteChanged(); } }
         /// <summary>
         /// A list of all the pdf files added.
         /// </summary>
@@ -82,9 +83,13 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         {
             return Files.Count > 0;
         }
-        public bool CanMove()
+        public bool CanMoveUp()
         {
-            return Files.Count > 1;
+            return CanMerge() & SelectedIndex != 0;
+        }
+        public bool CanMoveDown()
+        {
+            return CanMerge() & SelectedIndex + 1 != Files.Count;
         }
         #endregion
 
@@ -92,13 +97,29 @@ namespace SuicSoft.LittlesPDFMerge.Windows
           #region Move Up / Down
         public void MoveUp()
         {
-            Files.MoveUp(SelectedIndex);
+            Move(false);
             Application.Current.Dispatcher.Invoke(new Action(() => ((MainWindow)Application.Current.MainWindow).merger.f.Items.Refresh()));
         }
         public void MoveDown()
         {
-            Files.MoveDown(SelectedIndex);
+            Move(true);
             Application.Current.Dispatcher.Invoke(new Action(() => ((MainWindow)Application.Current.MainWindow).merger.f.Items.Refresh()));
+        }
+        private void Move (bool up)
+        {
+            //The old index
+            int indexold = SelectedIndex;
+            //The selected item
+            PDFItem dataItem = Files[SelectedIndex];
+            int index = SelectedIndex;
+            if (!up) index--;
+            if (up) index++;
+            Files.Remove(dataItem);
+            Files.Insert(index, dataItem);
+            SelectedIndex = 0;
+            SelectedIndex = index;
+            MoveDownCommand.RaiseCanExecuteChanged();
+            MoveUpCommand.RaiseCanExecuteChanged();
         }
         #endregion
 
