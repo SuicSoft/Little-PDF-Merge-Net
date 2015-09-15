@@ -37,7 +37,11 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         private DelegateCommand<string> mOpenSupportWebsiteCommand;
         public bool CanAccessWeb(string url)
         {
-            using(Ping ping = new Ping()) return isavalible ? ping.Send(new Uri((string)url).Host).Status == IPStatus.Success ? true : false : false;
+            try
+            {
+                using (Ping ping = new Ping()) return isavalible ? ping.Send(new Uri((string)url).Host).Status == IPStatus.Success ? true : false : false;
+            }
+            catch { return false; }
         }
         private void OpenWebsite(string url)
         {

@@ -28,6 +28,9 @@ using System.Windows;
 using Microsoft.Win32;
 using Microsoft.Practices.Prism.Commands;
 using System;
+using System.Windows.Media.Animation;
+using System.Windows.Controls;
+using System.Threading;
 namespace SuicSoft.LittlesPDFMerge.Windows
 {
     /// <summary>
@@ -125,10 +128,30 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// <param name="swatch">The primary color to set.</param>
         public static void ApplyPrimary(Swatch swatch)
         {
-            //Replace the color.
-            new PaletteHelper().ReplacePrimaryColor(swatch);
-            //Set the color index
-            PrimaryIndex = Swatches.FindIndex(x => x == swatch);
+            ThreadPool.QueueUserWorkItem(delegate
+            {
+                //Replace the color.
+                new PaletteHelper().ReplacePrimaryColor(swatch);
+                //Set the color index
+                PrimaryIndex = Swatches.FindIndex(x => x == swatch);
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    ((MainWindow)Application.Current.MainWindow).clr.Mode = ColorZoneMode.PrimaryDark;
+                    Panel.SetZIndex(((MainWindow)Application.Current.MainWindow).Ink, 1);
+                    Grid.SetRow(((MainWindow)Application.Current.MainWindow).Ink, 0);
+                    ((Storyboard)((MainWindow)Application.Current.MainWindow).Resources["InkSplash"]).Completed += PaletteSelectorViewModel_Completed;
+                    ((Storyboard)((MainWindow)Application.Current.MainWindow).Resources["InkSplash"]).Begin();
+                }));
+                
+            }, null);
+        }
+
+        static void PaletteSelectorViewModel_Completed(object sender, EventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).clr.Mode = ColorZoneMode.Accent;
+            //Add some ink.
+            Panel.SetZIndex(((MainWindow)Application.Current.MainWindow).Ink, 0);
+            Grid.SetRow(((MainWindow)Application.Current.MainWindow).Ink, 1);
         }
         /// <summary>
         /// Sets the accent color.
@@ -136,10 +159,14 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// <param name="swatch">The accent color to set.</param>
         public static void ApplyAccent(Swatch swatch)
         {
-            //Replace the color.
-            new PaletteHelper().ReplaceAccentColor(swatch);
-            //Set the color index
-            AccentIndex = Swatches.FindIndex(x => x == swatch);
+            ThreadPool.QueueUserWorkItem(delegate
+            {
+                //Replace the color.
+                new PaletteHelper().ReplaceAccentColor(swatch);
+                //Set the color index
+                AccentIndex = Swatches.FindIndex(x => x == swatch);
+            }, null);
+            
         }
         #endregion
         #endregion

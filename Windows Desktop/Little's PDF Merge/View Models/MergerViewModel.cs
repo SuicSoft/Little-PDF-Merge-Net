@@ -55,7 +55,11 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                     openFileDialog.Multiselect = true;
                     if (openFileDialog.ShowDialog() == true)
                     {
-                        Parallel.For(0, openFileDialog.FileNames.Length, i => AddInputFile(openFileDialog.FileNames[i]));
+                        for (int i = 0; i < openFileDialog.FileNames.Length; i++)
+                        {
+                            AddInputFile(openFileDialog.FileNames[i]);
+                        }
+                        //Parallel.For(0, openFileDialog.FileNames.Length, i => AddInputFile(openFileDialog.FileNames[i]));
                     }
                 })) { Name = "Open file dialog thread." }.Start();
             });
