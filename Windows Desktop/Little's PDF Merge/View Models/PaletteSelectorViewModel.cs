@@ -31,6 +31,7 @@ using System;
 using System.Windows.Media.Animation;
 using System.Windows.Controls;
 using System.Threading;
+using System.Windows.Media;
 namespace SuicSoft.LittlesPDFMerge.Windows
 {
     /// <summary>
@@ -46,17 +47,14 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         {
             //Set variables
             Swatches = new SwatchesProvider().Swatches.ToList();
-            ToggleBaseCommand = new DelegateCommand<object>(SetIsDark);
+            ToggleBaseCommand = new DelegateCommand<object>((o) => new PaletteHelper().SetLightDark((bool)o));
             ResetCommand = new DelegateCommand(Reset);
             ApplyPrimaryCommand = new DelegateCommand<Swatch>(ApplyPrimary);
             ApplyAccentCommand = new DelegateCommand<Swatch>(ApplyAccent);
             SaveCommand = new DelegateCommand(Save);
         }
-        public void SetIsDark(object o)
-        {
-            new PaletteHelper().SetLightDark((bool)o);
-        }
         #endregion
+
         #region Variables
         /// <summary>
         /// The index of the primary color
@@ -128,30 +126,31 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// <param name="swatch">The primary color to set.</param>
         public static void ApplyPrimary(Swatch swatch)
         {
+            EventHandler h = (sender, e) =>
+            {
+                ((ColorZone)((VisualBrush)((MainWindow)Application.Current.MainWindow).Ink.Fill).Visual).Mode = ColorZoneMode.Accent;
+                //Add some ink.
+                Panel.SetZIndex(((MainWindow)Application.Current.MainWindow).Ink, 0);
+                Grid.SetRow(((MainWindow)Application.Current.MainWindow).Ink, 1);
+            };
+            //Multithreading to get a smooth ink effect
             ThreadPool.QueueUserWorkItem(delegate
             {
                 //Replace the color.
                 new PaletteHelper().ReplacePrimaryColor(swatch);
                 //Set the color index
                 PrimaryIndex = Swatches.FindIndex(x => x == swatch);
+                //Start the animation
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    ((MainWindow)Application.Current.MainWindow).clr.Mode = ColorZoneMode.PrimaryDark;
+                    ((ColorZone)((VisualBrush)((MainWindow)Application.Current.MainWindow).Ink.Fill).Visual).Mode  = ColorZoneMode.PrimaryDark;
                     Panel.SetZIndex(((MainWindow)Application.Current.MainWindow).Ink, 1);
                     Grid.SetRow(((MainWindow)Application.Current.MainWindow).Ink, 0);
-                    ((Storyboard)((MainWindow)Application.Current.MainWindow).Resources["InkSplash"]).Completed += PaletteSelectorViewModel_Completed;
+                    ((Storyboard)((MainWindow)Application.Current.MainWindow).Resources["InkSplash"]).Completed += h;
                     ((Storyboard)((MainWindow)Application.Current.MainWindow).Resources["InkSplash"]).Begin();
                 }));
                 
             }, null);
-        }
-
-        static void PaletteSelectorViewModel_Completed(object sender, EventArgs e)
-        {
-            ((MainWindow)Application.Current.MainWindow).clr.Mode = ColorZoneMode.Accent;
-            //Add some ink.
-            Panel.SetZIndex(((MainWindow)Application.Current.MainWindow).Ink, 0);
-            Grid.SetRow(((MainWindow)Application.Current.MainWindow).Ink, 1);
         }
         /// <summary>
         /// Sets the accent color.
@@ -164,7 +163,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                 //Replace the color.
                 new PaletteHelper().ReplaceAccentColor(swatch);
                 //Set the color index
-                AccentIndex = Swatches.FindIndex(x => x == swatch);
+                Application.Current.Dispatcher.Invoke(new Action(() =>AccentIndex = Swatches.FindIndex(x => x == swatch)));
             }, null);
             
         }

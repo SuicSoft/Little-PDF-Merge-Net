@@ -20,21 +20,23 @@
             <Ellipse.Fill>
                 <VisualBrush>
                     <VisualBrush.Visual>
-                        <wpf:ColorZone x:Name="clr" Mode="Accent" Width="115" Height="115"/>
+                        <wpf:ColorZone Mode="Accent" Width="1" Height="1" />
                     </VisualBrush.Visual>
                 </VisualBrush>
             </Ellipse.Fill>
         </Ellipse>
-        <wpf:ColorZone x:Name="colorzone" Height="90" Padding="10" Effect="{StaticResource MaterialDesignShadowDepth2}" Mode="PrimaryMid">
+        <wpf:ColorZone x:Name="colorzone" Height="90" Effect="{StaticResource MaterialDesignShadowDepth2}" Mode="PrimaryMid">
             <StackPanel>
                 <Grid>
-                    <ToggleButton HorizontalAlignment="Left" Style="{StaticResource MaterialDesignHamburgerToggleButton}" x:Name="MenuToggleButton">
+                    <Button HorizontalAlignment="Left" Margin="5,5,0,0" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="Transparent" Height="Auto" Padding="4" BorderBrush="{x:Null}">
+                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" Foreground="White" x:Name="MenuToggleButton">
                         <ToggleButton.Triggers>
                             <EventTrigger RoutedEvent="ToggleButton.Click">
                                 <BeginStoryboard Storyboard="{DynamicResource InkSplash}"/>
                             </EventTrigger>
                         </ToggleButton.Triggers>
                     </ToggleButton>
+                    </Button>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30">Little's PDF Merge</TextBlock>
                 </Grid>
                 <StackPanel x:Name="ButtonsPanel"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Orientation="Horizontal" >
