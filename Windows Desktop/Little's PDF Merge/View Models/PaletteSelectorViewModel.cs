@@ -47,7 +47,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         {
             //Set variables
             Swatches = new SwatchesProvider().Swatches.ToList();
-            ToggleBaseCommand = new DelegateCommand<object>((o) => new PaletteHelper().SetLightDark((bool)o));
             ResetCommand = new DelegateCommand(Reset);
             ApplyPrimaryCommand = new DelegateCommand<Swatch>(ApplyPrimary);
             ApplyAccentCommand = new DelegateCommand<Swatch>(ApplyAccent);
@@ -59,11 +58,11 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// <summary>
         /// The index of the primary color
         /// </summary>
-        public static int PrimaryIndex;
+        private static int PrimaryIndex;
         /// <summary>
         /// The index if the accent color
         /// </summary>
-        public static int AccentIndex;
+        private static int AccentIndex;
         /// <summary>
         /// A list of all the Material Design swatches
         /// </summary>
@@ -87,10 +86,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// Sets the primary color
         /// </summary>
         public ICommand ApplyPrimaryCommand { get; set; }
-        /// <summary>
-        /// Sets light or dark
-        /// </summary>
-        public ICommand ToggleBaseCommand { get; set; }
         #endregion
 
         #region Methods
@@ -98,17 +93,27 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// <summary>
         /// Save the color settings
         /// </summary>
-        public static void Save()
+        private static void Save()
         {
             //Save accent.
             Registry.SetValue("HKEY_CURRENT_USER\\SOFTWARE\\SuicSoft\\LittlePDFMerge", "Accent", AccentIndex);
             //Save primary.
             Registry.SetValue("HKEY_CURRENT_USER\\SOFTWARE\\SuicSoft\\LittlePDFMerge", "Primary", PrimaryIndex);
         }
+        private static bool _ischecked;
+        public static bool IsChecked
+        {
+            get { return _ischecked; }
+            set
+            {
+                new PaletteHelper().SetLightDark(value);
+                _ischecked = value;
+            }
+        }
         /// <summary>
         /// Reset the color settings
         /// </summary>
-        public static void Reset()
+        private static void Reset()
         {
             //Replace primary with default.
             ApplyPrimary(Swatches[1]);
@@ -124,7 +129,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// Sets the primary color.
         /// </summary>
         /// <param name="swatch">The primary color to set.</param>
-        public static void ApplyPrimary(Swatch swatch)
+        private static void ApplyPrimary(Swatch swatch)
         {
             EventHandler h = (sender, e) =>
             {
@@ -156,7 +161,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// Sets the accent color.
         /// </summary>
         /// <param name="swatch">The accent color to set.</param>
-        public static void ApplyAccent(Swatch swatch)
+        private static void ApplyAccent(Swatch swatch)
         {
             ThreadPool.QueueUserWorkItem(delegate
             {

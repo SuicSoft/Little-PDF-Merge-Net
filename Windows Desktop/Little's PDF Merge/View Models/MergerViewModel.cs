@@ -39,6 +39,8 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         #endregion
 
         #region Constructor (.ctor)
+        bool istopped = false;
+
         public MergerViewModel()
         {
             Files = new List<PDFItem>();
@@ -54,13 +56,11 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                     openFileDialog.Filter = "Portable Document Format (*.pdf)|*.pdf|Text files (*.txt)|*.txt";
                     openFileDialog.Multiselect = true;
                     if (openFileDialog.ShowDialog() == true)
-                    {
+                        //Add the files async.)
                         for (int i = 0; i < openFileDialog.FileNames.Length; i++)
-                        {
-                            AddInputFile(openFileDialog.FileNames[i]);
-                        }
-                        //Parallel.For(0, openFileDialog.FileNames.Length, i => AddInputFile(openFileDialog.FileNames[i]));
-                    }
+                            if (!istopped)
+                                AddInputFile(openFileDialog.FileNames[i]);
+                        
                 })) { Name = "Open file dialog thread." }.Start();
             });
             #endregion
@@ -164,14 +164,14 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// Add a input file.
         /// </summary>
         /// <param name="file">The path of the file</param>
-        private async void AddInputFile(string file)
+        private async Task AddInputFile(string file)
         {
             switch (Combiner.TestSourceFile(File.ReadAllBytes(file)))
             {
                 //File is corrupt pdf.
                 case Combiner.SourceTestResult.Unreadable:
                     //Tell the user the pdf is corrupt.
-                    ((MetroWindow)Application.Current.MainWindow).Dispatcher.Invoke(new Action(() => ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("The file " + Path.GetFileName(file) + " could not be opened as a PDF or image", "Some thing went wrong when opening " + Path.GetFileName(file))));
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() => ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("The file " + Path.GetFileName(file) + " could not be opened as a PDF or image", "Some thing went wrong when opening " + Path.GetFileName(file))));
                     break;
                 //File is a protected pdf.
                 case Combiner.SourceTestResult.Protected:
@@ -180,19 +180,21 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                     {
                         using (PdfReader reader = new PdfReader(file))
                             if (!reader.IsOpenedWithFullPermissions)
-                                ((MetroWindow)Application.Current.MainWindow).Dispatcher.Invoke(new Action(async () =>
+                                Application.Current.Dispatcher.Invoke(new Action(async () =>
                                 {
+                                    istopped = true;
                                     if (MessageDialogResult.Affirmative == await ((MetroWindow)Application.Current.MainWindow).DonNotShowAgainDialog("The file " + " is a protected file", "Opening protected files may not be allowed by the pdf author", "Lawyer"))
                                         //That dog wants to open protected files.
                                         PdfReader.unethicalreading = true;
                                     else
                                         //Exit the method
                                         return;
+                                    istopped = false;
                                 }));
                     }
                     catch
                     {
-                        ((MetroWindow)Application.Current.MainWindow).Dispatcher.Invoke(new Action(() => ShowPasswordBox(file)));
+                        Application.Current.Dispatcher.Invoke(new Action(() => ShowPasswordBox(file)));
                         return;
                     }
                     break;
@@ -207,7 +209,9 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                 //File is unknown
                 case Combiner.SourceTestResult.Unknown:
                     //Show a metro dialog
-                    await ((MetroWindow)Application.Current.MainWindow).Dispatcher.BeginInvoke(new Action(() => ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Invalid format", "The file you selected is not a supported format. More supported formats coming soon.")));
+                    try { 
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() => ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Invalid format", "The file you selected is not a supported format. More supported formats coming soon.")));
+                    }catch{}
                     break;
             }
             //Update Commands
@@ -222,11 +226,12 @@ namespace SuicSoft.LittlesPDFMerge.Windows
           #region Merging
         public void Remove()
         {
-            Files.RemoveAt(SelectedIndex);
+            Try(() =>Files.RemoveAt(SelectedIndex));
             RemoveCommand.RaiseCanExecuteChanged();
             Application.Current.Dispatcher.Invoke(new Action(() => ((MainWindow)Application.Current.MainWindow).merger.f.Items.Refresh()));
         }
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        private static void Try(Action m){try{m();}catch{}}
         public void Save()
         {
             //To get the button click animation to show. We need to open the Microsoft.Win32.SaveFileDialog in a new thread.

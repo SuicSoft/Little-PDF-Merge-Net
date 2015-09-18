@@ -150,7 +150,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                 finally
                 {
                     @string.Dispose();
-                    GC.Collect();
                 }
             }
             return null;
@@ -247,8 +246,10 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                     if (Password != null)
                         using (Stream output = new FileStream(d, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
-                            PdfReader reader = new PdfReader(a.GetBuffer());
-                            PdfEncryptor.Encrypt(reader, output, true, Password.ToUnsecureString(), Password.ToUnsecureString(), PdfWriter.ALLOW_SCREENREADERS);
+                            using (PdfReader reader = new PdfReader(a.GetBuffer()))
+                            {
+                                PdfEncryptor.Encrypt(reader, output, true, Password.ToUnsecureString(), Password.ToUnsecureString(), PdfWriter.ALLOW_SCREENREADERS);
+                            }
                         }
                     else
                         File.WriteAllBytes(d, a.GetBuffer());

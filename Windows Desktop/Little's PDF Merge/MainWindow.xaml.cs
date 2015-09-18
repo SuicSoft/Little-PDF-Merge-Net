@@ -22,8 +22,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             //Load the UI.
             InitializeComponent();
             //Switch to dark if past 5:00 pm.
-            if (DateTime.Now.TimeOfDay < new TimeSpan(7, 0, 0) | DateTime.Now.TimeOfDay > new TimeSpan(17, 0, 0))
-                new PaletteHelper().SetLightDark(true);
+            PaletteSelectorViewModel.IsChecked = DateTime.Now.TimeOfDay < new TimeSpan(7, 0, 0) | DateTime.Now.TimeOfDay > new TimeSpan(17, 0, 0) ? true : false;
             //Load the color palette from the registry.
             LoadColors();
         }
