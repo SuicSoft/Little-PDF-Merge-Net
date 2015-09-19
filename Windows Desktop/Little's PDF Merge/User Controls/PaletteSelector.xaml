@@ -7,8 +7,9 @@
              xmlns:local="clr-namespace:SuicSoft.LittlesPDFMerge.Windows"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
+        <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
             <Setter Property="Margin" Value="0" />
             <Setter Property="CommandParameter" Value="{Binding}" />
@@ -88,14 +89,17 @@
         <Grid Margin="0 16 0 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" Margin="8">
+            <CheckBox x:Name="checkBox" IsChecked="{Binding Auto, Mode=TwoWay}">Auto</CheckBox>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="8" IsEnabled="{Binding IsChecked, ElementName=checkBox, Converter={StaticResource InverseBooleanConverter}}">
                 <TextBlock VerticalAlignment="Center">Light</TextBlock>
-                <ToggleButton Margin="8 0 16 0" IsChecked="{Binding IsChecked}"/>
+                <!--Toggles dark or light-->
+                <ToggleButton Margin="8 0 16 0" IsChecked="{Binding IsChecked , Mode=TwoWay}"/>
                 <TextBlock VerticalAlignment="Center">Dark</TextBlock>
             </StackPanel>
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0 12 0 0">
+            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0 12 0 0">
                 <ItemsControl ItemsSource="{Binding Swatches, Mode=OneTime}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -104,8 +108,8 @@
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
             </ScrollViewer>
-            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Margin="7,7,120,7" Command="{Binding ResetCommand}" Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="81">Reset</Button>
-            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Margin="7,7,25,7" Command="{Binding SaveCommand}" Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="81">Save</Button>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Margin="7,7,120,7" Command="{Binding ResetCommand}" Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="81">Reset</Button>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Margin="7,7,25,7" Command="{Binding SaveCommand}" Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="81">Save</Button>
         </Grid>
     </DockPanel>
 </UserControl>

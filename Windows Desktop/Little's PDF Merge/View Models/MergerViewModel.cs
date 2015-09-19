@@ -201,7 +201,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                 //File is a valid pdf.
                 case Combiner.SourceTestResult.Ok:
                     //Add the pdf to the ListBox.
-                    Files.Add(new PDFItem(file, null));
+                    Application.Current.Dispatcher.Invoke(new Action(() => Files.Add(new PDFItem(file, null))));
                     break;
                 //File is a image (maybe not valid!).
                 case Combiner.SourceTestResult.Image:

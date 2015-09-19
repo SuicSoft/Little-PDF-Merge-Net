@@ -31,7 +31,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -81,6 +81,7 @@
     </ApplicationDefinition>
     <Compile Include="Binder.cs" />
     <Compile Include="Extension.cs" />
+    <Compile Include="InverseBooleanConverter.cs" />
     <Compile Include="View Models\MergerViewModel.cs" />
     <Compile Include="PDFItem.cs" />
     <Compile Include="User Controls\About.xaml.cs">
