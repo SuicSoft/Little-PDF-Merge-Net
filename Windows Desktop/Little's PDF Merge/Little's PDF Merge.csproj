@@ -82,6 +82,11 @@
     <Compile Include="Binder.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="InverseBooleanConverter.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="PDFItem.cs" />
+    <Compile Include="View Models\MergerViewModel.cs" />
+>>>>>>> origin/master
     <Compile Include="User Controls\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
