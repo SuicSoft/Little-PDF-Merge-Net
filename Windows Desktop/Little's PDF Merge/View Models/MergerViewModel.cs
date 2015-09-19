@@ -201,7 +201,13 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                 //File is a valid pdf.
                 case Combiner.SourceTestResult.Ok:
                     //Add the pdf to the ListBox.
-                    Application.Current.Dispatcher.Invoke(new Action(() => Files.Add(new PDFItem(file, null))));
+                    Files.Add(new PDFItem(file, null));
+                    Application.Current.Dispatcher.Invoke(new Action(() => ((MainWindow)Application.Current.MainWindow).merger.f.Items.Refresh()));
+                    //Update Commands
+                    MergeCommand.RaiseCanExecuteChanged();
+                    MoveUpCommand.RaiseCanExecuteChanged();
+                    MoveDownCommand.RaiseCanExecuteChanged();
+                    RemoveCommand.RaiseCanExecuteChanged();
                     break;
                 //File is a image (maybe not valid!).
                 case Combiner.SourceTestResult.Image:
@@ -209,9 +215,11 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                 //File is unknown
                 case Combiner.SourceTestResult.Unknown:
                     //Show a metro dialog
-                    try { 
-                    Application.Current.Dispatcher.BeginInvoke(new Action(() => ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Invalid format", "The file you selected is not a supported format. More supported formats coming soon.")));
-                    }catch{}
+                    try
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(new Action(() => ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Invalid format", "The file you selected is not a supported format. More supported formats coming soon.")));
+                    }
+                    catch { }
                     break;
             }
             //Update Commands
