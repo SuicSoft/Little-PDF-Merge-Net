@@ -36,16 +36,15 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// </summary>
         private static void LoadColors()
         {
+            var clr = new SwatchesProvider().Swatches.ToList();
             new Thread(() =>
-            {
                 //Load accent.
-                new PaletteHelper().ReplaceAccentColor(new SwatchesProvider().Swatches.ToList()[(int)Registry.GetValue(apppath, "Accent", 9)]);
-            }).Start();
+                new PaletteHelper().ReplaceAccentColor(clr[(int)Registry.GetValue(apppath, "Accent", 9)])
+            ).Start();
             new Thread(() =>
-            {
                 //Load primary.
-                new PaletteHelper().ReplacePrimaryColor(new SwatchesProvider().Swatches.ToList()[(int)Registry.GetValue(apppath, "Primary", 1)]);
-            }).Start();
+                new PaletteHelper().ReplacePrimaryColor(clr[(int)Registry.GetValue(apppath, "Primary", 1)])
+            ).Start();
         }
     }
 }

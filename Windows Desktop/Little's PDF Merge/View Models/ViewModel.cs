@@ -41,7 +41,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         {
             try
             {
-                return false;// using (Ping ping = new Ping()) return isavalible ? ping.Send(new Uri((string)url).Host).Status == IPStatus.Success ? true : false : false;
+                using (Ping ping = new Ping()) return isavalible ? ping.Send(new Uri((string)url).Host).Status == IPStatus.Success ? true : false : false;
             }
             catch { return false; }
         }

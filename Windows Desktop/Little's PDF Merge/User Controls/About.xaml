@@ -21,7 +21,7 @@
             <ComboBoxItem>Stable</ComboBoxItem>
         </ComboBox>
         <StackPanel Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Margin="7" Command="{Binding OpenSupportWebsiteCommand}" CommandParameter="https://github.com/SuicSoft/Little-PDF-Merge/issues">
+            <Button Margin="7" Command="{Binding OpenSupportWebsiteCommand}" Style="{StaticResource MaterialDesignRaisedAccentButton}" CommandParameter="https://github.com/SuicSoft/Little-PDF-Merge/issues">
                 <StackPanel Orientation="Horizontal">
                     <Viewbox Width="18" Height="18">
                         <Canvas Width="24" Height="24">
@@ -31,7 +31,7 @@
                     <TextBlock Margin="3">Report a bug</TextBlock>
                 </StackPanel>
             </Button>
-            <Button Margin="7" Command="{Binding OpenSupportWebsiteCommand}" CommandParameter="https://github.com/SuicSoft/Little-PDF-Merge">
+            <Button Margin="7" Command="{Binding OpenSupportWebsiteCommand}" Style="{StaticResource MaterialDesignRaisedAccentButton}" CommandParameter="https://github.com/SuicSoft/Little-PDF-Merge">
                 <StackPanel Orientation="Horizontal">
                     <Viewbox Width="18" Height="18">
                         <Canvas Width="24" Height="24">

@@ -82,11 +82,11 @@
     <Compile Include="Binder.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="InverseBooleanConverter.cs" />
-<<<<<<< HEAD
-=======
-    <Compile Include="PDFItem.cs" />
+    <Compile Include="MainSettings.xaml.cs">
+      <DependentUpon>MainSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View Models\MergerViewModel.cs" />
->>>>>>> origin/master
+    <Compile Include="PDFItem.cs" />
     <Compile Include="User Controls\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -105,6 +105,10 @@
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="View Models\ViewModel.cs" />
+    <Page Include="MainSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="User Controls\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

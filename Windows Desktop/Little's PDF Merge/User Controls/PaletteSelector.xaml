@@ -10,11 +10,12 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
         <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
-        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
             <Setter Property="Margin" Value="0" />
             <Setter Property="CommandParameter" Value="{Binding}" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground">
                 <Setter.Value>
                     <SolidColorBrush Color="{Binding ExemplarHue.Foreground, Mode=OneTime}" />

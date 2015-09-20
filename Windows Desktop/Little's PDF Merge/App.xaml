@@ -18,14 +18,14 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
 
-                <!-- primary color -->
+                <!-- Primary color -->
                 <ResourceDictionary>
-                    <!-- include your primary palette -->
+                    <!-- Include your primary palette -->
                     <ResourceDictionary.MergedDictionaries>
                         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Blue.xaml" />
                     </ResourceDictionary.MergedDictionaries>
                     <!--
-                            include three hues from the primary palette (and the associated forecolours).
+                            Include three hues from the primary palette (and the associated forecolours).
                             Do not rename, keep in sequence; light to dark.
                         -->
 

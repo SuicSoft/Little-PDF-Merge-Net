@@ -12,12 +12,12 @@
     </UserControl.Resources>
     <Grid>
         <DockPanel>
-            <ListBox DockPanel.Dock="Left" x:Name="DemoItemsListBox" Margin="16 16 0 16" SelectedIndex="0" Width="109">
+            <ListBox DockPanel.Dock="Left" x:Name="DemoItemsListBox" Margin="16 16 0 16" SelectedIndex="0" Width="160">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="domain:DemoItem">
                         <Grid>
                             <TextBlock Text="{Binding Name}"/>
-                            <wpf:Ripple Margin="-8,-8,-65,-8"/>
+                            <wpf:Ripple Height="30" Width="160" Margin="-8"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -31,12 +31,16 @@
                         </local:PaletteSelector>
                     </local:DemoItem.Content>
                 </local:DemoItem>
+                <local:DemoItem Name="Application Settings">
+                    <local:DemoItem.Content>
+                        <local:MainSettings Height="Auto" Width="Auto"/>
+                    </local:DemoItem.Content>
+                </local:DemoItem>
                 <local:DemoItem Name="About">
                     <local:DemoItem.Content>
                         <local:About Height="Auto" Width="Auto"/>
                     </local:DemoItem.Content>
                 </local:DemoItem>
-
             </ListBox>
             <ContentControl Margin="16" Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" />
         </DockPanel>

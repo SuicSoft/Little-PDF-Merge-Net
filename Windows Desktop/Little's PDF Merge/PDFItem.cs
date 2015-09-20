@@ -15,8 +15,8 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             password = _password;
         }
 
-        public string path { get; }
-        public SecureString password { get; }
+        public string path { get; set; }
+        public SecureString password { get; set; }
 
     }
 }
