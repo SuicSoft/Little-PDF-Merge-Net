@@ -202,12 +202,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                 case Combiner.SourceTestResult.Ok:
                     //Add the pdf to the ListBox.
                     Files.Add(new PDFItem(file, null));
-                    Application.Current.Dispatcher.Invoke(new Action(() => ((MainWindow)Application.Current.MainWindow).merger.f.Items.Refresh()));
-                    //Update Commands
-                    MergeCommand.RaiseCanExecuteChanged();
-                    MoveUpCommand.RaiseCanExecuteChanged();
-                    MoveDownCommand.RaiseCanExecuteChanged();
-                    RemoveCommand.RaiseCanExecuteChanged();
                     break;
                 //File is a image (maybe not valid!).
                 case Combiner.SourceTestResult.Image:
@@ -223,10 +217,10 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                     break;
             }
             //Update Commands
-            MergeCommand.RaiseCanExecuteChanged();
+            Application.Current.Dispatcher.Invoke(()=>MergeCommand.RaiseCanExecuteChanged());
             MoveUpCommand.RaiseCanExecuteChanged();
             MoveDownCommand.RaiseCanExecuteChanged();
-            RemoveCommand.RaiseCanExecuteChanged();
+            Application.Current.Dispatcher.Invoke(()=>RemoveCommand.RaiseCanExecuteChanged());
             Application.Current.Dispatcher.Invoke(new Action(() => ((MainWindow)Application.Current.MainWindow).merger.f.Items.Refresh()));
         }
         #endregion

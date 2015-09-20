@@ -29,7 +29,7 @@
             <StackPanel>
                 <Grid>
                     <Button HorizontalAlignment="Left" Margin="5,5,0,0" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="Transparent" Height="Auto" Padding="4" BorderBrush="{x:Null}">
-                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" Foreground="White" x:Name="MenuToggleButton">
+                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" x:Name="MenuToggleButton">
                         <ToggleButton.Triggers>
                             <EventTrigger RoutedEvent="ToggleButton.Click">
                                 <BeginStoryboard Storyboard="{DynamicResource InkSplash}"/>
