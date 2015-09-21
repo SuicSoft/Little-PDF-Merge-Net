@@ -14,9 +14,15 @@ namespace SuicSoft.LittlesPDFMerge.Windows
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    //[CLSCompliant(false)]
     public partial class MainWindow
     {
-        public const string apppath = "HKEY_CURRENT_USER\\SOFTWARE\\SuicSoft\\LittlePDFMerge";
+
+        /// <summary>
+        /// The path used for writing to the windows registry.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Apppath")] //Ignore bad naming
+        public const string Apppath = "HKEY_CURRENT_USER\\SOFTWARE\\SuicSoft\\LittlePDFMerge"; //This path is used for registry writing.
         /// <summary>
         /// Initailizes the main window.
         /// </summary>
@@ -39,11 +45,11 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             var clr = new SwatchesProvider().Swatches.ToList();
             new Thread(() =>
                 //Load accent.
-                new PaletteHelper().ReplaceAccentColor(clr[(int)Registry.GetValue(apppath, "Accent", 9)])
+                new PaletteHelper().ReplaceAccentColor(clr[(int)Registry.GetValue(Apppath, "Accent", 9)])
             ).Start();
             new Thread(() =>
                 //Load primary.
-                new PaletteHelper().ReplacePrimaryColor(clr[(int)Registry.GetValue(apppath, "Primary", 1)])
+                new PaletteHelper().ReplacePrimaryColor(clr[(int)Registry.GetValue(Apppath, "Primary", 1)])
             ).Start();
         }
     }

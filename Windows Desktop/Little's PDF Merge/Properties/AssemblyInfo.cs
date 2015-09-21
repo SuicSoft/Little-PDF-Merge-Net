@@ -15,7 +15,8 @@ using System.Windows;
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyMetadata("SquirrelAwareVersion", "2.4")]
+[assembly: System.CLSCompliant(true)]
+[assembly: AssemblyMetadata("SquirrelAwareVersion", "2.4.1")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -52,5 +53,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.4.0.0")]
+[assembly: AssemblyVersion("2.4.1.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

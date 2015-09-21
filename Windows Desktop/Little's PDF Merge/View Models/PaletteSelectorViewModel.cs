@@ -34,6 +34,7 @@ using System.Threading;
 using System.Windows.Media;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
 namespace SuicSoft.LittlesPDFMerge.Windows
 {
     /// <summary>
@@ -67,11 +68,11 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             sw.Start();
             new Thread(() =>
             {
-                PrimaryIndex = (int)Registry.GetValue(MainWindow.apppath, "Primary", 1);
-                AccentIndex = (int)Registry.GetValue(MainWindow.apppath, "Accent", 9);
-                Auto = (int)Registry.GetValue(MainWindow.apppath, "Auto", 1) == 1;
+                PrimaryIndex = (int)Registry.GetValue(MainWindow.Apppath, "Primary", 1);
+                AccentIndex = (int)Registry.GetValue(MainWindow.Apppath, "Accent", 9);
+                Auto = (int)Registry.GetValue(MainWindow.Apppath, "Auto", 1) == 1;
                 //Switch to dark if past 5:00 pm.
-                IsChecked = Auto ? DateTime.Now.TimeOfDay < new TimeSpan(7, 0, 0) /*7:00am*/ | DateTime.Now.TimeOfDay > new TimeSpan(17, 0, 0) /*5:00pm*/ ? true : false : (int)Registry.GetValue(MainWindow.apppath, "Dark", 0) == 1 ? true : false;
+                IsChecked = Auto ? DateTime.Now.TimeOfDay < new TimeSpan(7, 0, 0) /*7:00am*/ | DateTime.Now.TimeOfDay > new TimeSpan(17, 0, 0) /*5:00pm*/ ? true : false : (int)Registry.GetValue(MainWindow.Apppath, "Dark", 0) == 1 ? true : false;
             }).Start();
             sw.Stop();
             Debug.WriteLine("Loaded settings in " + sw.Elapsed);
@@ -122,13 +123,13 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             var sw = new Stopwatch();
             sw.Start();
             //Save accent.
-            Registry.SetValue(MainWindow.apppath, "Accent", AccentIndex);
+            Registry.SetValue(MainWindow.Apppath, "Accent", AccentIndex);
             //Save primary.
-            Registry.SetValue(MainWindow.apppath, "Primary", PrimaryIndex);
+            Registry.SetValue(MainWindow.Apppath, "Primary", PrimaryIndex);
             //Save is auto.
-            Registry.SetValue(MainWindow.apppath, "Auto", Auto ? 1 : 0);
+            Registry.SetValue(MainWindow.Apppath, "Auto", Auto ? 1 : 0);
             //Save light dark.
-            Registry.SetValue(MainWindow.apppath, "Dark", IsChecked ? 1 : 0);
+            Registry.SetValue(MainWindow.Apppath, "Dark", IsChecked ? 1 : 0);
             sw.Stop();
             Debug.WriteLine("Wrote settings to registry in " + sw.Elapsed);
         }
@@ -156,7 +157,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             //Save();
         }
         #endregion
-        public bool _auto;
+        private bool _auto;
         public bool Auto
         {
             get { return _auto; }

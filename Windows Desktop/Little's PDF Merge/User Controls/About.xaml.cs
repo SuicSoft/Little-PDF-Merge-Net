@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Squirrel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,22 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         public About()
         {
             InitializeComponent();
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            using (var mgr = new UpdateManager("http://suicsoft.com/updates/lpm/"))
+            {
+                var info = await mgr.CheckForUpdate();
+                MessageBox.Show(info.FutureReleaseEntry.Version.ToString());
+
+                MessageBox.Show(info.CurrentlyInstalledVersion.Version.ToString());
+                MessageBox.Show(info.PackageDirectory);
+                foreach (ReleaseEntry item in info.ReleasesToApply)
+                {
+                    MessageBox.Show(item.Filename);
+                }
+            }
         }
     }
 }

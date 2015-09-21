@@ -31,6 +31,7 @@
                     <TextBlock Margin="3">Report a bug</TextBlock>
                 </StackPanel>
             </Button>
+            <Button Click="Button_Click">Update</Button>
             <Button Margin="7" Command="{Binding OpenSupportWebsiteCommand}" Style="{StaticResource MaterialDesignRaisedAccentButton}" CommandParameter="https://github.com/SuicSoft/Little-PDF-Merge">
                 <StackPanel Orientation="Horizontal">
                     <Viewbox Width="18" Height="18">

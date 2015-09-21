@@ -31,9 +31,9 @@
                         </local:PaletteSelector>
                     </local:DemoItem.Content>
                 </local:DemoItem>
-                <local:DemoItem Name="Application Settings">
+                <local:DemoItem Name="Dogs">
                     <local:DemoItem.Content>
-                        <local:MainSettings Height="Auto" Width="Auto"/>
+                        <Button>Suici</Button>
                     </local:DemoItem.Content>
                 </local:DemoItem>
                 <local:DemoItem Name="About">

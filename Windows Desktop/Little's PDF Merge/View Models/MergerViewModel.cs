@@ -19,22 +19,27 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// <summary>
         /// This command merges all the pdfs in the listbox
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static DelegateCommand MergeCommand { get; set; }
         /// <summary>
         /// This command adds a file to the listbox
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static ICommand AddFileCommand { get; set; }
         /// <summary>
         /// This command moves the selected listbox item up.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static DelegateCommand MoveUpCommand { get; set; }
         /// <summary>
         /// This command moves the selected listbox item down
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static DelegateCommand MoveDownCommand { get; set; }
         /// <summary>
         /// This command removes the selected listbox item.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static DelegateCommand RemoveCommand { get; set; }
         #endregion
 
@@ -79,6 +84,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// <summary>
         /// A list of all the pdf files added.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public List<PDFItem> Files { get; set; }
         #endregion
 
@@ -111,8 +117,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         }
         private void Move (bool up)
         {
-            //The old index
-            int indexold = SelectedIndex;
             //The selected item
             PDFItem dataItem = Files[SelectedIndex];
             int index = SelectedIndex;

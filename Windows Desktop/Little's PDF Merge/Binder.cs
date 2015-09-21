@@ -162,6 +162,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         {
             return AddFile(file, pass, true);
         }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "protectedpass")]
         public uint AddFile(byte[] file, byte[] pass, bool protectedpass)
         {
             try
