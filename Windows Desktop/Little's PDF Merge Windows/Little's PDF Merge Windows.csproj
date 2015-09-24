@@ -137,10 +137,6 @@
       <Project>{9047d44d-5216-4ef4-bafd-954912b0ca09}</Project>
       <Name>Little%27s PDF Merge Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Plugin.Core\Plugin.Core.csproj">
-      <Project>{33775abe-c35b-4310-94d3-3a24d05fe0f6}</Project>
-      <Name>Plugin.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

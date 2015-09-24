@@ -81,7 +81,6 @@ namespace SuicSoft.LittleSoft.LittlesPDFMerge.Windows
 
             // Create the CompositionContainer with all parts in the catalog (links Exports and Imports)
             _Container = new CompositionContainer(catalog);
-
             //Fill the imports of this object
             _Container.ComposeParts(this);
         }

@@ -190,9 +190,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Plugin.Core\Plugin.Core.csproj">
-      <Project>{33775abe-c35b-4310-94d3-3a24d05fe0f6}</Project>
-      <Name>Plugin.Core</Name>
+    <ProjectReference Include="..\..\Little%27s PDF Merge PluginBase\Little%27s PDF Merge PluginBase.csproj">
+      <Project>{022d6a97-af48-47a9-beca-7a0eb5d27fcf}</Project>
+      <Name>Little%27s PDF Merge PluginBase</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

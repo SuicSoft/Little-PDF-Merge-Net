@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Plugin.Core")]
+[assembly: AssemblyTitle("Little's PDF Merge Achievements")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Plugin.Core")]
+[assembly: AssemblyProduct("Little's PDF Merge Achievements")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("54146f8e-86bb-47b4-9783-000b99d75ec0")]
+[assembly: Guid("4acbcb8d-1ed4-43e4-ad6d-44d16e4cefcb")]
 
 // Version information for an assembly consists of the following four values:
 //
