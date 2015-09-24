@@ -3,11 +3,13 @@ using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 //For the registry
 using Microsoft.Win32;
+using SuicSoft.LittlesPDFMerge.PluginBase;
 using System;
 using System.Diagnostics;
 //For all the array stuff
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SuicSoft.LittlesPDFMerge.Windows
 {
@@ -17,7 +19,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
     //[CLSCompliant(false)]
     public partial class MainWindow
     {
-
+        System.Collections.Generic.List<IPlugin> plugins;
         /// <summary>
         /// The path used for writing to the windows registry.
         /// </summary>
@@ -30,12 +32,23 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         {
             //Load the UI.
             InitializeComponent();
-            var sw = new Stopwatch();
-            sw.Start();
-            //Load the color palette from the registry.
-            LoadColors();
-            sw.Stop();
-            Debug.WriteLine("Loaded colors in " + sw.Elapsed);
+            Stopwatch stopwatch = new Stopwatch();
+            //Init code is run as parallel. This software is optimized for CPUs with 2 or more cores (not 1 core and two threads).
+            ThreadPool.QueueUserWorkItem(delegate
+            {
+                //Start it again.
+                stopwatch.Start();
+                //Try loading plugins
+                try { plugins = new GenericMEFPluginLoader<IPlugin>("Plugins").Plugins.ToList(); }
+                //Print error message if crashes
+                catch { Debug.WriteLine("Failed to init plugins"); }
+                Parallel.For(0, plugins.Count, new ParallelOptions() { MaxDegreeOfParallelism = 2 }, i =>
+                    plugins[i].OnLoad());
+                // Stop timing
+                stopwatch.Stop();
+                //Print time to load plugins code.
+                Debug.WriteLine("Time to load plugins code: {0}", stopwatch.Elapsed);
+            });
         }
         /// <summary>
         /// Loads the color values from the registry.

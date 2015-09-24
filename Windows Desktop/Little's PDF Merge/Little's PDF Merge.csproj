@@ -96,6 +96,7 @@
       <HintPath>..\..\packages\squirrel.windows.1.0.2\lib\Net45\Squirrel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Security" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -113,8 +114,9 @@
     </ApplicationDefinition>
     <Compile Include="Binder.cs" />
     <Compile Include="Extension.cs" />
+    <Compile Include="GenericMEFPluginLoader.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="InverseBooleanConverter.cs" />
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="View Models\MergerViewModel.cs" />
     <Compile Include="PDFItem.cs" />
     <Compile Include="User Controls\About.xaml.cs">
@@ -186,6 +188,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Plugin.Core\Plugin.Core.csproj">
+      <Project>{33775abe-c35b-4310-94d3-3a24d05fe0f6}</Project>
+      <Name>Plugin.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

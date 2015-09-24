@@ -7,8 +7,8 @@
     <ProjectGuid>{33775ABE-C35B-4310-94D3-3A24D05FE0F6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Plugin.Core</RootNamespace>
-    <AssemblyName>Plugin.Core</AssemblyName>
+    <RootNamespace>SuicSoft.LittlesPDFMerge.PluginBase</RootNamespace>
+    <AssemblyName>PluginBase</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
