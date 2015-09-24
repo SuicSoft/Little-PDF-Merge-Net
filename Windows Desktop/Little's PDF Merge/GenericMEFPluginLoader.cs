@@ -1,8 +1,8 @@
 ﻿/*
  * File Name : GenericMEFPluginLoader.cs
+ * Online link : https://github.com/SuicSoft/Little-PDF-Merge/blob/master/Windows%20Desktop/Little's%20PDF%20Merge/GenericMEFPluginLoader.cs
  * Language : C#.NET (.NET 4.5)
  * Description : Loads Managed Extensibility Framework (MEF) https://msdn.microsoft.com/en-us/library/dd460648(v=vs.110).aspx from a folder.
- * Source : https://code.msdn.microsoft.com/windowsdesktop/Creating-a-simple-plugin-b6174b62/sourcecode?fileId=74454&pathId=1812241599
  */
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -11,7 +11,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
     public class GenericMEFPluginLoader<T>
     {
         private CompositionContainer _Container;
-
         /// <summary>
         /// A list of all the MEF plugins installed
         /// </summary>
