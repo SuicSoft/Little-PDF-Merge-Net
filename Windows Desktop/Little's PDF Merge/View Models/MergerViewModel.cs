@@ -168,7 +168,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// Add a input file.
         /// </summary>
         /// <param name="file">The path of the file</param>
-        private async Task AddInputFile(string file)
+        public async Task AddInputFile(string file)
         {
             switch (Combiner.TestSourceFile(File.ReadAllBytes(file)))
             {
