@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SuicSoft.LittlesPDFMerge.Windows
 {
@@ -20,7 +21,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
     [CLSCompliant(false)]
     public partial class MainWindow
     {
-        List<IPlugin> plugins;
         /// <summary>
         /// The path used for writing to the windows registry.
         /// </summary>
@@ -33,29 +33,15 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         {
             //Load the UI.
             InitializeComponent();
-            
-        }
-        protected override void OnSourceInitialized(EventArgs e)
-        {
-            base.OnSourceInitialized(e);
-            new GenericMEFPluginLoader<IPlugin>("Plugins").Plugins.ToList().ForEach(x => x.OnLoad());
+            //Load the MEF Plugins
+            using (var loader = new GenericMEFPluginLoader<IPlugin>("Plugins"))
+                StaticVariables.Plugins = loader.Plugins.ToList();
+            //Execute OnLoad.
+            StaticVariables.Plugins.ForEach(x => x.OnLoad()); //Execute OnLoad() on all the plugins
+            //Add handler for load event
+            Loaded += (sender, e) =>  /*Execute OnUILoad() on all the plugins*/ StaticVariables.Plugins.ForEach(x => { x.OnUILoad(); Resources.MergedDictionaries.Add(x.res); });
+
         }
 
-        /// <summary>
-        /// Loads the color values from the registry.
-        /// </summary>
-        private static void LoadColors()
-        {
-            //Color swatches.
-            var clr = new SwatchesProvider().Swatches.ToList();
-            new Thread(() =>
-                //Load accent.
-                new PaletteHelper().ReplaceAccentColor(clr[(int)Registry.GetValue(Apppath, "Accent", 9)])
-            ).Start();
-            new Thread(() =>
-                //Load primary.
-                new PaletteHelper().ReplacePrimaryColor(clr[(int)Registry.GetValue(Apppath, "Primary", 1)])
-            ).Start();
-        }
     }
 }

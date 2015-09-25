@@ -1,10 +1,13 @@
-﻿namespace PluginBase
+﻿using System.Threading.Tasks;
+using System.Windows;
+namespace PluginBase
 {
     /// <summary>
     /// Use this interface to create plugins for Little's PDF Merge
     /// </summary>
     public interface IPlugin
     {
+        ResourceDictionary res { get; set; }
         /// <summary>
         /// The name of the plugin
         /// </summary>

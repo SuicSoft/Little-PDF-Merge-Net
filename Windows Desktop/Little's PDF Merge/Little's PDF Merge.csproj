@@ -117,6 +117,7 @@
     <Compile Include="GenericMEFPluginLoader.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="StaticVariables.cs" />
     <Compile Include="View Models\MergerViewModel.cs" />
     <Compile Include="PDFItem.cs" />
     <Compile Include="User Controls\About.xaml.cs">

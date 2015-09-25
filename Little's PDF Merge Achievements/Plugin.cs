@@ -4,13 +4,32 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
 
 namespace Achievements
 {
     [Export(typeof(IPlugin))]
     public class Achievements : IPlugin
     {
+        public Achievements()
+        {
+            res = new ResourceDictionary();
+            // Create a LinearGradientBrush and use it to
+            // paint the rectangle.
+            LinearGradientBrush myBrush = new LinearGradientBrush();
+            myBrush.GradientStops.Add(new GradientStop(Colors.Gold, 0.0));
+            myBrush.GradientStops.Add(new GradientStop(Colors.LightYellow, 1.0));
+            LinearGradientBrush myBrush2 = new LinearGradientBrush();
+            myBrush2.GradientStops.Add(new GradientStop(Colors.DarkGoldenrod, 0.0));
+            myBrush2.GradientStops.Add(new GradientStop(Colors.LightYellow, 1.0));
+            res.Add("PrimaryHueMidBrush", myBrush);
+            res.Add("WindowTitleColorBrush", Brushes.DarkGoldenrod);
+            res.Add("SecondaryAccentBrush", myBrush2);
+        }
+        public ResourceDictionary res { get; set; }
         /// <summary>
         /// The name of the plugin
         /// </summary>
@@ -46,7 +65,7 @@ namespace Achievements
         /// </summary>
         public void OnLoad()
         {
-            System.Windows.MessageBox.Show("Hello World. Hi novice");
+            new Thread(() => System.Windows.MessageBox.Show("Hello World. Hi novice")).Start();
         }
         /// <summary>
         /// When the UI is loaded

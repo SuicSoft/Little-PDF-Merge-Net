@@ -51,14 +51,17 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             var sw = new Stopwatch();
             sw.Start();
             //Set variables using 3 threads.
-            new Thread(() =>
-            {
-                Swatches = new SwatchesProvider().Swatches.ToList();
-                ResetCommand = new DelegateCommand(Reset);
-            }).Start();
+
+            Swatches = new SwatchesProvider().Swatches.ToList();
+            //Start commands thread #1.
             new Thread(() =>
             {
                 ApplyPrimaryCommand = new DelegateCommand<Swatch>(ApplyPrimary);
+                ResetCommand = new DelegateCommand(Reset);
+            }).Start();
+            //Start commands thread #2.
+            new Thread(() =>
+            {
                 ApplyAccentCommand = new DelegateCommand<Swatch>(ApplyAccent);
                 SaveCommand = new DelegateCommand(Save);
             }).Start();
@@ -66,11 +69,12 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             Debug.WriteLine("Set values in " + sw.Elapsed);
             sw.Reset();
             sw.Start();
+            //Start settings thread.
             new Thread(() =>
             {
-                PrimaryIndex = (int)Registry.GetValue(MainWindow.Apppath, "Primary", 1);
-                AccentIndex = (int)Registry.GetValue(MainWindow.Apppath, "Accent", 9);
-                Auto = (int)Registry.GetValue(MainWindow.Apppath, "Auto", 1) == 1;
+                PrimaryIndex = (int)Registry.GetValue(MainWindow.Apppath, "Primary", 1 /*Blue*/); //Read the primary color from registry.
+                AccentIndex = (int)Registry.GetValue(MainWindow.Apppath, "Accent", 9 /*Indigo*/); //Read the accent color from the registry
+                Auto = (int)Registry.GetValue(MainWindow.Apppath, "Auto", 1) == 1; //Read the auto setting from the registry
                 //Switch to dark if past 5:00 pm.
                 IsChecked = Auto ? DateTime.Now.TimeOfDay < new TimeSpan(7, 0, 0) /*7:00am*/ | DateTime.Now.TimeOfDay > new TimeSpan(17, 0, 0) /*5:00pm*/ ? true : false : (int)Registry.GetValue(MainWindow.Apppath, "Dark", 0) == 1 ? true : false;
             }).Start();
@@ -80,14 +84,16 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         #endregion
 
         #region Variables
+        private static int _PrimaryIndex;
+        private static int _AccentIndex;
         /// <summary>
         /// The index of the primary color
         /// </summary>
-        private static int PrimaryIndex;
+        private static int PrimaryIndex { get { return _PrimaryIndex; } set { _PrimaryIndex = value; new PaletteHelper().ReplacePrimaryColor(Swatches[_PrimaryIndex]); } }
         /// <summary>
         /// The index if the accent color
         /// </summary>
-        private static int AccentIndex;
+        private static int AccentIndex { get { return _AccentIndex; } set { _AccentIndex = value; new PaletteHelper().ReplaceAccentColor(Swatches[_AccentIndex]); } }
         /// <summary>
         /// A list of all the Material Design swatches
         /// </summary>
