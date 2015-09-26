@@ -11,10 +11,24 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
 namespace SuicSoft.LittlesPDFMerge.Windows
 {
-    class MergerViewModel
+    class MergerViewModel : System.ComponentModel.INotifyPropertyChanged
     {
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged(String info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+
+        #endregion
         #region Commands
         /// <summary>
         /// This command merges all the pdfs in the listbox
@@ -45,16 +59,17 @@ namespace SuicSoft.LittlesPDFMerge.Windows
 
         #region Constructor (.ctor)
         bool istopped = false;
-
+        private ObservableCollection<PDFItem> _Files;
         public MergerViewModel()
         {
-            Files = new List<PDFItem>();
+            Files = new ObservableCollection<PDFItem>();
             MergeCommand = new DelegateCommand(Save, CanMerge);
             #region AddFileComand
             AddFileCommand = new DelegateCommand(() =>
             {
+                ((MainWindow)Application.Current.MainWindow).merger.b.Height = 8;
                 //To get the button click animation to show. We need to open the Microsoft.Win32.OpenFileDialog in a new thread.
-                new System.Threading.Thread(new System.Threading.ThreadStart(delegate()
+                new System.Threading.Thread(async() =>
                 {
                     OpenFileDialog openFileDialog = new OpenFileDialog();
                     openFileDialog.DefaultExt = ".pdf";
@@ -64,9 +79,10 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                         //Add the files async.)
                         for (int i = 0; i < openFileDialog.FileNames.Length; i++)
                             if (!istopped)
-                                AddInputFile(openFileDialog.FileNames[i]);
-                        
-                })) { Name = "Open file dialog thread." }.Start();
+                                await AddInputFile(openFileDialog.FileNames[i]);
+
+                    Application.Current.Dispatcher.Invoke(() =>((MainWindow)Application.Current.MainWindow).merger.b.Height = 0);
+                }) { Name = "Open file dialog thread." }.Start();
             });
             #endregion
             MoveUpCommand = new DelegateCommand(MoveUp, CanMoveUp);
@@ -85,7 +101,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// A list of all the pdf files added.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public List<PDFItem> Files { get; set; }
+        public ObservableCollection<PDFItem> Files { get { return _Files; } set { _Files = value; } }
         #endregion
 
         #region Boolean
@@ -205,7 +221,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                 //File is a valid pdf.
                 case Combiner.SourceTestResult.Ok:
                     //Add the pdf to the ListBox.
-                    Files.Add(new PDFItem(file, null));
+                    Application.Current.Dispatcher.Invoke(new Action(() => Files.Add(new PDFItem(file, null))));
                     break;
                 //File is a image (maybe not valid!).
                 case Combiner.SourceTestResult.Image:
@@ -225,7 +241,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             MoveUpCommand.RaiseCanExecuteChanged();
             MoveDownCommand.RaiseCanExecuteChanged();
             Application.Current.Dispatcher.Invoke(()=>RemoveCommand.RaiseCanExecuteChanged());
-            Application.Current.Dispatcher.Invoke(new Action(() => ((MainWindow)Application.Current.MainWindow).merger.f.Items.Refresh()));
         }
         #endregion
 
@@ -234,7 +249,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         {
             Try(() =>Files.RemoveAt(SelectedIndex));
             RemoveCommand.RaiseCanExecuteChanged();
-            Application.Current.Dispatcher.Invoke(new Action(() => ((MainWindow)Application.Current.MainWindow).merger.f.Items.Refresh()));
         }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private static void Try(Action m){try{m();}catch{}}
@@ -247,6 +261,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                 SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog() { Title = Files.Count > 1 ? String.Format("Merging {0} File(s)", Files.Count) : String.Format("Converting {0}", Path.GetFileName(Files[0].path)) };
                 //If user clicks ok.
                 if (saveFileDialog.ShowDialog() == true)
+                    Application.Current.Dispatcher.Invoke(() => ((MainWindow)Application.Current.MainWindow).merger.b.Height = 8);
                     using (Combiner comb = new Combiner())
                     {
                         comb.Output = saveFileDialog.FileName;
@@ -255,6 +270,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                             comb.AddFile(File.ReadAllBytes(item.path), null);
 
                     }
+                    Application.Current.Dispatcher.Invoke(() => ((MainWindow)Application.Current.MainWindow).merger.b.Height = 0);
                 if (!String.IsNullOrEmpty(saveFileDialog.FileName))
                     System.Diagnostics.Process.Start(saveFileDialog.FileName);
             })).Start();
