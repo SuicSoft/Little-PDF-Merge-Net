@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -60,12 +61,20 @@ namespace Achievements
         {
 
         }
+        [DllImport("user32.dll", CharSet=CharSet.Auto)]
+public static extern MessageBoxResult MessageBox(IntPtr hWnd, String text, String caption, int options);
+
         /// <summary>
         /// When the MainWindow constructor is executed
         /// </summary>
-        public void OnLoad()
+        public void OnLoad(IntPtr hwnd)
         {
-            new Thread(() => System.Windows.MessageBox.Show("Hello World. Hi novice")).Start();
+            //throw new NullReferenceException();
+            MessageBox(hwnd, "Hello World. Hi novice", "Hello From Plugin", 0);
+        }
+        public string AddFile(string file)
+        {
+            return "";
         }
         /// <summary>
         /// When the UI is loaded

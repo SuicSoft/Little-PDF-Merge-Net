@@ -168,7 +168,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             try
             {
                 //Check if the file contains the pdf header
-                if (i(file) == h.pdf)
                     using (PdfReader reader = password != null ? new PdfReader(file, ProtectedData.Unprotect(pass, e, DataProtectionScope.CurrentUser)) : protectedpass ? new PdfReader(file) : new PdfReader(file, pass))
                     {
                         //Copy the pages the new PDF doocument.
@@ -185,12 +184,8 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                         }
                     }
 
-                //Check if the file contains the image file header.
-                else if (IsImage(file))
-                {
-                    Image image = Image.GetInstance(file);
-                    b.SetPageSize(new Rectangle(image.Width, image.Height));
-                }
+
+
                 //Clear password from memory
                 Array.Clear(password != null ? pass : new byte[0], 0, password != null ? pass.Length : 0);
             }

@@ -8,6 +8,10 @@
  */
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Reflection;
+using System.Security;
+using System.Security.Policy;
+using System.IO;
 namespace SuicSoft.LittlesPDFMerge.Windows
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "MEF")]
@@ -25,13 +29,12 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// <param name="path">The folder to load plugins from</param>
         public GenericMEFPluginLoader(string path)
         {
-            DirectoryCatalog directoryCatalog = null;
             AggregateCatalog catalog = null;
             try
             {
-                directoryCatalog = new DirectoryCatalog(path);
                 //An aggregate catalog that combines multiple catalogs
-                catalog = new AggregateCatalog(directoryCatalog);
+                catalog = new AggregateCatalog();
+                catalog.Catalogs.Add(new AssemblyCatalog(Assembly.LoadFrom(path)));
                 // Create the CompositionContainer with all parts in the catalog (links Exports and Imports)
                 _Container = new CompositionContainer(catalog);
                 //Fill the imports of this object
@@ -39,7 +42,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             }
             finally
             {
-                directoryCatalog.Dispose();
+  
                 catalog.Dispose();
             }
         }

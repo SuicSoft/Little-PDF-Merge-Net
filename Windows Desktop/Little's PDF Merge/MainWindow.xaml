@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf" 
         xmlns:local="clr-namespace:SuicSoft.LittlesPDFMerge.Windows"
         x:Class="SuicSoft.LittlesPDFMerge.Windows.MainWindow"
-        Title="Little's PDF Merge" Height="443" Width="719" ShowIconOnTitleBar="False" GlowBrush="{DynamicResource WindowTitleColorBrush}">
+        Title="Little's PDF Merge" Height="443" Width="719" Closing="MetroWindow_Closing" Loaded="MetroWindow_Loaded" ShowIconOnTitleBar="False" GlowBrush="{DynamicResource WindowTitleColorBrush}">
     <metro:MetroWindow.Resources>
         <Storyboard x:Key="InkSplash">
             <DoubleAnimationUsingKeyFrames BeginTime="0:0:0.25" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Ink">
@@ -21,6 +22,40 @@
         </Storyboard>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </metro:MetroWindow.Resources>
+    <metro:MetroWindow.RightWindowCommands>
+        <metro:WindowCommands>
+            <StackPanel>
+                <Button>
+                    <Viewbox>
+                        <Canvas x:Name="canvas" Width="24" Height="24" RenderTransformOrigin="0.5,0.5" Visibility="{Binding HasUpdates, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Canvas.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform Y="-25"/>
+                                </TransformGroup>
+                            </Canvas.RenderTransform>
+                            <Canvas.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard RepeatBehavior="Forever">
+                                            <DoubleAnimationUsingKeyFrames  BeginTime="0:0:0.5" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                                                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="10"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="25"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Canvas.Triggers>
+                            <Path Data="M11,4H13V16L18.5,10.5L19.92,11.92L12,19.84L4.08,11.92L5.5,10.5L11,16V4Z" Fill="White" />
+                        </Canvas>
+                    </Viewbox>
+                </Button>
+                <Border Height="50" Width="50"/>
+            </StackPanel>
+        </metro:WindowCommands>
+    </metro:MetroWindow.RightWindowCommands>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="90"/>
@@ -64,5 +99,9 @@
                 </StackPanel>
             </StackPanel>
         </wpf:ColorZone>
+        <WindowsFormsHost Grid.RowSpan="2" x:Name="FormsHost" Background="{x:Null}">
+            
+        </WindowsFormsHost>
+
     </Grid>
 </metro:MetroWindow>

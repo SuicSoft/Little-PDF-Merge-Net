@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 namespace PluginBase
 {
@@ -35,7 +36,12 @@ namespace PluginBase
         /// <summary>
         /// When the MainWindow constructor is executed
         /// </summary>
-        void OnLoad();
+        void OnLoad(IntPtr hwnd);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file"></param>
+        string AddFile(string file);
         /// <summary>
         /// When the UI is loaded
         /// </summary>
