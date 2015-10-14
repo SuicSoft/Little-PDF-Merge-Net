@@ -1,5 +1,5 @@
 
-# Litte's PDF Merge
+# Little's PDF Merge
 Free , open source and fast PDF merger using Google Material Design, WPF and C# .Net
 <img src="https://raw.githubusercontent.com/SuicSoft/Little-PDF-Merge/developer/web/lpm.PNG"></img>
 Free to use, distrubute and modify. 
