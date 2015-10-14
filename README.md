@@ -15,8 +15,8 @@ and download the great <b>GOODWARE</b>
 
 #Oh! And if you want to see, here's the dog we were talking about!
 
-#<img src="https://c5bd2f1cb6c7712ee5b2eecc4ca962b0fb517791.googledrive.com/host/0B08cCnnU-zt-V3R0OTR1WlBpdVk/My%20Dog.png">
-#</img>
+<img src="https://c5bd2f1cb6c7712ee5b2eecc4ca962b0fb517791.googledrive.com/host/0B08cCnnU-zt-V3R0OTR1WlBpdVk/My%20Dog.png">
+</img>
 
 I'm Suici. Say that like Sooky. I'm not as popular as Android, Duo or the Octocat, But I'm on the web!
 What Am I? I'm a dog, bearded collie puppy! - And I was drawn in Fresh Paint for the Logo - But I'm real!
