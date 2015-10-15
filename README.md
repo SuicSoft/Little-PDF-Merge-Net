@@ -30,6 +30,7 @@ To install, run the setup.exe file . It should be installed on your pc and will 
 It is very easy to do on Windows (tested on Windows 10). To do it, open a git shell and type
 ```
 git clone https://github.com/suicsoft/little-pdf-merge.git
+edit the code and stuff here if needed
 cd little-pdf-merge
 ./build.bat
 ```
