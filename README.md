@@ -1,24 +1,24 @@
 
 # Little's PDF Merge
 Fast ,Free ,and open source PDF merger using Google Material Design, WPF and C# .Net
-<img src="https://raw.githubusercontent.com/SuicSoft/Little-PDF-Merge/developer/web/lpm.PNG"></img>
+![Screenshot of Little's PDF Merge](https://raw.githubusercontent.com/SuicSoft/Little-PDF-Merge/developer/web/lpm.PNG)
 Free to use, distrubute and modify. 
-<b>You can't sell this, and remove all '<i>SuicSoft</i>' stuff if you're using it </b>
+**You can't sell this, and remove all '*SuicSoft*' stuff if you're using it **
 
-<b>NO COPYING OF OUR USER INTERFACE IS ALLOWED, IF YOU WANT TO MAKE A MATERIAL DESIGN WINDOWS PROGRAM, CHECK OUT MATERIAL-DESIGN-IN-XAML-TOOLKIT, AND USE IT YOURSELF</B>
-(keep the dog if you like!) - read more in <b>LICENSE.md</b>
-
+**NO COPYING OF OUR USER INTERFACE IS ALLOWED, IF YOU WANT TO MAKE A MATERIAL DESIGN WINDOWS PROGRAM, CHECK OUT MATERIAL-DESIGN-IN-XAML-TOOLKIT, AND USE IT YOURSELF**
+(keep the dog if you like!) - read more in [**LICENSE.md**](https://github.com/SuicSoft/Little-PDF-Merge/developer/License.md) <!---Replace developer with correct branch--->
+<!---Appveyor build status--->
 [![Build status](https://ci.appveyor.com/api/projects/status/79qcnkt3rxxboays?svg=true)](https://ci.appveyor.com/project/SuicSoft/little-pdf-merge)
+<!---Github issue count--->
 [![GitHub issues](https://img.shields.io/github/issues/badges/shields.svg)](https://github.com/SuicSoft/Little-PDF-Merge/issues)
 # SuicSoft. Better Software. Happier PCs
-SuicSoft's great <b>FREEWARE</b> are <b>badware</b> free (free from those annoying stuff...you know)
+SuicSoft's great **FREEWARE** are **badware** free (free from those annoying stuff...you know)
 We've got great PDF Mergers, System Speederupers and Tweakers! Just come to our website! (we don't have much traffic!)
-and download the great <b>GOODWARE</b> 
+and download the great **GOODWARE**
 
 #Oh! And if you want to see, here's the dog we were talking about!
 
-<img src="https://raw.githubusercontent.com/SuicSoft/SuicSoft-Art/master/Suici/Suici%20(Original).png">
-</img>
+![The cute and cuddly dog](https://raw.githubusercontent.com/SuicSoft/SuicSoft-Art/master/Suici/Suici%20(Original).png)
 
 I'm Suici. Say that like Sooky. I'm not as popular as Android, Duo or the Octocat, But I'm on the web!
 What Am I? I'm a dog, bearded collie puppy! - And I was drawn in Fresh Paint for the Logo - But I'm real!
@@ -41,7 +41,7 @@ Do not delete the cloned repo because the exe used to run Little's PDF Merge is 
 LPM.Core (Little's PDF Merge Core) is a free and open source pdf merger library for C#.NET, VB.NET and other .NET programming languages.
 
 For c#.
-```
+```cs
  using (SuicSoft.LittleSoft.LittlesPDFMerge.Core.Combiner comb = new SuicSoft.LittleSoft.LittlesPDFMerge.Core.Combiner())
                     {
                         comb.OutputPath = "youroutputpath";
