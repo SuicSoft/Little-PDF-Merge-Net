@@ -8,7 +8,7 @@ Free to use, distrubute and modify.
 <b>NO COPYING OF OUR USER INTERFACE IS ALLOWED, IF YOU WANT TO MAKE A MATERIAL DESIGN WINDOWS PROGRAM, CHECK OUT MATERIAL-DESIGN-IN-XAML-TOOLKIT, AND USE IT YOURSELF</B>
 (keep the dog if you like!) - read more in <b>LICENSE.md</b>
 
-[![Build status](https://img.shields.io/appveyor/ci/ButchersBoy/MaterialDesignInXamlToolkit.svg?style=flat-square)](https://ci.appveyor.com/project/SuicSoft/little-pdf-merge)
+[![AppVeyor](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)](https://ci.appveyor.com/project/SuicSoft/little-pdf-merge)
 [![GitHub issues](https://img.shields.io/github/issues/badges/shields.svg)](https://github.com/SuicSoft/Little-PDF-Merge/issues)
 # SuicSoft. Better Software. Happier PCs
 SuicSoft's great <b>FREEWARE</b> are <b>badware</b> free (free from those annoying stuff...you know)
