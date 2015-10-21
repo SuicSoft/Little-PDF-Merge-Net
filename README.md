@@ -10,7 +10,7 @@ Free to use, distrubute and modify.
 <!---Replace developer with correct branch--->
 <!---Appveyor build status--->
 [![Build status](https://ci.appveyor.com/api/projects/status/79qcnkt3rxxboays?svg=true)](https://ci.appveyor.com/project/SuicSoft/little-pdf-merge)
-<!---Github issue count--->
+
 [![GitHub issues](https://img.shields.io/github/issues/badges/shields.svg)](https://github.com/SuicSoft/Little-PDF-Merge/issues)
 # SuicSoft. Better Software. Happier PCs
 SuicSoft's great **FREEWARE** are **badware** free (free from those annoying stuff...you know)
