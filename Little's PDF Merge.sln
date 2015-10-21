@@ -1,4 +1,3 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
@@ -33,6 +32,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Little's PDF Merge PluginBase", "Little's PDF Merge PluginBase\Little's PDF Merge PluginBase.csproj", "{022D6A97-AF48-47A9-BECA-7A0EB5D27FCF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Little's PDF Merge Achievements", "Little's PDF Merge Achievements\Little's PDF Merge Achievements.csproj", "{F515282B-70EB-478A-9806-B1FC97D0F9D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Little's PDF Merge Image Merging", "Plugins\Little's PDF Merge Image Merging\Little's PDF Merge Image Merging.csproj", "{0025040B-60A6-4126-B063-7CE33D7592E0}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
