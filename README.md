@@ -6,7 +6,8 @@ Free to use, distrubute and modify.
 **You can't sell this, and remove all '*SuicSoft*' stuff if you're using it **
 
 **NO COPYING OF OUR USER INTERFACE IS ALLOWED, IF YOU WANT TO MAKE A MATERIAL DESIGN WINDOWS PROGRAM, CHECK OUT MATERIAL-DESIGN-IN-XAML-TOOLKIT, AND USE IT YOURSELF**
-(keep the dog if you like!) - read more in [**LICENSE.md**](https://github.com/SuicSoft/Little-PDF-Merge/developer/License.md) <!---Replace developer with correct branch--->
+(keep the dog if you like!) - read more in [**LICENSE.md**](https://github.com/SuicSoft/Little-PDF-Merge/developer/License.md) 
+<!---Replace developer with correct branch--->
 <!---Appveyor build status--->
 [![Build status](https://ci.appveyor.com/api/projects/status/79qcnkt3rxxboays?svg=true)](https://ci.appveyor.com/project/SuicSoft/little-pdf-merge)
 <!---Github issue count--->
