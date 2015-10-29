@@ -1,6 +1,6 @@
 
 # Little's PDF Merge
-Fast ,Free ,and open source PDF merger using Google Material Design, WPF and C# .Net
+Fast ,Free ,and open source PDF merger using Google Material Design, WPF and C# .Net. This branch contains the Little's PDF Merge website
 ![Screenshot of Little's PDF Merge](https://raw.githubusercontent.com/SuicSoft/Little-PDF-Merge/developer/web/lpm.PNG)
 Free to use, distrubute and modify 
 **You can't sell this, and remove all '*SuicSoft*' stuff if you're using it **
