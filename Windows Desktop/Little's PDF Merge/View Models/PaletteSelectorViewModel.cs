@@ -152,22 +152,18 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         #endregion
 
         #region Methods
-            private bool IsNotUsingSwatch(Swatch s)
-            {
-                return !(PrimaryIndex == Swatches.IndexOf(s) | AccentIndex == Swatches.IndexOf(s));
-            }
-
             /// <summary>
             /// A list of all the Material Design swatches
             /// </summary>
             public static List<Swatch> Swatches { get; set; }
 
         #endregion
+
         public PaletteSelectorViewModel()
         {
             Swatches = new SwatchesProvider().Swatches.ToList();
-            ApplyPrimaryCommand = new DelegateCommand<Swatch>(o => PrimaryIndex = Swatches.IndexOf(o), IsNotUsingSwatch);
-            ApplyAccentCommand = new DelegateCommand<Swatch>(o => AccentIndex = Swatches.IndexOf(o), IsNotUsingSwatch);
+            ApplyPrimaryCommand = new DelegateCommand<Swatch>(o => PrimaryIndex = Swatches.IndexOf(o));
+            ApplyAccentCommand = new DelegateCommand<Swatch>(o => AccentIndex = Swatches.IndexOf(o));
         }
 
         

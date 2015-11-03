@@ -20,6 +20,32 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            //WARNING. Incorrect editing of this code can result in a PC Freeze , forcing you to hold down the power button and get Bad Sectors. You have been warned
+            if (e.Args.Count() > 1)
+            {
+
+                if (e.Args[0] == "-verify" & File.Exists(e.Args[1]))
+                {
+                    //TODO : Add PDF verification here
+                }
+                else if (e.Args[0] == "-merge")
+                {
+                    //TODO : Add PDF merging here
+                }
+                else
+                {
+                    var win = new MainWindow();
+                    foreach (string item in e.Args.Skip(1))
+                    {
+                        ((MergerViewModel)win.merger.DataContext).Files.Add(new PDFItem(item, null));
+                    }
+                    win.Show();
+                }
+            }
+            else
+            {
+                new MainWindow().Show();
+            }
             //It's safe to edit below. Don't hack our update server
             try
             {
