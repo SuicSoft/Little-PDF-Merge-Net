@@ -44,7 +44,7 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             //Start the plugin server
             //StartServer();
             //Start the plugin Process
-            var proc =Process.Start(@"C:\Users\Prince96\Documents\visual studio 2013\Projects\Little's PDF Merge\PluginProcess\bin\Debug\PluginProcess.exe", @"""C:\Users\Prince96\Documents\visual studio 2013\Projects\Little's PDF Merge\LPM.Achievements.dll""");
+        
             
             //Load the UI.
             InitializeComponent();

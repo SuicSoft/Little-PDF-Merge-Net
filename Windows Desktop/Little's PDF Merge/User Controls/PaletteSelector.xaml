@@ -99,7 +99,7 @@
             <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="8" IsEnabled="{Binding IsChecked, ElementName=checkBox, Converter={StaticResource InverseBooleanConverter}}">
                 <TextBlock VerticalAlignment="Center">Light</TextBlock>
                 <!--Toggles dark or light-->
-                <ToggleButton Margin="8 0 16 0" IsChecked="{Binding IsChecked , Mode=TwoWay}"/>
+                <ToggleButton Margin="8 0 16 0" IsChecked="{Binding IsDark , Mode=TwoWay}"/>
                 <TextBlock VerticalAlignment="Center">Dark</TextBlock>
             </StackPanel>
             <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0 12 0 0">

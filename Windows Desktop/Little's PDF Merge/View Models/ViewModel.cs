@@ -40,11 +40,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public bool CanAccessWeb(string url)
         {
-            string dogname = "suici";
-            bool issuici = false;
-            string bala = "";
-            issuici = dogname == "suici";
-            bala = dogname != "suici" ? "BadBala" : "Bala";
             try
             {
                 using (Ping ping = new Ping()) return isavalible ? ping.Send(new Uri((string)url).Host).Status == IPStatus.Success ? true : false : false;

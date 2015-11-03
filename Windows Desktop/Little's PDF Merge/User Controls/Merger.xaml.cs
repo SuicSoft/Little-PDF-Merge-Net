@@ -13,7 +13,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CefSharp;
 namespace SuicSoft.LittlesPDFMerge.Windows
 {
     /// <summary>
@@ -24,13 +23,11 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         public Merger()
         {
             InitializeComponent();
-            b.MouseRightButtonUp += b_MouseRightButtonUp;
-            b.Address = Environment.CurrentDirectory + @"\html\loader.html";
+
         }
 
         void b_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).merger.b.GetBrowser().GetHost().ShowDevTools();
         }
 
 

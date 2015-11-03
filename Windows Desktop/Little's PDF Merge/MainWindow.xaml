@@ -25,6 +25,7 @@ xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
             <StackPanel>
+                <!--Update button-->
                 <Button>
                     <Viewbox>
                         <Canvas x:Name="canvas" Width="24" Height="24" RenderTransformOrigin="0.5,0.5" Visibility="{Binding HasUpdates, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -52,6 +53,7 @@ xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
                         </Canvas>
                     </Viewbox>
                 </Button>
+                <!--To fix a MahApps bug-->
                 <Border Height="50" Width="50"/>
             </StackPanel>
         </metro:WindowCommands>
@@ -77,9 +79,10 @@ xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
             </Ellipse.Fill>
         </Ellipse>
         <wpf:ColorZone x:Name="colorzone" Height="90" Effect="{StaticResource MaterialDesignShadowDepth2}" Mode="PrimaryMid">
-            <StackPanel>
-                <Grid>
-                    <Button HorizontalAlignment="Left" Margin="5,5,0,0" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="Transparent" Height="Auto" Padding="4" BorderBrush="{x:Null}">
+            <DockPanel>
+                <DockPanel DockPanel.Dock="Top">
+                    <!--The hamburger button-->
+                    <Button DockPanel.Dock="Left" Margin="5,5,0,0" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="Transparent" Height="Auto" Padding="4" BorderBrush="{x:Null}">
                         <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" x:Name="MenuToggleButton">
                             <ToggleButton.Triggers>
                                 <EventTrigger RoutedEvent="ButtonBase.Click">
@@ -89,19 +92,14 @@ xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
                         </ToggleButton>
                     </Button>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30">Little's PDF Merge</TextBlock>
-                </Grid>
-                <StackPanel x:Name="ButtonsPanel"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Orientation="Horizontal" >
-
-                    <Button x:Name="bm" x:Uid="bm" Background="Transparent" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" Command="{Binding DataContext.MergeCommand, ElementName=merger}" Content="Merge"/>
-                    <Button x:Name="ub" x:Uid="ub" Background="Transparent" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" Command="{Binding DataContext.MoveUpCommand, ElementName=merger}" Content="Up" Padding="0" Width="40" Margin="6"/>
-                    <Button x:Name="db" x:Uid="db" Background="Transparent" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" Command="{Binding DataContext.MoveDownCommand, ElementName=merger}" Content="Down" Padding="0" Width="50" Margin="6"/>
-                    <Button x:Uid="rb" x:Name="rb" Background="Transparent" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" Command="{Binding DataContext.RemoveCommand, ElementName=merger}" Content="Remove" Padding="0" Width="76" Margin="6"/>
+                </DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+                    <Button Background="Transparent" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" Command="{Binding DataContext.MergeCommand, ElementName=merger}" Content="Merge"/>
+                    <Button Background="Transparent" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" Command="{Binding DataContext.MoveUpCommand, ElementName=merger}" Content="Up" Padding="0" Width="40" Margin="6"/>
+                    <Button Background="Transparent" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" Command="{Binding DataContext.MoveDownCommand, ElementName=merger}" Content="Down" Padding="0" Width="50" Margin="6"/>
+                    <Button Background="Transparent" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" Command="{Binding DataContext.RemoveCommand, ElementName=merger}" Content="Remove" Padding="0" Width="76" Margin="6"/>
                 </StackPanel>
-            </StackPanel>
+            </DockPanel>
         </wpf:ColorZone>
-        <WindowsFormsHost Grid.RowSpan="2" x:Name="FormsHost" Background="{x:Null}">
-            
-        </WindowsFormsHost>
-
     </Grid>
 </metro:MetroWindow>

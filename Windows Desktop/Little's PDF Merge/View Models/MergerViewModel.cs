@@ -67,7 +67,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             #region AddFileComand
             AddFileCommand = new DelegateCommand(() =>
             {
-                ((MainWindow)Application.Current.MainWindow).merger.b.Height = 8;
                 //To get the button click animation to show. We need to open the Microsoft.Win32.OpenFileDialog in a new thread.
                 new System.Threading.Thread(async() =>
                 {
@@ -80,8 +79,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                         for (int i = 0; i < openFileDialog.FileNames.Length; i++)
                             if (!istopped)
                                 await AddInputFile(openFileDialog.FileNames[i]);
-
-                    Application.Current.Dispatcher.Invoke(() =>((MainWindow)Application.Current.MainWindow).merger.b.Height = 0);
                 }) { Name = "Open file dialog thread." }.Start();
             });
             #endregion
@@ -261,7 +258,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                 SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog() { Title = Files.Count > 1 ? String.Format("Merging {0} File(s)", Files.Count) : String.Format("Converting {0}", Path.GetFileName(Files[0].path)) };
                 //If user clicks ok.
                 if (saveFileDialog.ShowDialog() == true)
-                    Application.Current.Dispatcher.Invoke(() => ((MainWindow)Application.Current.MainWindow).merger.b.Height = 8);
                     using (Combiner comb = new Combiner())
                     {
                         comb.Output = saveFileDialog.FileName;
@@ -270,7 +266,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
                             comb.AddFile(File.ReadAllBytes(item.path), null);
 
                     }
-                    Application.Current.Dispatcher.Invoke(() => ((MainWindow)Application.Current.MainWindow).merger.b.Height = 0);
                 if (!String.IsNullOrEmpty(saveFileDialog.FileName))
                     System.Diagnostics.Process.Start(saveFileDialog.FileName);
             })).Start();

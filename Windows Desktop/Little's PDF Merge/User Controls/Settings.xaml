@@ -22,25 +22,25 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
 
-                <local:DemoItem Name="Palette">
-                    <local:DemoItem.Content>
+                <local:SettingsItem Name="Palette">
+                    <local:SettingsItem.Content>
                         <local:PaletteSelector>
                             <local:PaletteSelector.DataContext>
                                 <local:PaletteSelectorViewModel />
                             </local:PaletteSelector.DataContext>
                         </local:PaletteSelector>
-                    </local:DemoItem.Content>
-                </local:DemoItem>
-                <local:DemoItem Name="Dogs">
-                    <local:DemoItem.Content>
+                    </local:SettingsItem.Content>
+                </local:SettingsItem>
+                <local:SettingsItem Name="Dogs">
+                    <local:SettingsItem.Content>
                         <Button>Suici</Button>
-                    </local:DemoItem.Content>
-                </local:DemoItem>
-                <local:DemoItem Name="About">
-                    <local:DemoItem.Content>
+                    </local:SettingsItem.Content>
+                </local:SettingsItem>
+                <local:SettingsItem Name="About">
+                    <local:SettingsItem.Content>
                         <local:About Height="Auto" Width="Auto"/>
-                    </local:DemoItem.Content>
-                </local:DemoItem>
+                    </local:SettingsItem.Content>
+                </local:SettingsItem>
             </ListBox>
             <ContentControl Margin="16" Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" />
         </DockPanel>

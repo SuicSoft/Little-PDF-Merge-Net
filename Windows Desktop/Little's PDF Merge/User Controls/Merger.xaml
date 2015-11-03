@@ -49,7 +49,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <cefSharp:ChromiumWebBrowser x:Name="b" VerticalAlignment="Top" Height="0" />
         <Grid x:Name="ellipse" Opacity="0" AllowDrop="True" IsHitTestVisible="False">
             <Ellipse Height="300" Width="300" x:Name="ellipse2">
                 <Ellipse.Fill>

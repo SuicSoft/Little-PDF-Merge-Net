@@ -20,20 +20,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            //WARNING. Incorrect editing of this code can result in a PC Freeze , forcing you to hold down the power button and get Bad Sectors. You have been warned
-            if (e.Args.Count() > 1)
-            {
-                
-                if (e.Args[0] == "-plugin" & File.Exists(e.Args[1]))
-                {
-                    MainWindow = null;
-                    new GenericMEFPluginLoader<PluginBase.IPlugin>(e.Args[1]).Plugins.ToList()[0].OnLoad(new IntPtr(0));
-                }
-            }
-            else
-            {
-                Process.Start(Assembly.GetExecutingAssembly().Location, @"-plugin ""C:\Users\Prince96\documents\visual studio 2013\Projects\Little's PDF Merge\Little's PDF Merge Achievements\bin\Release\LPM.Achievements.dll""");
-            }
             //It's safe to edit below. Don't hack our update server
             try
             {

@@ -143,8 +143,6 @@
     </ApplicationDefinition>
     <Compile Include="Binder.cs" />
     <Compile Include="Extension.cs" />
-    <Compile Include="GenericMEFPluginLoader.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="PluginWindow.xaml.cs">
       <DependentUpon>PluginWindow.xaml</DependentUpon>
@@ -155,7 +153,7 @@
     <Compile Include="User Controls\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DemoItem.cs" />
+    <Compile Include="SettingsItem.cs" />
     <Compile Include="User Controls\Merger.xaml.cs">
       <DependentUpon>Merger.xaml</DependentUpon>
     </Compile>
