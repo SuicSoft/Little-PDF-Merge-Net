@@ -1,5 +1,4 @@
 ﻿using CefSharp;
-using CefSharp.WinForms;
 //For changing themes.
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
@@ -41,17 +40,9 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// </summary>
         public MainWindow()
         {
-            //Start the plugin server
-            //StartServer();
-            //Start the plugin Process
-        
-            
             //Load the UI.
             InitializeComponent();
             this.DataContext = this;
-            //ChromiumWebBrowser myBrowser = new ChromiumWebBrowser(@"C:\Users\Prince96\Pictures\htmlsnow.html");
-            //FormsHost.Child = myBrowser;
-            SendMessageToWindowAsync(FindWindowByCaption(IntPtr.Zero,"Form1"),"OnLoad");
             try
             {
                 //Return if we are debugging.
@@ -67,66 +58,18 @@ namespace SuicSoft.LittlesPDFMerge.Windows
             }
             
         }
-        #region PInvoke
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, ref COPYDATASTRUCT lParam);
-        // Find window by Caption only. Note you must pass IntPtr.Zero as the first parameter.
-        [DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true)]
-        static extern IntPtr FindWindowByCaption(IntPtr ZeroOnly, string lpWindowName);
-        #endregion
-
-        #region PInvoke Structs
-        public struct COPYDATASTRUCT
+        protected override void OnSourceInitialized(EventArgs e)
         {
-            /// <summary>
-            /// The length of lpData + 1.
-            /// </summary>
-            public int cbData;
-            public IntPtr dwData;
-            /// <summary>
-            /// The string message to send.
-            /// </summary>
-            [MarshalAs(UnmanagedType.LPStr)]
-            public string lpData;
-        }
-        #endregion
-
-        #region PInvoke Constants
-        /// <summary>
-        /// WM-COPYDATA
-        /// </summary>
-        const int WM_COPYDATA = 0x004A;
-        #endregion
-        public static void SendMessageToWindow(IntPtr hwnd, string message)
-        {
-            SendMessageToWindowAsync(hwnd, message).RunSynchronously();
-        }
-        /// <summary>
-        /// Sends a message to a window
-        /// </summary>
-        /// <param name="hwnd">The target window handle</param>
-        /// <param name="message">The message</param>
-        /// <returns>The return code of SendMessage(user32.dll)</returns>
-        public static async Task<IntPtr> SendMessageToWindowAsync(IntPtr hwnd, string message)
-        {
-            //Copy data structure.
-            var cds = new COPYDATASTRUCT
-            {
-                dwData = new IntPtr(message.Length * sizeof(char)),
-                cbData = message.Length * sizeof(char),
-                lpData = message
-            };
-            //Send message and return
-            return SendMessage(hwnd, WM_COPYDATA, IntPtr.Zero, ref cds);
-        }
-        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Process.GetProcesses().Where(x => x.ProcessName.Contains("PluginP")).ToList().ForEach(x => x.Kill());
+            base.OnSourceInitialized(e);
+            HwndSource source = PresentationSource.FromVisual(this) as HwndSource;
+            source.AddHook(WndProc);
         }
 
-        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            //writer.WriteLine("OnLoad " + new WindowInteropHelper(this).Handle.ToString());
+            // Handle messages...
+
+            return IntPtr.Zero;
         }
 
     }

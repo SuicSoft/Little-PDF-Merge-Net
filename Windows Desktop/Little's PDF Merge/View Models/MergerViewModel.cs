@@ -183,54 +183,21 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         /// <param name="file">The path of the file</param>
         public async Task AddInputFile(string file)
         {
-            switch (Combiner.TestSourceFile(File.ReadAllBytes(file)))
+            switch (OutOfProcessHelper.TestSourceFile(file))
             {
                 //File is corrupt pdf.
-                case Combiner.SourceTestResult.Unreadable:
+                case OutOfProcessHelper.SourceTestResult.Unreadable:
                     //Tell the user the pdf is corrupt.
                     Application.Current.Dispatcher.BeginInvoke(new Action(() => ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("The file " + Path.GetFileName(file) + " could not be opened as a PDF or image", "Some thing went wrong when opening " + Path.GetFileName(file))));
                     break;
-                //File is a protected pdf.
-                case Combiner.SourceTestResult.Protected:
-                    PdfReader.unethicalreading = false;
-                    try
-                    {
-                        using (PdfReader reader = new PdfReader(file))
-                            if (!reader.IsOpenedWithFullPermissions)
-                                Application.Current.Dispatcher.Invoke(new Action(async () =>
-                                {
-                                    istopped = true;
-                                    if (MessageDialogResult.Affirmative == await ((MetroWindow)Application.Current.MainWindow).DonNotShowAgainDialog("The file " + " is a protected file", "Opening protected files may not be allowed by the pdf author", "Lawyer"))
-                                        //That dog wants to open protected files.
-                                        PdfReader.unethicalreading = true;
-                                    else
-                                        //Exit the method
-                                        return;
-                                    istopped = false;
-                                }));
-                    }
-                    catch
-                    {
-                        Application.Current.Dispatcher.Invoke(new Action(() => ShowPasswordBox(file)));
-                        return;
-                    }
-                    break;
+               
                 //File is a valid pdf.
-                case Combiner.SourceTestResult.Ok:
+                case OutOfProcessHelper.SourceTestResult.Ok:
                     //Add the pdf to the ListBox.
                     Application.Current.Dispatcher.Invoke(new Action(() => Files.Add(new PDFItem(file, null))));
                     break;
                 //File is a image (maybe not valid!).
-                case Combiner.SourceTestResult.Image:
-                    break;
-                //File is unknown
-                case Combiner.SourceTestResult.Unknown:
-                    //Show a metro dialog
-                    try
-                    {
-                        Application.Current.Dispatcher.BeginInvoke(new Action(() => ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Invalid format", "The file you selected is not a supported format. More supported formats coming soon.")));
-                    }
-                    catch { }
+                case OutOfProcessHelper.SourceTestResult.Image:
                     break;
             }
             //Update Commands

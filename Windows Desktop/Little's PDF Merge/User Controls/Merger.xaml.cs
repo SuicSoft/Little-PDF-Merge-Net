@@ -26,11 +26,6 @@ namespace SuicSoft.LittlesPDFMerge.Windows
 
         }
 
-        void b_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-        }
-
-
         private async void UserControl_Drop(object sender, DragEventArgs e)
         {
             

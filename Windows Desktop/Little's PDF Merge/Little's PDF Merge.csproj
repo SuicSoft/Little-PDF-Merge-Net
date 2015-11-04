@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\CefSharp.WinForms.43.0.0\build\CefSharp.WinForms.props" Condition="Exists('..\..\packages\CefSharp.WinForms.43.0.0\build\CefSharp.WinForms.props')" />
   <Import Project="..\..\packages\CefSharp.Wpf.43.0.0\build\CefSharp.Wpf.props" Condition="Exists('..\..\packages\CefSharp.Wpf.43.0.0\build\CefSharp.Wpf.props')" />
   <Import Project="..\..\packages\CefSharp.Common.43.0.0\build\CefSharp.Common.props" Condition="Exists('..\..\packages\CefSharp.Common.43.0.0\build\CefSharp.Common.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -19,7 +18,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <ExpressionBlendVersion>12.0.51020.0</ExpressionBlendVersion>
-    <NuGetPackageImportStamp>71951eae</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>6b30b08b</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -77,6 +76,9 @@
     </Reference>
     <Reference Include="DeltaCompressionDotNet.PatchApi">
       <HintPath>..\..\packages\DeltaCompressionDotNet.1.0.0\lib\net45\DeltaCompressionDotNet.PatchApi.dll</HintPath>
+    </Reference>
+    <Reference Include="EasyHook">
+      <HintPath>..\..\..\..\..\..\Downloads\EasyHook-2.7.5726.0-Binaries\NetFX4.0\EasyHook.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\..\packages\squirrel.windows.1.0.2\lib\Net45\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -144,6 +146,8 @@
     <Compile Include="Binder.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="OutOfProcessHelper.cs" />
     <Compile Include="PluginWindow.xaml.cs">
       <DependentUpon>PluginWindow.xaml</DependentUpon>
     </Compile>
@@ -247,7 +251,6 @@
     <Error Condition="!Exists('..\..\packages\CefSharp.Common.43.0.0\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\CefSharp.Common.43.0.0\build\CefSharp.Common.props'))" />
     <Error Condition="!Exists('..\..\packages\CefSharp.Common.43.0.0\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\CefSharp.Common.43.0.0\build\CefSharp.Common.targets'))" />
     <Error Condition="!Exists('..\..\packages\CefSharp.Wpf.43.0.0\build\CefSharp.Wpf.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\CefSharp.Wpf.43.0.0\build\CefSharp.Wpf.props'))" />
-    <Error Condition="!Exists('..\..\packages\CefSharp.WinForms.43.0.0\build\CefSharp.WinForms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\CefSharp.WinForms.43.0.0\build\CefSharp.WinForms.props'))" />
   </Target>
   <Import Project="..\..\packages\cef.redist.x86.3.2357.1287\build\cef.redist.x86.targets" Condition="Exists('..\..\packages\cef.redist.x86.3.2357.1287\build\cef.redist.x86.targets')" />
   <Import Project="..\..\packages\cef.redist.x64.3.2357.1287\build\cef.redist.x64.targets" Condition="Exists('..\..\packages\cef.redist.x64.3.2357.1287\build\cef.redist.x64.targets')" />

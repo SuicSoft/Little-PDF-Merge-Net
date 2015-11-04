@@ -6,7 +6,7 @@
 xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf" 
         xmlns:local="clr-namespace:SuicSoft.LittlesPDFMerge.Windows"
         x:Class="SuicSoft.LittlesPDFMerge.Windows.MainWindow"
-        Title="Little's PDF Merge" Height="443" Width="719" Closing="MetroWindow_Closing" Loaded="MetroWindow_Loaded" ShowIconOnTitleBar="False" GlowBrush="{DynamicResource WindowTitleColorBrush}">
+        Title="Little's PDF Merge" Height="443" Width="719" ShowIconOnTitleBar="False" GlowBrush="{DynamicResource WindowTitleColorBrush}">
     <metro:MetroWindow.Resources>
         <Storyboard x:Key="InkSplash">
             <DoubleAnimationUsingKeyFrames BeginTime="0:0:0.25" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Ink">
