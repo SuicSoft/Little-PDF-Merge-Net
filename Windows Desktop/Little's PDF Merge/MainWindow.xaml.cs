@@ -68,7 +68,17 @@ namespace SuicSoft.LittlesPDFMerge.Windows
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             // Handle messages...
+            switch (msg)
+            {
+                case NativeMethods.WM_COPYDATA:
+                    NativeMethods.CopyDataStruct st = (NativeMethods.CopyDataStruct)Marshal.PtrToStructure(lParam, typeof(NativeMethods.CopyDataStruct));
+                    string strData = Marshal.PtrToStringUni(st.lpData);
+                    strData = strData.Remove(strData.Length - 1);
+                    MessageBox.Show(strData);
+                    OutOfProcessHelper.procdata = strData;
 
+                    break;
+            }
             return IntPtr.Zero;
         }
 

@@ -67,6 +67,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>SuicSoft.LittlesPDFMerge.Windows.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DeltaCompressionDotNet">
       <HintPath>..\..\packages\DeltaCompressionDotNet.1.0.0\lib\net45\DeltaCompressionDotNet.dll</HintPath>
@@ -125,6 +128,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Security" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -151,6 +155,7 @@
     <Compile Include="PluginWindow.xaml.cs">
       <DependentUpon>PluginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="StaticVariables.cs" />
     <Compile Include="View Models\MergerViewModel.cs" />
     <Compile Include="PDFItem.cs" />
