@@ -1,7 +1,0 @@
-﻿<Application
-    x:Class="Littles_PDF_Merge.App"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Littles_PDF_Merge">
-
-</Application>
