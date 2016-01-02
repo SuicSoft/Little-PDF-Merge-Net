@@ -11,7 +11,7 @@ Free to use, distrubute and modify
 (keep the dog if you like!) - read more in [**LICENSE.md**](License.md) 
 <!---Replace developer with correct branch--->
 <!---Appveyor build status--->
-[![Build status](https://ci.appveyor.com/api/projects/status/79qcnkt3rxxboays?svg=true)](https://ci.appveyor.com/project/SuicSoft/little-pdf-merge)[![Join the chat at https://gitter.im/SuicSoft/Little-PDF-Merge](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/SuicSoft/Little-PDF-Merge?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build status](https://ci.appveyor.com/api/projects/status/79qcnkt3rxxboays?svg=true)](https://ci.appveyor.com/project/SuicSoft/little-pdf-merge) [![Join the chat at https://gitter.im/SuicSoft/Little-PDF-Merge](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/SuicSoft/Little-PDF-Merge?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 # SuicSoft. Better Software. Happier PCs
 SuicSoft's great **FREEWARE** are **badware** free (free from those annoying stuff...you know)
 We've got great PDF Mergers, System Speederupers and Tweakers! Just come to our website! (we don't have much traffic!)
