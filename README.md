@@ -1,19 +1,28 @@
-
+<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+ <!-- Compiled and minified JavaScript -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+ <script>
+ Materialize.fadeInImage('#lpmshot')
+ </script>
 # Little's PDF Merge
 
-[![Join the chat at https://gitter.im/SuicSoft/Little-PDF-Merge](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/SuicSoft/Little-PDF-Merge?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 
 Free , as fast as a running 🐕 dog ,and open source PDF merger with support for multiple platforms
-![Screenshot of Little's PDF Merge](web/lpm.PNG)
+<img src="web/lpm.PNG" id="lpmshot"/>
 
 Free to use, distrubute and modify 
-**You can't sell this, and remove all '*SuicSoft*' stuff if you're using it **
+**You can't sell this, and remove all '*SuicSoft*' stuff if you're using it. And don't copy our name. But change and modify the dog in any way you like and send it to suiciwd(at)outlook(dot)com**
 
 **NO COPYING OF OUR USER INTERFACE IS ALLOWED, IF YOU WANT TO MAKE A MATERIAL DESIGN WINDOWS PROGRAM, CHECK OUT MATERIAL-DESIGN-IN-XAML-TOOLKIT, AND USE IT YOURSELF**
 (keep the dog if you like!) - read more in [**LICENSE.md**](License.md) 
-<!---Replace developer with correct branch--->
+
 <!---Appveyor build status--->
-[![Build status](https://ci.appveyor.com/api/projects/status/79qcnkt3rxxboays?svg=true)](https://ci.appveyor.com/project/SuicSoft/little-pdf-merge)
+[![Build status](https://ci.appveyor.com/api/projects/status/79qcnkt3rxxboays?svg=true)](https://ci.appveyor.com/project/SuicSoft/little-pdf-merge)[![Join the chat at https://gitter.im/SuicSoft/Little-PDF-Merge](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/SuicSoft/Little-PDF-Merge?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 # SuicSoft. Better Software. Happier PCs
 SuicSoft's great **FREEWARE** are **badware** free (free from those annoying stuff...you know)
 We've got great PDF Mergers, System Speederupers and Tweakers! Just come to our website! (we don't have much traffic!)
