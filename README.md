@@ -2,7 +2,8 @@
 # Little's PDF Merge
 
 [![Join the chat at https://gitter.im/SuicSoft/Little-PDF-Merge](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/SuicSoft/Little-PDF-Merge?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-Fast ,Free ,and open source PDF merger using Google Material Design, WPF and C# .Net
+
+Free , as fast as a running 🐕 dog ,and open source PDF merger with support for multiple platforms
 ![Screenshot of Little's PDF Merge](web/lpm.PNG)
 
 Free to use, distrubute and modify 
