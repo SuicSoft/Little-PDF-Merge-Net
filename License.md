@@ -1,6 +1,6 @@
 ### The SuicSoft Open License (SOL)
 
-**Copyright (c) 2014-2015 SuicSoft**
+**Copyright (c) 2014-2016 SuicSoft**
 
 
 1. *"Source Code" means the C# .NET Code found in this GitHub Repository.*
