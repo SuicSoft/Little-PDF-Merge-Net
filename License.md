@@ -28,7 +28,7 @@ subject to the following conditions:
 2. If you publish a software using our Source Code, you must make the published software 
 Open Source (under an Open Source license, like the GNU GPL or even our very own SOL!).
 3. If you are distrubuting/publishing a software made with our Source Code, you must **NOT** bundle Potentially Unwanted Programs, and you must **NOT** create computer viruses, worms, trojan horses, ransomware, spyware, adware and scareware from the Source Code.
-4. Hosting the Source Code without permission from SuicSoft is **NOT** allowed
+4. Hosting the Source Code without permission from SuicSoft is **NOT** allowed (except for forks (which don't copy our UI))
 5. The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
