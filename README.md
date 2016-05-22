@@ -1,4 +1,6 @@
 
+# PLEASE DO NOT USE THIS. DEVELOPMENT HAS BEEN STOPPED AND WE ARE DEVELOPING AN ANDROID APP AND WEB APP
+
 # Little's PDF Merge
 
 Free , as fast as a running 🐕 dog ,and open source PDF merger with support for multiple platforms
